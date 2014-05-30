@@ -130,7 +130,7 @@ var SampleApp = function() {
             // self.app.get(r, self.routes[r]);
         // }
         
-        self.routes['/'] = function(req, res) {
+        self.app.get('/', function(req, res) {
         	var hostName = req.header('host');
         	switch(hostName) {
         		case 'clip.imapp.kr':
@@ -141,9 +141,8 @@ var SampleApp = function() {
             		res.send(self.cache_get('index.html') );
             		break;
         	}
-        };
+        });
     };
-
 
     /**
      *  Initializes the sample application.
