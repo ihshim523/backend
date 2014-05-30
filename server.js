@@ -3,11 +3,7 @@
 var express = require('express');
 var fs      = require('fs');
 
-
-/**
- *  Define the sample application.
- */
-var SampleApp = function() {
+var Backend = function() {
 
     //  Scope.
     var self = this;
@@ -134,7 +130,7 @@ var SampleApp = function() {
         	var hostName = req.header('host');
         	switch(hostName) {
         		case 'clip.imapp.kr':
-        			app.use(express.static('./ClipAnywhere'));
+        			self.app.use(express.static('./ClipAnywhere'));
         			break;
         		default:
 		            res.setHeader('Content-Type', 'text/html');
@@ -175,7 +171,7 @@ var SampleApp = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new SampleApp();
+var zapp = new Backend();
 zapp.initialize();
 zapp.start();
 
