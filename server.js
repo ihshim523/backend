@@ -1,5 +1,5 @@
 #!/bin/env node
-//  OpenShift sample Node application
+
 var express = require('express');
 var fs      = require('fs');
 
@@ -43,7 +43,7 @@ var SampleApp = function() {
         }
 
         //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./ClipAnywhere/index.html');
+        self.zcache['index.html'] = fs.readFileSync('./index.html');
     };
 
 
@@ -92,19 +92,27 @@ var SampleApp = function() {
     /**
      *  Create the routing table entries + handlers for the application.
      */
-    self.createRoutes = function() {
-        self.routes = { };
-
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
-        self.routes['/'] = function(req, res) {
-            res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
-        };
-    };
+    // self.createRoutes = function() {
+        // self.routes = { };
+// 
+        // // self.routes['/asciimo'] = function(req, res) {
+            // // var link = "http://i.imgur.com/kmbjB.png";
+            // // res.send("<html><body><img src='" + link + "'></body></html>");
+        // // };
+// 
+        // self.routes['/'] = function(req, res) {
+        	// var 
+        	// hostName = req.header('host');
+        	// switch(hostName) {
+        		// case 'clip.imapp.kr':
+        			// break;
+//         		
+        	// } 
+//         	
+            // res.setHeader('Content-Type', 'text/html');
+            // res.send(self.cache_get('index.html') );
+        // };
+    // };
 
 
     /**
@@ -112,13 +120,28 @@ var SampleApp = function() {
      *  the handlers.
      */
     self.initializeServer = function() {
-        self.createRoutes();
-        self.app = express.createServer();
 
-        //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
-        }
+        // self.createRoutes();
+        self.app = express.createServer();
+		self.app.use(express.compress());
+		
+        // //  Add handlers for the app (from the routes).
+        // for (var r in self.routes) {
+            // self.app.get(r, self.routes[r]);
+        // }
+        
+        self.routes['/'] = function(req, res) {
+        	var hostName = req.header('host');
+        	switch(hostName) {
+        		case 'clip.imapp.kr':
+        			app.use(express.static('./ClipAnywhere'));
+        			break;
+        		default:
+		            res.setHeader('Content-Type', 'text/html');
+            		res.send(self.cache_get('index.html') );
+            		break;
+        	}
+        };
     };
 
 
