@@ -126,10 +126,15 @@ var Backend = function() {
             // self.app.get(r, self.routes[r]);
         // }
 
+        self.clipAnywhere = require('./ClipAnywhereServer/server.js');
+
         self.app.use(function(req, res, next) {
             switch(req.host) {
                 case 'clip.imapp.kr':
                     express.static('./ClipAnywhere')(req,res,next);
+                    break;
+                case 'clip-back.imapp.kr':
+                    self.clipAnywhere.server(req,res,next);
                     break;
                 default:
                     res.setHeader('Content-Type', 'text/html');
