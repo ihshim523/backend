@@ -1,39 +1,44 @@
 #!/bin/env node
 
 var mongo = require('mongojs');
+var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+  process.env.OPENSHIFT_APP_NAME;
 
-get = function(req, res) {
-            res.send("GET:"+req.method);
+get = function(req, res, next) {
+    var db = mongo(connection_string, ['clips']);
+    var clips = db.collection('clips');
     
+    clips.find({key:req.param('k')}, function(err, docs) {
+        if ( docs.length > 0 ) {
+            res.send(docs[0].value);
+        }
+        next();
+    });
 }
 
-post = function(req, res) {
-            res.send("POST:"+req.method);
+post = function(req, res, next) {
+    var db = mongo(connection_string, ['clips']);
+    var clips = db.collection('clips');
+    
+    clips.save({req.param('k'):req.param('v')});
+    
+    res.send('good');
+    
+    next();
 }
 
 var server  = function(req, res, next) {
     switch(req.method) {
         case 'GET':
-            get(req,res);
+            get(req,res, next);
             break;
         case 'POST':
-            post(req,res);
+            post(req,res, next);
             break;
     }
-    
-    // var db = mongo(connection_string, ['clips']);
-    // var clips = db.collection('clips');
-// 
-//     
-    // MongoClient.connect('mongodb://'+connection_string, function(err, db) {
-      // if(err) throw err;
-      // var collection = db.collection('books').find().limit(10).toArray(function(err, docs) {
-        // console.dir(docs);
-        // db.close();
-      // })
-    // })
-
-    next();
 }; 
 
 module.exports.server = server;
