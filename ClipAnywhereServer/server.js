@@ -25,8 +25,7 @@ post = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    clips.ensureIndex({k:1},{unique:true});
-    clips.save({k:req.body.k,v:req.body.v},
+    clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
      function(err, saved) { // 
            if( err || !saved ) res.send( "User not saved");
            else res.send( "User saved");
