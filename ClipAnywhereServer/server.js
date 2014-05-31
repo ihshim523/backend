@@ -30,11 +30,10 @@ post = function(req, res, next) {
     
     clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
      function(err, saved) { // 
-         res.send(saved);
-           if ( saved && saved.updateExisting ) 
+           if ( saved && saved.updatedExisting ) 
                 res.send({u:true});
             else               
-           if ( saved && !saved.updateExisting ) 
+           if ( saved && !saved.updatedExisting ) 
                 res.send({u:false});
      });
 
