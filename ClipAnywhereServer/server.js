@@ -40,7 +40,7 @@ post = function(req, res, next) {
 //    res.send('good:'+req.body.k + ',v:'+req.body.v);
 }
 
-delete = function(req, res, next) {
+del = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
@@ -56,7 +56,7 @@ var server  = function(req, res, next) {
             post(req,res, next);
             break;
         case 'DELETE':
-            delete(req,res,next);
+            del(req,res,next);
             break;
     }
 }; 
