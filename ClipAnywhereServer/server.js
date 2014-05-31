@@ -13,12 +13,12 @@ get = function(req, res, next) {
 
     console.log("k="+req.query.k);
 
-    clips.findOne({k:req.query.k}, function(err, docs) {
+    clips.findOne({k:req.query.k}, function(err, doc) {
         
         console.log("err:"+err);
         
         if ( !err ) {
-            res.send(docs);
+            res.send({v:doc.v});
         }
         else
             res.send(err);
