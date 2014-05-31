@@ -126,7 +126,7 @@ var Backend = function() {
             // self.app.get(r, self.routes[r]);
         // }
         
-        self.app.use('clip.imapp.kr', express.static('./ClipAnywhere'));
+        self.app.use(express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
 
         // self.app.get('/', function(req, res) {
 		            // res.setHeader('Content-Type', 'text/html');
