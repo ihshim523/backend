@@ -27,7 +27,7 @@ post = function(req, res, next) {
     
     clips.save({key:req.body.k,value:req.body.v});
     
-    res.send('good');
+    res.send('good:'+req.body.k + ',v:'+req.body.v);
 }
 
 var server  = function(req, res, next) {
