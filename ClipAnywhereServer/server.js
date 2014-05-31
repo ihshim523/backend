@@ -11,7 +11,7 @@ get = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    clips.find({key:req.body('k')}, function(err, docs) {
+    clips.find({key:req.query.k}, function(err, docs) {
         if ( docs.length > 0 ) {
             res.send(docs);
             //res.send(docs[0].value);
