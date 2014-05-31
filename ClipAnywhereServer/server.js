@@ -13,7 +13,8 @@ get = function(req, res, next) {
     
     clips.find({key:req.param('k')}, function(err, docs) {
         if ( docs ) {
-            res.send(docs[0].value);
+            res.send(docs[0]);
+            //res.send(docs[0].value);
         }
         else
             next();
