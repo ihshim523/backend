@@ -1,6 +1,6 @@
 #!/bin/env node
 
-//var mongo = require('mongojs');
+var mongo = require('mongojs');
 
 get = function(req, res) {
             res.send("GET:"+req.method);
