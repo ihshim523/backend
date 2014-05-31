@@ -17,7 +17,7 @@ get = function(req, res, next) {
         
         console.log(err);
         
-        if ( !err && docs.length > 0 ) {
+        if ( !err && !docs && docs.length > 0 ) {
             res.send(docs);
             //res.send(docs[0].value);
         }
