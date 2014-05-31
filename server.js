@@ -121,6 +121,7 @@ var Backend = function() {
         self.app = express();
 //		self.app.use(express.compress());
 		self.app.use(express.bodyParser());
+		app.use(express.methodOverride());
 		
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
