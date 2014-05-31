@@ -17,6 +17,9 @@ get = function(req, res, next) {
             //res.send(docs[0].value);
         }
         else
+        if ( err )
+            res.send(err);
+        else
             next();
     });
 }
