@@ -23,7 +23,7 @@ post = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    clips.save({req.param('k'):req.param('v')});
+    clips.save({key:req.param('k'),value:req.param('v')});
     
     res.send('good');
     
