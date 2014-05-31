@@ -12,7 +12,7 @@ get = function(req, res, next) {
     var clips = db.collection('clips');
     
     clips.find({key:req.param('k')}, function(err, docs) {
-        if ( docs ) {
+        if ( docs.length > 0 ) {
             res.send(docs);
             //res.send(docs[0].value);
         }
