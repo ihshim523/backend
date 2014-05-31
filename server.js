@@ -173,8 +173,6 @@ var Backend = function() {
 
 };   /*  Sample Application.  */
 
-
-
 /**
  *  main():  Main code.
  */
