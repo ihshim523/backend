@@ -118,15 +118,27 @@ var Backend = function() {
     self.initializeServer = function() {
 
         // self.createRoutes();
-        self.app = express.createServer();
-		self.app.use(express.compress());
+        self.app = express();
+//		self.app.use(express.compress());
 		
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
             // self.app.get(r, self.routes[r]);
         // }
-        
-        self.app.use(express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
+
+        self.app.use(function(req, res, next) {
+            switch(req.host) {
+                case 'clip.imapp.kr':
+                    express.static('./ClipAnywhere')(req,res,next);
+                    break;
+                default:
+                    res.setHeader('Content-Type', 'text/html');
+                    res.send(self.cache_get('index.html') );
+                    break;
+            }  
+        });
+            
+            // express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
 
         // self.app.get('/', function(req, res) {
 		            // res.setHeader('Content-Type', 'text/html');
