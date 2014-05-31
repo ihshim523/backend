@@ -15,7 +15,8 @@ get = function(req, res, next) {
         if ( docs ) {
             res.send(docs[0].value);
         }
-        next();
+        else
+            next();
     });
 }
 
@@ -26,8 +27,6 @@ post = function(req, res, next) {
     clips.save({key:req.param('k'),value:req.param('v')});
     
     res.send('good');
-    
-    next();
 }
 
 var server  = function(req, res, next) {
