@@ -2,9 +2,24 @@
 
 //var mongo = require('mongojs');
 
-var server  = function(req, res, next) {
+get = function(req, res) {
+            res.send("GET:"+req.method);
     
-    res.send(req.method);
+}
+
+post = function(req, res) {
+            res.send("POST:"+req.method);
+}
+
+var server  = function(req, res, next) {
+    switch(req.method) {
+        case 'GET':
+            get(req,res);
+            break;
+        case 'POST':
+            post(req,res);
+            break;
+    }
     
     // var db = mongo(connection_string, ['clips']);
     // var clips = db.collection('clips');
