@@ -30,14 +30,13 @@ post = function(req, res, next) {
     
     clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
      function(err, saved) { // 
-           if( err || !saved ) {
-               res.send( err + ":User not saved");
-           }
-           else
-                res.send(saved);               
-
+           if ( saved && saved.updateExisting ) 
+                res.send({u:true});
+            else               
+           if ( saved && !saved.updateExisting ) 
+                res.send({u:false});
      });
-    
+
 //    res.send('good:'+req.body.k + ',v:'+req.body.v);
 }
 
