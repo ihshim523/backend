@@ -126,18 +126,13 @@ var Backend = function() {
             // self.app.get(r, self.routes[r]);
         // }
         
-        self.app.get('/', function(req, res) {
-        	var hostName = req.header('host');
-        	switch(hostName) {
-        		case 'clip.imapp.kr':
-        			self.app.use(express.static('./ClipAnywhere'));
-        			break;
-        		default:
-		            res.setHeader('Content-Type', 'text/html');
-            		res.send(self.cache_get('index.html') );
-            		break;
-        	}
-        });
+        self.app.use('clip.imapp.kr', express.static('./ClipAnywhere'));
+
+        // self.app.get('/', function(req, res) {
+		            // res.setHeader('Content-Type', 'text/html');
+            		// res.send(self.cache_get('index.html') );
+            		// break;
+        // });
     };
 
     /**
