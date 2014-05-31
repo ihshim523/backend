@@ -32,7 +32,7 @@ post = function(req, res, next) {
            else res.send( "User saved");
      });
     
-    res.send('good:'+req.body.k + ',v:'+req.body.v);
+//    res.send('good:'+req.body.k + ',v:'+req.body.v);
 }
 
 var server  = function(req, res, next) {
