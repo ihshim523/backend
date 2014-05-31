@@ -17,15 +17,11 @@ get = function(req, res, next) {
         
         console.log(err);
         
-        if ( !err && !docs && docs.length > 0 ) {
+        if ( !err ) {
             res.send(docs);
-            //res.send(docs[0].value);
         }
         else
-        if ( err )
             res.send(err);
-        else
-            next();
     });
 }
 
@@ -55,6 +51,8 @@ del = function(req, res, next) {
     var clips = db.collection('clips');
     
     clips.remove({});
+    
+    next();
 }
 
 var server  = function(req, res, next) {
