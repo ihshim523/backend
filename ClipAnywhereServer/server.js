@@ -10,8 +10,13 @@ var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
 get = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
-    
+
+    console.log(req.query.k);
+
     clips.findOne({k:req.query.k}, function(err, docs) {
+        
+        console.log(err);
+        
         if ( !err && docs.length > 0 ) {
             res.send(docs);
             //res.send(docs[0].value);
@@ -44,6 +49,8 @@ post = function(req, res, next) {
 }
 
 del = function(req, res, next) {
+    console.log('delete verb');
+    
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
