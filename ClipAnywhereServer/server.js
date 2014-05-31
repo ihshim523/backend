@@ -1,6 +1,6 @@
 #!/bin/env node
 
-var mongo = require('mongojs');
+//var mongo = require('mongojs');
 
 var server  = function(req, res, next) {
     
