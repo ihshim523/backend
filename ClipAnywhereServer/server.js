@@ -25,7 +25,7 @@ post = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    clips.save({k:'req.body.k',v:'req.body.v'},
+    clips.save({k:req.body.k,v:req.body.v},
      function(err, saved) { // 
            if( err || !saved ) res.send( "User not saved");
            else res.send( "User saved");
