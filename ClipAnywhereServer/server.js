@@ -11,7 +11,7 @@ get = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    clips.find({key:req.param('k')}, function(err, docs) {
+    clips.find({key:req.body('k')}, function(err, docs) {
         if ( docs.length > 0 ) {
             res.send(docs);
             //res.send(docs[0].value);
@@ -27,8 +27,12 @@ post = function(req, res, next) {
     
     clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
      function(err, saved) { // 
-           if( err || !saved ) res.send( err + ":User not saved");
-           else res.send( err+":User saved");
+           if( err || !saved ) {
+               res.send( err + ":User not saved");
+           }
+           else
+                res.send(saved.v);               
+
      });
     
 //    res.send('good:'+req.body.k + ',v:'+req.body.v);
