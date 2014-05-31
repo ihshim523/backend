@@ -1,7 +1,6 @@
 #!/bin/env node
 
 var express = require('express');
-var bodyParser = require('body-parser');
 
 var Backend = function() {
 
@@ -120,7 +119,7 @@ var Backend = function() {
         // self.createRoutes();
         self.app = express();
 //		self.app.use(express.compress());
-		self.app.use(bodyParser());
+		self.app.use(express.bodyParser());
 		
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
