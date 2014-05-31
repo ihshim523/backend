@@ -11,11 +11,11 @@ get = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
 
-    console.log(req.query.k);
+    console.log("k="+req.query.k);
 
     clips.findOne({k:req.query.k}, function(err, docs) {
         
-        console.log(err);
+        console.log("err:"+err);
         
         if ( !err ) {
             res.send(docs);
