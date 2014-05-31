@@ -34,7 +34,7 @@ post = function(req, res, next) {
                res.send( err + ":User not saved");
            }
            else
-                res.send(saved.v);               
+                res.send(saved);               
 
      });
     
