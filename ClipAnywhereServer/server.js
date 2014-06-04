@@ -18,7 +18,10 @@ get = function(req, res, next) {
         console.log("err:"+err);
         
         if ( !err ) {
-            res.send({v:doc.v});
+            if ( !doc ) 
+                res.send({v:null});
+            else
+                res.send({v:doc.v});
         }
         else
             res.send(err);
