@@ -31,6 +31,9 @@ get = function(req, res, next) {
 }
 
 post = function(req, res, next) {
+    console.log("k="+req.body.k);
+    console.log("v="+req.body.v);
+
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
