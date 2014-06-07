@@ -41,7 +41,20 @@ post = function(req, res, next) {
     
     id = parseInt(req.query.k);
     
-    clips.update({k:id},{ $setOnInsert:{k:id,v:req.body.v} }, {upsert:true},
+    // clips.update({k:id},{ $setOnInsert:{k:id,v:req.body.v} }, {upsert:true},
+     // function(err, saved) { //
+           // if ( saved && saved.updatedExisting ) 
+                // res.send({u:true});
+            // else               
+           // if ( saved && !saved.updatedExisting ) 
+                // res.send({u:false});
+            // else
+                // next();
+//                 
+           // console.log("err:"+err);
+           // console.log("saved:"+JSON.stringify(saved));
+     // });
+    clips.update({k:id},{ k:id,v:req.body.v }, {upsert:true},
      function(err, saved) { //
            if ( saved && saved.updatedExisting ) 
                 res.send({u:true});
@@ -75,7 +88,19 @@ put = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
+    // clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
+     // function(err, saved) { //
+//           
+           // if ( saved && saved.updatedExisting ) 
+                // res.send({u:true});
+            // else               
+           // if ( saved && !saved.updatedExisting ) 
+                // res.send({u:false});
+//                 
+           // console.log(saved);
+     // });
+
+    clips.update({k:req.body.k},{ {k:req.body.k,v:req.body.v} }, {upsert:true},
      function(err, saved) { //
           
            if ( saved && saved.updatedExisting ) 
