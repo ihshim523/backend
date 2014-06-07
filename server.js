@@ -131,10 +131,11 @@ var Backend = function() {
 
         // self.createRoutes();
         self.app = express();
+        
+        self.app.use(enableCORS());
 //		self.app.use(express.compress());
 		self.app.use(express.bodyParser());
 		self.app.use(express.methodOverride());
-		// self.app.use(enableCORS());
 		
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
