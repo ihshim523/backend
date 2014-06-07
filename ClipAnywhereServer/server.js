@@ -83,6 +83,9 @@ del = function(req, res, next) {
 }
 
 var server  = function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', '*');
+
     switch(req.method) {
         case 'GET':
             get(req,res, next);

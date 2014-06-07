@@ -131,8 +131,6 @@ var Backend = function() {
         self.clipAnywhere = require('./ClipAnywhereServer/server.js');
 
         self.app.use(function(req, res, next) {
-            res.setHeader('Access-Control-Allow-Origin', '*');
-
             switch(req.host) {
                 case 'clip.imapp.kr':
                     express.static('./ClipAnywhere')(req,res,next);
