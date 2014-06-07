@@ -13,7 +13,9 @@ get = function(req, res, next) {
 
     console.log("k="+req.query.k);
 
-    clips.findOne({k:req.query.k}, function(err, doc) {
+    id = parseInt(req.query.k);
+    
+    clips.findOne({k:id}, function(err, doc) {
         
         console.log("err:"+err);
         
