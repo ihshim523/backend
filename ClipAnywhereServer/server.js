@@ -43,7 +43,7 @@ post = function(req, res, next) {
                 next();
                 
            console.log("err:"+err);
-           console.log("saved:"+saved);
+           console.log("saved:"+JSON.stringify(saved));
      });
 
 //    res.send('good:'+req.body.k + ',v:'+req.body.v);
