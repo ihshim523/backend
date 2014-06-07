@@ -39,7 +39,7 @@ post = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    id = parseInt(req.query.k);
+    id = parseInt(req.body.k);
     
     // clips.update({k:id},{ $setOnInsert:{k:id,v:req.body.v} }, {upsert:true},
      // function(err, saved) { //
@@ -63,7 +63,7 @@ post = function(req, res, next) {
                 res.send({u:false});
             else
                 next();
-                
+
            console.log("err:"+err);
            console.log("saved:"+JSON.stringify(saved));
      });
