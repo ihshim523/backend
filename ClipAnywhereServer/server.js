@@ -21,7 +21,7 @@ get = function(req, res, next) {
             if ( !doc ) 
                 res.send({v:null});
             else
-                res.send({v:doc.v});
+                res.send({k:doc.k,v:doc.v});
         }
         else
             res.send(err);
