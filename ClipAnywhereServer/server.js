@@ -22,6 +22,8 @@ get = function(req, res, next) {
                 res.send({v:null});
             else
                 res.send({k:doc.k,v:doc.v});
+                
+            console.log("ret:" + JSON.stringify(doc));
         }
         else
             res.send(err);
