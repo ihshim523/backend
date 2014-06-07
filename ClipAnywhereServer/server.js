@@ -54,7 +54,7 @@ post = function(req, res, next) {
            // console.log("err:"+err);
            // console.log("saved:"+JSON.stringify(saved));
      // });
-    clips.update({k:id},{ k:id,v:req.body.v }, {upsert:true},
+    clips.update({k:id},{v:req.body.v}, {upsert:true},
      function(err, saved) { //
            if ( saved && saved.updatedExisting ) 
                 res.send({u:true});
