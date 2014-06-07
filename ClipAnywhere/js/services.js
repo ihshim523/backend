@@ -4,18 +4,16 @@ angular.module('starter.services', [])
 
   return {
     send: function(key, value) {
-    	
-		var result = $http({method: 'POST', url: 'http://c50.imapp.kr:8080/get',
-			data:{
-				"k":key,
-				"v":value
-			}});
+		var result = $http({method: 'POST', url: 'http://clip-back.imapp.kr',
+			data:{k:key,v:value}});
     	
       return result;
     },
-    receive: function(friendId) {
+    receive: function(key) {
+        var result = $http({method: 'GET', url: 'http://clip-back.imapp.kr',
+            params:{k:key}});
 
-      return friends[friendId];
+      return result;
     }
-  }
+  };
 });

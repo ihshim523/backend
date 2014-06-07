@@ -32,27 +32,34 @@
 
 	<ion-content >
 	<div class="card padding">
-		<div class="item item-divider">Paste</div>
-		<label class="item item-input padding"> <input type="text" maxlength="32"
-			placeholder="Key" ng-model="receive.key"/>
+		<div class="item item-divider">Key</div>
+		<label class="item item-input padding"> <input type="number" maxlength="32"
+			placeholder="Key" ng-model="clip.key" ng-pattern="/^[0-9]+$/"/>
 		</label>
-		<ion-list class="padding"> <ion-item ng-show="!items.length" >
-		Empty </ion-item> </ion-list>
+	</div>
+	
+	<div class="card padding">
+		<div class="item item-divider">Paste</div>
+		<ion-list can-swipe="true">
+		<ion-item ng-repeat="v in items" ng-click="Action({{v.v}})">
+  			{{v.k}} => {{v.v}}
+		<ion-option-button class="button-positive" ng-click="Delete($index,{{v}})">
+      		Delete
+    	</ion-option-button>
+		</ion-item>
+		 </ion-list>
 		<button class="button button-balanced button-block " ng-click="Receive();">Go</button>
 	</div>
 	<div class="card padding">
 		<div class="item item-divider">Copy</div>
-		<label class="item item-input padding"> <input type="text" maxlength="32" 
-			placeholder="Key" ng-model="send.key"/>
-		</label> <label class="item item-input padding"> <input type="text" maxlength="1000"
-			placeholder="Text" ng-model="receive.value"/>
+		<label class="item item-input padding"> <input type="text" maxlength="1000"
+			placeholder="Text" ng-model="send.value"/>
 		</label>
 		<button class="button button-balanced button-block " ng-click="Send();">Go</button>
 	</div>
 	
 	<div class="padding"></div>
 	</ion-content>
-
 
 </body>
 </html>
