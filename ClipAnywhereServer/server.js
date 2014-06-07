@@ -82,39 +82,6 @@ del = function(req, res, next) {
     next();
 }
 
-put = function(req, res, next) {
-    console.log('put verb');
-    
-    var db = mongo(connection_string, ['clips']);
-    var clips = db.collection('clips');
-    
-    // clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
-     // function(err, saved) { //
-//           
-           // if ( saved && saved.updatedExisting ) 
-                // res.send({u:true});
-            // else               
-           // if ( saved && !saved.updatedExisting ) 
-                // res.send({u:false});
-//                 
-           // console.log(saved);
-     // });
-
-    clips.update({k:req.body.k},{ {k:req.body.k,v:req.body.v} }, {upsert:true},
-     function(err, saved) { //
-          
-           if ( saved && saved.updatedExisting ) 
-                res.send({u:true});
-            else               
-           if ( saved && !saved.updatedExisting ) 
-                res.send({u:false});
-                
-           console.log(saved);
-     });
-    
-    next();
-}
-
 var server  = function(req, res, next) {
     switch(req.method) {
         case 'GET':
@@ -126,9 +93,7 @@ var server  = function(req, res, next) {
         case 'DELETE':
             del(req,res,next);
             break;
-        case 'PUT':
-            put(req,res,next);
-            break;
+
     }
 }; 
 
