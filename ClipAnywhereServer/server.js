@@ -39,7 +39,9 @@ post = function(req, res, next) {
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    clips.update({k:req.body.k},{ $setOnInsert:{k:req.body.k,v:req.body.v} }, {upsert:true},
+    id = parseInt(req.query.k);
+    
+    clips.update({k:id},{ $setOnInsert:{k:id,v:req.body.v} }, {upsert:true},
      function(err, saved) { //
            if ( saved && saved.updatedExisting ) 
                 res.send({u:true});
