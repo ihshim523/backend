@@ -45,9 +45,9 @@
 	<div class="card padding">
 		<div class="item item-divider">Paste</div>
 		<ion-list can-swipe="true">
-		<ion-item ng-repeat="v in items" ng-click="Action({{v.v}})">
+		<ion-item ng-repeat="v in items" ng-click="Action(v.v)">
   			{{v.k}} => {{v.v}}
-		<ion-option-button class="button-positive" ng-click="Delete($index,{{v}})">
+		<ion-option-button class="button-positive" ng-click="Delete($index,v)">
       		Delete
     	</ion-option-button>
 		</ion-item>
@@ -60,6 +60,34 @@
 			placeholder="Text" ng-model="send.value"/>
 		</label>
 		<button class="button button-balanced button-block " ng-disabled="send.value == null || send.value == ''" ng-click="Send();">Go</button>
+	</div>
+
+	<div class="card padding">
+		<div class="item item-divider">About</div>
+		<label class="item padding" align="center"><p><a href="#" ng-click="openBrowser('http://imapp.blogspot.com/2014/06/clip-anywhere.html')">How to use</a></p>
+		</label>
+
+		<label class="item padding" align="center">
+			<p>Desktop site: <a href="#" ng-click="openBrowser('http://clip.imapp.kr')">http://clip.imapp.kr</a></p>
+		</label>
+		
+		<label class="item padding" >
+			
+<!-- I got these buttons from simplesharebuttons.com -->
+<div id="share-buttons" align="center">
+
+<!-- Facebook -->
+<a href ng-click="openBrowser('http://www.facebook.com/sharer.php?u=http://imapp.blogspot.com/2014/06/clip-anywhere.html')" target="_blank"><img src="img/facebook.png" alt="Facebook" /></a>
+
+<!-- Twitter -->
+<a href ng-click="openBrowser('http://twitter.com/share?url=http://imapp.blogspot.com/2014/06/clip-anywhere.html&text=Clip Anywhere')" target="_blank"><img src="img/twitter.png" alt="Twitter" /></a>
+
+<!-- Google+ -->
+<a href ng-click="openBrowser('https://plus.google.com/share?url=http://imapp.blogspot.com/2014/06/clip-anywhere.html')" target="_blank"><img src="img/google.png" alt="Google" /></a>
+ </div>
+
+</label>
+
 	</div>
 	
 	<div class="padding"></div>

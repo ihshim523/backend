@@ -3,9 +3,9 @@ angular.module('starter.controllers', [])
 .controller('ListCtrl', function($scope, $ionicLoading, $ionicPopup, ClipService, $ionicActionSheet,  $ionicPlatform,$sce) {
 	function adBanner() {
 		if( window.plugins && window.plugins.AdMob ) {
-		    var admob_ios_key = 'a151e6d43c5a28f';
+		    var admob_ios_key = 'ca-app-pub-3241952602337815/9930829037';
 		    var admob_android_key = 'ca-app-pub-3241952602337815/5472106633';
-		    var admob_wp_key = 'a14d161d31d73a4';
+		    var admob_wp_key = 'ca-app-pub-3241952602337815/3884295436';
 		    var adId = (navigator.userAgent.indexOf('Android') >=0) ? admob_android_key : admob_ios_key;
 		    var am = window.plugins.AdMob;
 
@@ -21,20 +21,20 @@ angular.module('starter.controllers', [])
 		                function(){
 		                	am.showAd( true );
 		                }, 
-		                function(){ console.log('failed to request ad'); }
+		                function(){ //console.log('failed to request ad'); }
 		            );
 		        }, 
-		        function(){ console.log('failed to create banner view'); }
+		        function(){ //console.log('failed to create banner view'); }
 		    );
 		} else {
-			console.log('AdMob plugin not available/ready.');
+			//console.log('AdMob plugin not available/ready.');
 		}
 	}
 	function loadKey() {
 	    $scope.clip.key = '';
         key = window.localStorage.getItem("key");
         
-        console.log(key);
+        //console.log(key);
 
 	    if ( key && key != '' ) {
             $scope.clip.key = parseInt(key);
@@ -50,12 +50,12 @@ angular.module('starter.controllers', [])
         $scope.items = JSON.parse(json);
         if (!$scope.items)
             $scope.items = [];
-        console.log("loadValue:"+JSON.stringify($scope.items));
+        //console.log("loadValue:"+JSON.stringify($scope.items));
     }
     function setValue(values) {
         if ( values.length > 5 )
             values.shift();
-        console.log("setValue:"+JSON.stringify(values));
+        //console.log("setValue:"+JSON.stringify(values));
         window.localStorage.setItem("values",JSON.stringify(values));
     }
 
@@ -138,7 +138,7 @@ angular.module('starter.controllers', [])
 
     $scope.Delete = function (index,data) {
         $scope.items.forEach(function(it){
-            console.log('Delete:'+JSON.stringify(it));    
+            //console.log('Delete:'+JSON.stringify(it));    
         });
 
         $scope.items = $scope.items.filter(function(item) {
@@ -147,10 +147,11 @@ angular.module('starter.controllers', [])
         setValue($scope.items);
         
         $scope.items.forEach(function(it){
-            console.log('Delete2:'+JSON.stringify(it));    
+            //console.log('Delete2:'+JSON.stringify(it));    
         });
     }
 	$scope.Action = function (data) {
+	    //console.log("action:"+data);
         $ionicActionSheet.show({
 //          titleText: 'ActionSheet Example',
             buttons: [
@@ -166,14 +167,20 @@ angular.module('starter.controllers', [])
                               case  0:
                                 if ( !$scope.isPhoneGap )
                                     copyToClipboard(data);
+                                else {
+                                    //console.log("copy:"+data);
+                                    cordova.plugins.clipboard.copy(data);
+                                    $ionicLoading.show({
+                                        template: 'Copied to clipboard!',
+                                        duration: 2000
+                                    });
+                                }
                               break;
                               case  1:
-                                if ( !$scope.isPhoneGap )
-                                    window.location.href=data;
+                                 openBrowser(data);
                               break;
                               case  2:
-                                if ( !$scope.isPhoneGap )
-                                    window.location.href="http://www.google.com/search?q="+data;
+                                 openBrowser("http://www.google.com/search?q="+data);
                               break;
                           }
                           return true;
@@ -182,5 +189,12 @@ angular.module('starter.controllers', [])
 	    
 	}
 	
+	$scope.openBrowser = function(url) {
+        if ( !$scope.isPhoneGap )
+            window.location.href=url;
+        else
+            window.open(url, '_system');
+    };
+
 });
 
