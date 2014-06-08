@@ -21,10 +21,10 @@ angular.module('starter.controllers', [])
 		                function(){
 		                	am.showAd( true );
 		                }, 
-		                function(){ //console.log('failed to request ad'); }
+		                function(){ }//console.log('failed to request ad'); }
 		            );
 		        }, 
-		        function(){ //console.log('failed to create banner view'); }
+		        function(){ }//console.log('failed to create banner view'); }
 		    );
 		} else {
 			//console.log('AdMob plugin not available/ready.');
