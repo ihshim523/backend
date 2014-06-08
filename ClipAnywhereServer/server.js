@@ -54,7 +54,10 @@ post = function(req, res, next) {
            // console.log("err:"+err);
            // console.log("saved:"+JSON.stringify(saved));
      // });
-    clips.update({k:id},{k:id,v:req.query.v}, {upsert:true},
+     
+     clips.ensureIndex({expire:1},{expireAfterSeconds:600});
+     
+    clips.update({k:id},{k:id,v:req.query.v,expire:new Date()}, {upsert:true},
      function(err, saved) { //
            if ( saved && saved.updatedExisting ) 
                 res.jsonp({u:true});
