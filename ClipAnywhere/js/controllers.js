@@ -78,12 +78,15 @@ angular.module('starter.controllers', [])
     });
 
     if ( !isPhoneGap )
-       $scope.adsense = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3241952602337815" data-ad-slot="5779831039"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
+       $scope.google = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3241952602337815" data-ad-slot="5779831039"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
     $scope.clip = {};
 	$scope.send = {};
     loadValue();
     loadKey();
 
+    $scope.adsense = function() {
+        return $sce.trustAsHtml($scope.google);
+    }
 	$scope.Send = function() {
 	    window.localStorage.setItem("key", $scope.clip.key.toString());
 	    
