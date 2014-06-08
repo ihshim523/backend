@@ -4,14 +4,16 @@ angular.module('starter.services', [])
 
   return {
     send: function(key, value) {
-		var result = $http({method: 'POST', url: 'http://clip-back.imapp.kr',
-			data:{k:key,v:value}});
-    	
+		var result = $http.jsonp(
+		    encodeURI('http://clip-back.imapp.kr/?f=2&callback=JSON_CALLBACK&k='+key+'&v='+value)
+		    );
+
       return result;
     },
     receive: function(key) {
-        var result = $http({method: 'GET', url: 'http://clip-back.imapp.kr',
-            params:{k:key}});
+        var result = $http.jsonp(
+            encodeURI('http://clip-back.imapp.kr/?f=1&callback=JSON_CALLBACK&k='+key)
+            );
 
       return result;
     }
