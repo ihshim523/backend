@@ -52,14 +52,14 @@
     	</ion-option-button>
 		</ion-item>
 		 </ion-list>
-		<button class="button button-balanced button-block " ng-click="Receive();">Go</button>
+		<button class="button button-balanced button-block " ng-disabled="clip.key == null || clip.key == ''" ng-click="Receive();">Go</button>
 	</div>
 	<div class="card padding">
 		<div class="item item-divider">Copy</div>
 		<label class="item item-input padding"> <input type="text" maxlength="1000"
 			placeholder="Text" ng-model="send.value"/>
 		</label>
-		<button class="button button-balanced button-block " ng-click="Send();">Go</button>
+		<button class="button button-balanced button-block " ng-disabled="send.value == null || send.value == ''" ng-click="Send();">Go</button>
 	</div>
 	
 	<div class="padding"></div>
