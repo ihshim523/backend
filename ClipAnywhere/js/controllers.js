@@ -1,5 +1,3 @@
-var isPhoneGap;
-
 angular.module('starter.controllers', [])
 
 .controller('ListCtrl', function($scope, $ionicLoading, $ionicPopup, ClipService, $ionicActionSheet,  $ionicPlatform,$sce) {
@@ -69,7 +67,7 @@ angular.module('starter.controllers', [])
         window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
     }
 
-	isPhoneGap = (document.location.protocol == "file:");
+	$scope.isPhoneGap = (document.location.protocol == "file:");
 	// if ( isPhoneGap )
 		// document.addEventListener("deviceready", onDeviceReady, false);
 
@@ -177,15 +175,15 @@ angular.module('starter.controllers', [])
                       buttonClicked: function(index) {
                           switch(index) {
                               case  0:
-                                if ( !isPhoneGap )
+                                if ( !$scope.isPhoneGap )
                                     copyToClipboard(data);
                               break;
                               case  1:
-                                if ( !isPhoneGap )
+                                if ( !$scope.isPhoneGap )
                                     window.location.href=data;
                               break;
                               case  2:
-                                if ( !isPhoneGap )
+                                if ( !$scope.isPhoneGap )
                                     window.location.href="http://www.google.com/search?q="+data;
                               break;
                           }
