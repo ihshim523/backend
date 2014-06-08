@@ -75,8 +75,11 @@ angular.module('starter.controllers', [])
 
     $ionicPlatform.ready(function(){
          adBanner();
+         if ( !isPhoneGap )
+            $scope.adsense = '<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3241952602337815" data-ad-slot="5779831039"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script>';
     });
-    
+
+    $scope.adsense = '';
     $scope.clip = {};
 	$scope.send = {};
     loadValue();
