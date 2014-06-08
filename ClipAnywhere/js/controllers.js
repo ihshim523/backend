@@ -2,7 +2,7 @@ var isPhoneGap;
 
 angular.module('starter.controllers', [])
 
-.controller('ListCtrl', function($scope, $ionicLoading, $ionicPopup, ClipService, $ionicActionSheet,  $ionicPlatform) {
+.controller('ListCtrl', function($scope, $ionicLoading, $ionicPopup, ClipService, $ionicActionSheet,  $ionicPlatform,$sce) {
 	function adBanner() {
 		if( window.plugins && window.plugins.AdMob ) {
 		    var admob_ios_key = 'a151e6d43c5a28f';
@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
     loadValue();
     loadKey();
 
-    $scope.adsense = function($sce) {
+    $scope.adsense = function() {
         return $sce.trustAsHtml($scope.google);
     }
 	$scope.Send = function() {
