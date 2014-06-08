@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
     loadValue();
     loadKey();
 
-    $scope.adsense = function() {
+    $scope.adsense = function($sce) {
         return $sce.trustAsHtml($scope.google);
     }
 	$scope.Send = function() {
