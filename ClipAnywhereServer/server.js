@@ -1,5 +1,5 @@
 #!/bin/env node
-
+ 
 var mongo = require('mongojs');
 var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
@@ -21,25 +21,25 @@ get = function(req, res, next) {
         
         if ( !err ) {
             if ( !doc ) 
-                res.send({v:null});
+                res.jsonp({v:null});
             else
-                res.send({k:doc.k,v:doc.v});
+                res.jsonp({k:doc.k,v:doc.v});
                 
             console.log("ret:" + JSON.stringify(doc));
         }
         else
-            res.send(err);
+            res.jsonp(err);
     });
 }
 
 post = function(req, res, next) {
-    console.log("k="+req.body.k);
-    console.log("v="+req.body.v);
+    console.log("k="+req.query.k);
+    console.log("v="+req.query.v);
 
     var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
-    id = parseInt(req.body.k);
+    id = parseInt(req.query.k);
     
     // clips.update({k:id},{ $setOnInsert:{k:id,v:req.body.v} }, {upsert:true},
      // function(err, saved) { //
@@ -54,13 +54,13 @@ post = function(req, res, next) {
            // console.log("err:"+err);
            // console.log("saved:"+JSON.stringify(saved));
      // });
-    clips.update({k:id},{k:id,v:req.body.v}, {upsert:true},
+    clips.update({k:id},{k:id,v:req.query.v}, {upsert:true},
      function(err, saved) { //
            if ( saved && saved.updatedExisting ) 
-                res.send({u:true});
+                res.jsonp({u:true});
             else               
            if ( saved && !saved.updatedExisting ) 
-                res.send({u:false});
+                res.jsonp({u:false});
             else
                 next();
 
@@ -85,15 +85,20 @@ del = function(req, res, next) {
 var server  = function(req, res, next) {
     switch(req.method) {
         case 'GET':
-            get(req,res, next);
+            switch(req.query.f) {
+                case '1':
+                    get(req,res, next);
+                break;
+                case '2':
+                    post(req,res, next);
+                break;
+            }
             break;
         case 'POST':
-            post(req,res, next);
             break;
         case 'DELETE':
             del(req,res,next);
             break;
-
     }
 }; 
 
