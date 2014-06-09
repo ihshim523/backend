@@ -74,6 +74,13 @@ angular.module('starter.controllers', [])
     loadValue();
     loadKey();
 
+    $scope.openBrowser = function(url) {
+        if ( !$scope.isPhoneGap )
+            window.location.href=url;
+        else
+            window.open(url, '_system');
+    };
+
 	$scope.Send = function() {
 	    window.localStorage.setItem("key", $scope.clip.key.toString());
 	    
@@ -188,13 +195,6 @@ angular.module('starter.controllers', [])
         });
 	    
 	}
-	
-	$scope.openBrowser = function(url) {
-        if ( !$scope.isPhoneGap )
-            window.location.href=url;
-        else
-            window.open(url, '_system');
-    };
 
 });
 
