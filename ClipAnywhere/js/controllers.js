@@ -184,10 +184,10 @@ angular.module('starter.controllers', [])
                                 }
                               break;
                               case  1:
-                                 openBrowser(data);
+                                 $scope.openBrowser(data);
                               break;
                               case  2:
-                                 openBrowser("http://www.google.com/search?q="+data);
+                                 $scope.openBrowser("http://www.google.com/search?q="+data);
                               break;
                           }
                           return true;
