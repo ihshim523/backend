@@ -1,5 +1,5 @@
 #!/bin/env node
- 
+
 var mongo = require('mongojs');
 var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
@@ -7,8 +7,9 @@ var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
   process.env.OPENSHIFT_APP_NAME;
 
+var db = mongo(connection_string, ['clips']);
+
 get = function(req, res, next) {
-    var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
 
     console.log("k="+req.query.k);
@@ -36,7 +37,6 @@ post = function(req, res, next) {
     console.log("k="+req.query.k);
     console.log("v="+req.query.v);
 
-    var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
     id = parseInt(req.query.k);
@@ -77,7 +77,6 @@ post = function(req, res, next) {
 del = function(req, res, next) {
     console.log('delete verb');
     
-    var db = mongo(connection_string, ['clips']);
     var clips = db.collection('clips');
     
     clips.remove({});
