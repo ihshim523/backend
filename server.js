@@ -143,7 +143,7 @@ var Backend = function() {
 
     try {
         self.app.use(function(req, res, next) {
-            console.log(req.host);
+            //console.log(req.host);
             switch(req.host) {
                 case 'clip.imapp.kr':
                     express.static('./ClipAnywhere')(req,res,next);
