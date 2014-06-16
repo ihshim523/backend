@@ -26,6 +26,14 @@ var Backend = function() {
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
         };
+
+        try {
+        self.clipAnywhere = require('./ClipAnywhereServer/server.js');
+        self.Hotissue = require('./HotIssueServer/server.js');
+        }
+        catch(err) {
+            console.error(err.message);
+        }
     };
 
 
@@ -135,14 +143,12 @@ var Backend = function() {
                     express.static('./ClipAnywhere')(req,res,next);
                     break;
                 case 'clip-back.imapp.kr':
-                     self.clipAnywhere = require('./ClipAnywhereServer/server.js');
                      self.clipAnywhere.server(req,res,next);
                      break;
                 case 'hotissue.imapp.kr':
                     express.static('./HotIssue')(req,res,next);
                      break;
                 case 'hotissue-back.imapp.kr':
-                    self.Hotissue = require('./HotIssueServer/server.js');
                      self.Hotissue.server(req,res,next);
                      break;
                 default:
