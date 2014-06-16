@@ -128,6 +128,7 @@ var Backend = function() {
             // self.app.get(r, self.routes[r]);
         // }
 
+    try {
         self.app.use(function(req, res, next) {
             switch(req.host) {
                 case 'clip.imapp.kr':
@@ -150,7 +151,10 @@ var Backend = function() {
                     break;
             }  
         });
-            
+    }
+    catch(err) {
+        console.log("## Exception:"+err.message);
+    }
             // express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
 
         // self.app.get('/', function(req, res) {
