@@ -3,11 +3,11 @@
 var fs = require('fs');
 var zlib = require('zlib');
 
-get = function(req, res, next) {
+var get = function(req, res, next) {
     next();
 };
 
-post = function(req, res, next) {
+var post = function(req, res, next) {
     zlib.deflateRaw(req.body.k, function(err, output) {
         fs.writeFile('./HotIssue/get.dat', output, function(err) {
             res.send('{"R":"1"}');
@@ -15,7 +15,7 @@ post = function(req, res, next) {
     });
 };
 
-del = function(req, res, next) {
+var del = function(req, res, next) {
     next();
 };
 

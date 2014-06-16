@@ -9,7 +9,7 @@ var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
 
 var db = mongo(connection_string, ['clips']);
 
-get = function(req, res, next) {
+var get = function(req, res, next) {
     console.log('+get:');
     var clips = db.collection('clips');
 
@@ -35,7 +35,7 @@ get = function(req, res, next) {
     console.log('-get:');
 };
 
-post = function(req, res, next) {
+var post = function(req, res, next) {
     console.log('+post:');
     console.log("k="+req.query.k);
     console.log("v="+req.query.v);
@@ -77,7 +77,7 @@ post = function(req, res, next) {
     console.log('-post:');
 };
 
-del = function(req, res, next) {
+var del = function(req, res, next) {
     console.log('delete verb');
     
     var clips = db.collection('clips');
