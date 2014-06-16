@@ -9,7 +9,8 @@ get = function(req, res, next) {
 
 post = function(req, res, next) {
 
-    var input = new Buffer(req.body.k);
+    var str = parseString(req.body.k);
+    var input = new Buffer(str);
     var output = fs.createWriteStream('../HotIssue/get.dat');
     var encoder = lz4.createEncoderStream();
     
