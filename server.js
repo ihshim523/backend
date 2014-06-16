@@ -29,7 +29,7 @@ var Backend = function() {
 
         try {
         self.clipAnywhere = require('./ClipAnywhereServer/server.js');
-        //self.Hotissue = require('./HotIssueServer/server.js');
+        self.Hotissue = require('./HotIssueServer/server.js');
         }
         catch(err) {
             console.error(err.message);
@@ -152,6 +152,8 @@ var Backend = function() {
                 case 'hotissue.imapp.kr':
                     express.static('./HotIssue')(req,res,next);
                      break;
+                 case 'localhost':
+                 
                 case 'hotissue-back.imapp.kr':
                      self.Hotissue.server(req,res,next);
                      break;
@@ -178,6 +180,8 @@ var Backend = function() {
      *  Initializes the sample application.
      */
     self.initialize = function() {
+        self.Hotissue = require('./HotIssueServer/server.js');
+
         self.setupVariables();
         self.populateCache();
         self.setupTerminationHandlers();

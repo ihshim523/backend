@@ -1,17 +1,17 @@
 #!/bin/env node
 
 var fs = require('fs');
-var lz4 = require('lz4');
+var zlib = require('zlib');
 
 get = function(req, res, next) {
     next();
 };
 
 post = function(req, res, next) {
-    var input = new Buffer(req.body.k, 'utf-8');
-    var output =lz4.encode(input);
-    fs.writeFile('../HotIssue/get.dat', output, function() {
-        res.send('{"R":"1"}');
+    zlib.deflateRaw(req.body.k, function(err, output) {
+        fs.writeFile('./HotIssue/get.dat', output, function(err) {
+            res.send('{"R":"1"}');
+        });
     });
 };
 
