@@ -29,7 +29,7 @@ var Backend = function() {
 
         try {
         self.clipAnywhere = require('./ClipAnywhereServer/server.js');
-        self.Hotissue = require('./HotIssueServer/server.js');
+        //self.Hotissue = require('./HotIssueServer/server.js');
         }
         catch(err) {
             console.error(err.message);
