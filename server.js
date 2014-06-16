@@ -140,20 +140,20 @@ var Backend = function() {
         self.app.use(function(req, res, next) {
             //console.log(req.host);
             switch(req.host) {
-                case 'clip.imapp.kr':
+                case "clip.imapp.kr":
                     //console.log('clip');
                     express.static('./ClipAnywhere')(req,res,next);
                     break;
-                case 'clip-back.imapp.kr':
+                case "clip-back.imapp.kr":
                     //console.log('clip-back');
                      self.clipAnywhere.server(req,res,next);
                      break;
-                case 'hotissue.imapp.kr':
+                case "hotissue.imapp.kr":
                     express.static('./HotIssue')(req,res,next);
                      break;
 //                 case 'localhost':
                  
-                case 'hotissue-back.imapp.kr':
+                case "hotissue-back.imapp.kr":
                      self.Hotissue.server(req,res,next);
                      break;
                 default:
