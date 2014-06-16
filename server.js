@@ -128,21 +128,20 @@ var Backend = function() {
             // self.app.get(r, self.routes[r]);
         // }
 
-        self.clipAnywhere = require('./ClipAnywhereServer/server.js');
-        self.Hotissue = require('./HotIssueServer/server.js');
-
         self.app.use(function(req, res, next) {
             switch(req.host) {
                 case 'clip.imapp.kr':
                     express.static('./ClipAnywhere')(req,res,next);
                     break;
                 case 'clip-back.imapp.kr':
+                     self.clipAnywhere = require('./ClipAnywhereServer/server.js');
                      self.clipAnywhere.server(req,res,next);
                      break;
                 case 'hotissue.imapp.kr':
                     express.static('./HotIssue')(req,res,next);
                      break;
                 case 'hotissue-back.imapp.kr':
+                    self.Hotissue = require('./HotIssueServer/server.js');
                      self.Hotissue.server(req,res,next);
                      break;
                 default:
