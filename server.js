@@ -146,9 +146,11 @@ var Backend = function() {
             //console.log(req.host);
             switch(req.host) {
                 case 'clip.imapp.kr':
+                    console.log('clip');
                     express.static('./ClipAnywhere')(req,res,next);
                     break;
                 case 'clip-back.imapp.kr':
+                    console.log('clip-back');
                      self.clipAnywhere.server(req,res,next);
                      break;
                 case 'hotissue.imapp.kr':
