@@ -122,7 +122,7 @@ var Backend = function() {
     self.initializeServer = function() {
 
         self.clipAnywhere = require('./ClipAnywhereServer/server.js');
-        self.Hotissue = require('./HotIssueServer/server.js');
+        //self.Hotissue = require('./HotIssueServer/server.js');
 
         // self.createRoutes();
         self.app = express();
