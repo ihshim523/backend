@@ -10,6 +10,7 @@ var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
 var db = mongo(connection_string, ['clips']);
 
 get = function(req, res, next) {
+    console.log('+get:');
     var clips = db.collection('clips');
 
     console.log("k="+req.query.k);
@@ -31,16 +32,17 @@ get = function(req, res, next) {
         else
             res.jsonp(err);
     });
-}
+    console.log('-get:');
+};
 
 post = function(req, res, next) {
+    console.log('+post:');
     console.log("k="+req.query.k);
     console.log("v="+req.query.v);
 
     var clips = db.collection('clips');
     
     id = parseInt(req.query.k);
-    
     // clips.update({k:id},{ $setOnInsert:{k:id,v:req.body.v} }, {upsert:true},
      // function(err, saved) { //
            // if ( saved && saved.updatedExisting ) 
@@ -72,7 +74,8 @@ post = function(req, res, next) {
      });
 
 //    res.send('good:'+req.body.k + ',v:'+req.body.v);
-}
+    console.log('-post:');
+};
 
 del = function(req, res, next) {
     console.log('delete verb');
@@ -82,7 +85,7 @@ del = function(req, res, next) {
     clips.remove({});
     
     next();
-}
+};
 
 var server  = function(req, res, next) {
     switch(req.method) {
