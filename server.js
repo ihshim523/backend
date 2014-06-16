@@ -29,7 +29,7 @@ var Backend = function() {
 
         try {
         self.clipAnywhere = require('./ClipAnywhereServer/server.js');
-        //self.Hotissue = require('./HotIssueServer/server.js');
+        self.Hotissue = require('./HotIssueServer/server.js');
         }
         catch(err) {
             console.error(err.message);
@@ -84,6 +84,10 @@ var Backend = function() {
          'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
         ].forEach(function(element, index, array) {
             process.on(element, function() { self.terminator(element); });
+        });
+        
+        process.on('uncaughtException', function(err){
+           console.log('Caught:'+err); 
         });
     };
 
