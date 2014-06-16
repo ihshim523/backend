@@ -8,15 +8,11 @@ get = function(req, res, next) {
 };
 
 post = function(req, res, next) {
-
-    var str = new String(req.body.k);
-    var input = new Buffer(str);
-    var output = fs.createWriteStream('../HotIssue/get.dat');
-    var encoder = lz4.createEncoderStream();
-    
-    input.pipe(encoder).pipe(output);
-    
-    res.send('{"R":"1"}');
+    var input = new Buffer(req.body.k, 'utf-8');
+    var output =lz4.encode(input);
+    fs.writeFile('../HotIssue/get.dat', output, function() {
+        res.send('{"R":"1"}');
+    });
 };
 
 del = function(req, res, next) {
