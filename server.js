@@ -16,14 +16,6 @@ var Backend = function() {
      *  Set up server IP address and port # using env variables/defaults.
      */
     self.setupVariables = function() {
-        try {
-        self.clipAnywhere = require('./ClipAnywhereServer/server.js');
-        self.Hotissue = require('./HotIssueServer/server.js');
-        }
-        catch(err) {
-            console.error(err.message);
-        }
-
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
@@ -129,12 +121,20 @@ var Backend = function() {
      */
     self.initializeServer = function() {
 
+        try {
+        self.clipAnywhere = require('./ClipAnywhereServer/server.js');
+        self.Hotissue = require('./HotIssueServer/server.js');
+        }
+        catch(err) {
+            console.error(err.message);
+        }
+
         // self.createRoutes();
         self.app = express();
         
 //		self.app.use(express.compress());
-		self.app.use(express.bodyParser());
-		self.app.use(express.methodOverride());
+        self.app.use(express.bodyParser());
+	self.app.use(express.methodOverride());
 		
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
