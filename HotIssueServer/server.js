@@ -1,17 +1,19 @@
 #!/bin/env node
 
 var fs = require('fs');
-var zlib = require('zlib');
+var zlib = require('zlibjs');
 
 var get = function(req, res, next) {
     next();
 };
 
 var post = function(req, res, next) {
-    zlib.deflateRaw(req.body.k, function(err, output) {
-        fs.writeFile('./HotIssue/get.dat', output, function(err) {
-            res.send('{"R":"1"}');
-        });
+    var buffer = new Buffer(req.body.k, "utf-8");
+
+    var compressed = zlib.deflateSync(buffer);
+
+    fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
+        res.send('{"R":"1"}');
     });
 };
 
