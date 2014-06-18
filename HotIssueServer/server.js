@@ -8,8 +8,7 @@ var get = function(req, res, next) {
 };
 
 var post = function(req, res, next) {
-    var buffer = new Buffer(req.body.k, "utf-8");
-
+    var buffer = new Buffer(req.body.k);
     var compressed = zlib.deflateSync(buffer);
 
     fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
