@@ -23,6 +23,7 @@ var del = function(req, res, next) {
 var server  = function(req, res, next) {
     switch(req.method) {
         case 'GET':
+            next();
             break;
         case 'POST':
             post(req,res,next);
