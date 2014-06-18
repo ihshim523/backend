@@ -138,7 +138,7 @@ var Backend = function() {
 //		self.app.use(express.compress());
         self.app.use(express.bodyParser());
 	   self.app.use(express.methodOverride());
-		self.app.use(allowCrossDomain);
+		self.app.use(self.allowCrossDomain);
 		
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
