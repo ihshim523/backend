@@ -115,6 +115,14 @@ var Backend = function() {
     // };
 
 
+    self.allowCrossDomain = function(req, res, next) {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+    
+        next();
+    }
+
     /**
      *  Initialize the server (express) and create the routes and register
      *  the handlers.
@@ -129,7 +137,8 @@ var Backend = function() {
         
 //		self.app.use(express.compress());
         self.app.use(express.bodyParser());
-	self.app.use(express.methodOverride());
+	   self.app.use(express.methodOverride());
+		self.app.use(allowCrossDomain);
 		
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
