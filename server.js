@@ -160,8 +160,6 @@ var Backend = function() {
                 case "hotissue.imapp.kr":
                     express.static('./HotIssue')(req,res,next);
                      break;
-                 case 'localhost':
-                 
                 case "hotissue-back.imapp.kr":
                      hotissue.server(req,res,next);
                      break;
