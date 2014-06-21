@@ -1,0 +1,81 @@
+/* Your app's CSS, go crazy, make it your own */
+.ionic-logo {
+	display: block;
+	margin: 15px auto;
+	width: 96px;
+	height: 96px;
+}
+
+#rank {
+	color: #ffa500;
+}
+
+#title {
+	color: white;
+	text-align: center;
+	font-size:medium;
+}
+
+#title-left {
+	color: white;
+	text-align: left;
+	font-size:medium;
+}
+
+#subtitle {
+	color: LightGray ;
+	text-align: left;
+	font-size:small;
+}
+
+#odd {
+	color: white;
+	background-color: #000000;
+	border: 0px;
+	margin:3px;
+}
+
+#odd:active {
+	color: white;
+	background-color: #9c9b9b;
+}
+
+#even {
+	color: white;
+	background-color: #484848;
+	border: 0px;
+	margin:3px;
+}
+
+#even:active {
+	color: white;
+	background-color: #9c9b9b;
+}
+
+.im-vmiddle {
+	vertical-align: middle;
+}
+
+.ellipsis-text {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 90%;
+	overflow: hidden;
+}
+
+i.im-big-icon.ion-gear-b {
+  font-size: 40px;
+}
+
+.im-center-box {
+    min-height: 1024px;
+}
+
+.scroll-content {
+    background-color: black;
+}
+
+.im-spannable {
+	word-break: break-word;
+	padding:50px
+}
