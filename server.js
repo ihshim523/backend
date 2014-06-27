@@ -165,6 +165,9 @@ var Backend = function() {
                 case "hotissue-back.imapp.kr":
                      hotissue.server(req,res,next);
                      break;
+                case "appicons.imapp.kr":
+                    express.static('./AppIcons')(req,res,next);
+                    break;
                 default:
                     res.setHeader('Content-Type', 'text/html');
                     res.send(self.cache_get('index.html') );
