@@ -149,7 +149,6 @@ var Backend = function() {
 
     try {
         self.app.use(function(req, res, next) {
-            //console.log(req.host);
             switch(req.host) {
                 case "clip.imapp.kr":
                     //console.log('clip');
@@ -160,9 +159,11 @@ var Backend = function() {
                      clipAnywhere.server(req,res,next);
                      break;
                 case "hotissue.imapp.kr":
+                case "test-hotissue.imapp.kr":
                     express.static('./HotIssue')(req,res,next);
                      break;
                 case "hotissue-back.imapp.kr":
+                case "test-hotissue-back.imapp.kr":
                      hotissue.server(req,res,next);
                      break;
                 case "appicons.imapp.kr":

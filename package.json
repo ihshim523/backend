@@ -26,7 +26,10 @@
     "express": "~3.4.4",
     "mongojs": ">= 0.13.0",
     "zlibjs": ">= 0.2.0",
-    "strong-agent": "~0.4.9"
+    "strong-agent": "~0.4.9",
+    "imnaver": ">= 0.1.12",
+    "async": ">= 0.9.0",
+    "html-to-text": ">= 0.1.0"
   },
   "devDependencies": {
     "zlibjs": "~0.2.0",
