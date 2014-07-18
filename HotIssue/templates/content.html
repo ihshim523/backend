@@ -1,0 +1,34 @@
+<ion-view>
+<ion-content has-header="true">
+
+	<div class="card" ng-if="isPhoneGap===Devices.ID_WEB"
+		style="background-color: black" align="center">
+		<script async
+			src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- HotIssue -->
+		<ins class="adsbygoogle"
+			style="display: inline-block; width: 728px; height: 90px"
+			data-ad-client="ca-pub-3241952602337815" data-ad-slot="9230995039"></ins>
+		<script>
+			(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+	
+<div style="width: 100%; height: 100%;">
+
+	<div class="card padding">
+		<div class="item item-divider">{{item.k}}</div>
+		<label class="item item-text-wrap padding"> {{item.v}} </label>
+	</div>
+
+	<div class="row">
+		<div class="col"></div>
+		<div class="col col-75">
+			<div class="button button-energized padding" style="width: 100%;"
+				ng-click="openBrowser3()">자세히 보기...</div>
+		</div>
+		<div class="col"></div>
+	</div>
+</div>
+</ion-content>
+</ion-view>

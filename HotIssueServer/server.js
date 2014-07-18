@@ -14,6 +14,10 @@ var naver = require('imnaver');
 var htmlToText = require('html-to-text');
 
 //////////////////////////////////
+var init = function() {
+    var hotissue = db.collection('hotissue');
+    hotissue.ensureIndex({k:1,expire:1},{expireAfterSeconds:60000});
+}
 
 var get = function(req, res, next) {
 	var hotissue = db.collection('hotissue');
@@ -40,7 +44,6 @@ var get = function(req, res, next) {
 var post = function(req, res, next) {
 	var client = naver({key: '5b3cf79266a7f34b2d102a8161826d59'});
     var hotissue = db.collection('hotissue');
-    hotissue.ensureIndex({expire:1},{expireAfterSeconds:60000});
 
     var obj = JSON.parse(req.body.k);
 
@@ -143,4 +146,5 @@ var server  = function(req, res, next) {
     }
 }; 
 
+module.exports.init = init;
 module.exports.server = server;
