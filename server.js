@@ -134,6 +134,9 @@ var Backend = function() {
         var hotissue = require('./HotIssueServer/server.js');
         var clipAnywhere = require('./ClipAnywhereServer/server.js');
 
+        hotissue.init();
+        clipAnywhere.init();
+        
         // self.createRoutes();
         self.app = express();
         
@@ -151,10 +154,12 @@ var Backend = function() {
         self.app.use(function(req, res, next) {
             switch(req.host) {
                 case "clip.imapp.kr":
+                case "test-clip.imapp.kr":
                     //console.log('clip');
                     express.static('./ClipAnywhere')(req,res,next);
                     break;
                 case "clip-back.imapp.kr":
+                case "test-clip-back.imapp.kr":
                     //console.log('clip-back');
                      clipAnywhere.server(req,res,next);
                      break;
@@ -167,6 +172,7 @@ var Backend = function() {
                      hotissue.server(req,res,next);
                      break;
                 case "appicons.imapp.kr":
+                case "test-appicons.imapp.kr":
                     express.static('./AppIcons')(req,res,next);
                     break;
                 default:

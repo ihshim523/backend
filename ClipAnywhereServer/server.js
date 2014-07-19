@@ -9,17 +9,22 @@ var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
 
 var db = mongo(connection_string, ['clips']);
 
+var init = function() {
+    var clips = db.collection('clips');
+    clips.ensureIndex({expire:1},{expireAfterSeconds:600});
+}
+
 var get = function(req, res, next) {
-    console.log('+get:');
+//    console.log('+get:');
     var clips = db.collection('clips');
 
-    console.log("k="+req.query.k);
+//    console.log("k="+req.query.k);
 
     id = parseInt(req.query.k);
     
     clips.findOne({k:id}, function(err, doc) {
         
-        console.log("err:"+err);
+//        console.log("err:"+err);
         
         if ( !err ) {
             if ( !doc ) 
@@ -27,18 +32,18 @@ var get = function(req, res, next) {
             else
                 res.jsonp({k:doc.k,v:doc.v});
                 
-            console.log("ret:" + JSON.stringify(doc));
+//            console.log("ret:" + JSON.stringify(doc));
         }
         else
             res.jsonp(err);
     });
-    console.log('-get:');
+//    console.log('-get:');
 };
 
 var post = function(req, res, next) {
-    console.log('+post:');
-    console.log("k="+req.query.k);
-    console.log("v="+req.query.v);
+//    console.log('+post:');
+//    console.log("k="+req.query.k);
+//    console.log("v="+req.query.v);
 
     var clips = db.collection('clips');
     
@@ -57,8 +62,6 @@ var post = function(req, res, next) {
            // console.log("saved:"+JSON.stringify(saved));
      // });
      
-     clips.ensureIndex({expire:1},{expireAfterSeconds:600});
-     
     clips.update({k:id},{k:id,v:req.query.v,expire:new Date()}, {upsert:true},
      function(err, saved) { //
            if ( saved && saved.updatedExisting ) 
@@ -69,16 +72,16 @@ var post = function(req, res, next) {
             else
                 next();
 
-           console.log("err:"+err);
-           console.log("saved:"+JSON.stringify(saved));
+//           console.log("err:"+err);
+//           console.log("saved:"+JSON.stringify(saved));
      });
 
 //    res.send('good:'+req.body.k + ',v:'+req.body.v);
-    console.log('-post:');
+//    console.log('-post:');
 };
 
 var del = function(req, res, next) {
-    console.log('delete verb');
+//    console.log('delete verb');
     
     var clips = db.collection('clips');
     
@@ -107,4 +110,5 @@ var server  = function(req, res, next) {
     }
 }; 
 
+module.exports.init = init;
 module.exports.server = server;

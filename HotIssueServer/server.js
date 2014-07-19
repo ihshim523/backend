@@ -16,7 +16,7 @@ var htmlToText = require('html-to-text');
 //////////////////////////////////
 var init = function() {
     var hotissue = db.collection('hotissue');
-    hotissue.ensureIndex({k:1,expire:1},{expireAfterSeconds:60000});
+    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
 }
 
 var get = function(req, res, next) {
