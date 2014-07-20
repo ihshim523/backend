@@ -15,8 +15,13 @@ var htmlToText = require('html-to-text');
 
 //////////////////////////////////
 var init = function() {
-    var hotissue = db.collection('hotissue');
-    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
+//    var hotissue = db.collection('hotissue');
+//    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
+    
+    setInterval(function(){
+        var hotissue = db.collection('hotissue');
+    	hotissue.remove({expire:{$lt:((new Date).getTime() - 24*60*60*1000) }});
+    },60000);
 }
 
 var get = function(req, res, next) {
@@ -91,7 +96,7 @@ var post = function(req, res, next) {
 	    		//console.log("BING3:: "+item.title+" :::"+text);
 
 		        hotissue.update({k:item.title},{k:item.title,v:text,
-		        	expire:new Date()}, {upsert:true}, function(err, saved) { //
+		        	expire:(new Date).getTime()}, {upsert:true}, function(err, saved) { //
 		        		//if ( err ) console.log(err);
 		        		cb2();
 			       	});
