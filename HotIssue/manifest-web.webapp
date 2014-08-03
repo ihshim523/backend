@@ -12,11 +12,8 @@
         "url": "http://imapp.blogspot.com/"
     },
     "permissions": {
-        "browser": {
-            "description": "Enables the app to implement a browser in an iframe."
-        }
     },
-    "type": "privileged",
+    "type": "web",
     "icons": {
     	"60": "/res/icons/ios/Icon-60.png",
     	"128": "/res/icons/ios/Icon-128.png"
