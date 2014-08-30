@@ -1,0 +1,21 @@
+{
+    "launch_path": "/index.html",
+    "installs_allowed_from": [
+        "*"
+    ],
+    "version": "1.0.0",
+    "name": "Level Ruler",
+    "pkgName": "com.blogspot.imapp.imandroscale",
+    "description": "Hybrid version of Andro Ruler",
+    "developer": {
+        "name": "INAPP",
+        "url": "http://imapp.blogspot.com/"
+    },
+    "permissions": {
+    },
+    "type": "web",
+    "icons": {
+    	"60": "/res/icons/ios/Icon-60.png",
+    	"128": "/res/icons/ios/Icon-128.png"
+    }
+}
