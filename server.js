@@ -175,6 +175,10 @@ var Backend = function() {
                 case "test-appicons.imapp.kr":
                     express.static('./AppIcons')(req,res,next);
                     break;
+                case "test-ruler.imapp.kr":
+                case "ruler.imapp.kr":
+                	express.static('./IMRuler')(req,res,next);
+                	break;
                 default:
                     res.setHeader('Content-Type', 'text/html');
                     res.send(self.cache_get('index.html') );

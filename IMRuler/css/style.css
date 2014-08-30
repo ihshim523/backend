@@ -1,0 +1,82 @@
+/* Empty. Add your own CSS if you like */
+
+*{
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  transition: all 0.5s;
+}
+
+#settings {
+	position:fixed;
+    bottom:10%;
+    right:3%;	
+    z-index:10;
+}
+
+#menus {
+	position:fixed;
+    top:50%;
+    right:3%;	
+    z-index:10;
+}
+
+#showAdjust {
+	position:fixed;
+    top:50%;
+    left:3%;	
+    z-index:10;
+}
+
+#holdTool {
+	position:fixed;
+    top:50%;
+    left:3%;	
+    z-index:10;
+}
+
+#pinTool {
+	position:fixed;
+    bottom:10%;
+    left:3%;	
+    z-index:10;
+}
+
+
+#adjust {
+	position:fixed;
+    top:50%;
+    left:3%;	
+}
+
+
+#adsense {
+	position:fixed;
+	width:728px;
+	height:90px;
+    bottom:3%;
+    left:3%;	
+    z-index:10;
+}
+
+
+.shrink{
+  -webkit-transform: scale(0.0,0.0);
+  -moz-transform: scale(0.0,0.0);
+  transform: scale(0.0,0.0);
+}
+
+.expand{
+  transition-delay:0.5s;
+  -webkit-transform: scale(1.0,1.0);
+  -moz-transform: scale(1.0,1.0);
+  transform: scale(1.0,1.0);
+}
+
+#canvas-container {
+   width: 100%;
+   text-align:center;
+}
+
+canvas {
+   display: inline;
+}
