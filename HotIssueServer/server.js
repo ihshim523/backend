@@ -133,11 +133,11 @@ var post = function(req, res, next) {
 
             fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
                 console.log('#### series end 2:'+err);
-                // var buffer = new Buffer(req.body.e, 'base64');
-                // fs.writeFile('./HotIssue/get2.dat', buffer, function(err) {
-                //     res.send('{"R":"1"}');
-                // });
-                res.send('{"R":"1"}');
+                var buffer = new Buffer(req.body.e, 'base64');
+                fs.writeFile('./HotIssue/get2.dat', buffer, function(err) {
+                     res.send('{"R":"1"}');
+                });
+//                res.send('{"R":"1"}');
             });
         }
         catch(e) {

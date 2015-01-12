@@ -133,9 +133,11 @@ var Backend = function() {
 
         var hotissue = require('./HotIssueServer/server.js');
         var clipAnywhere = require('./ClipAnywhereServer/server.js');
+        var music = require('./MusicServer/server.js');
 
         hotissue.init();
         clipAnywhere.init();
+        music.init();
         
         // self.createRoutes();
         self.app = express();
@@ -179,6 +181,14 @@ var Backend = function() {
                 case "ruler.imapp.kr":
                 	express.static('./IMRuler')(req,res,next);
                 	break;
+                case "music.imapp.kr":
+                case "test-music.imapp.kr":
+                    express.static('./Music')(req,res,next);
+                     break;
+                case "music-back.imapp.kr":
+                case "test-music-back.imapp.kr":
+                     music.server(req,res,next);
+                     break;
                 default:
                     res.setHeader('Content-Type', 'text/html');
                     res.send(self.cache_get('index.html') );

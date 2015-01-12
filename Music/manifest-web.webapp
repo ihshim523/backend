@@ -1,0 +1,21 @@
+{
+    "launch_path": "/index.html",
+    "installs_allowed_from": [
+        "*"
+    ],
+    "version": "4.6.0",
+    "name": "실시간 검색어",
+    "pkgName": "com.blogspot.imapp.imhotissue",
+    "description": "Hybrid version of HotIssue",
+    "developer": {
+        "name": "INAPP",
+        "url": "http://imapp.blogspot.com/"
+    },
+    "permissions": {
+    },
+    "type": "web",
+    "icons": {
+    	"60": "/res/icons/ios/Icon-60.png",
+    	"128": "/res/icons/ios/Icon-128.png"
+    }
+}
