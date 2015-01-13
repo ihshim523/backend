@@ -135,7 +135,7 @@ var post = function(req, res, next) {
             fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
                 console.log('#### series end 2:'+err);
                 
-                var compressed = lz.compressToBase64(JSON.stringify(req.body.k));
+                var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
 
                 fs.writeFile('./HotIssue/get2.dat', compressed, function(err) {
                      res.send('{"R":"1"}');
