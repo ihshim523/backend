@@ -12,6 +12,7 @@ var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
 var db = mongo(connection_string, ['hotissue']);
 var naver = require('imnaver');
 var htmlToText = require('html-to-text');
+var lz = require('lz-string');
 
 //////////////////////////////////
 var init = function() {
@@ -133,8 +134,10 @@ var post = function(req, res, next) {
 
             fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
                 console.log('#### series end 2:'+err);
-                var buffer = new Buffer(req.body.e, 'base64');
-                fs.writeFile('./HotIssue/get2.dat', buffer, function(err) {
+                
+                var compressed = lz.compressToBase64(JSON.stringify(req.body.k));
+
+                fs.writeFile('./HotIssue/get2.dat', compressed, function(err) {
                      res.send('{"R":"1"}');
                 });
 //                res.send('{"R":"1"}');

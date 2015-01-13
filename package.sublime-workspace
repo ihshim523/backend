@@ -1,1 +1,327 @@
-{}
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "HotIssueServer/server.js",
+			"settings":
+			{
+				"buffer_size": 4860,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/server.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/HotIssueServer/server.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/MusicServer/server.js",
+		"/Users/quickmobile/Work/INAPP/ionic/MusicRankHybrid/www/templates/home.html",
+		"/Users/quickmobile/Work/INAPP/ionic/MusicRankHybrid/config.xml",
+		"/Users/quickmobile/Work/INAPP/ionic/MusicRankHybrid/www/js/controllers.js",
+		"/Users/quickmobile/Work/INAPP/ionic/MusicRankHybrid/www/lib/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/IMRuler/www/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/HotIssueHybrid/www/lib/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/www/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/wp8/www/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/ios/www/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/firefoxos/www/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/assets/www/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/IMRuler/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/HotIssue/lib/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/ClipAnywhere/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/AppIcons/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/IMRuler/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/HotIssue/lib/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/ClipAnywhere/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/AppIcons/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/AppIcons/www/lib/ionic/css/ionic.css",
+		"/Users/quickmobile/Work/INAPP/ionic/HotIssueHybrid/www/templates/content.html",
+		"/Users/quickmobile/Work/INAPP/ionic/HotIssueHybrid/www/js/controllers.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/CordovaLib/src/com/squareup/okhttp/internal/spdy/SpdyConnection.java",
+		"/Users/quickmobile/Work/INAPP/ionic/ios-splash.json",
+		"/Users/quickmobile/Work/INAPP/ionic/.gitignore",
+		"/Users/quickmobile/Work/INAPP/ionic/MusicRankHybrid/www/templates/content.html",
+		"/Users/quickmobile/Work/INAPP/ionic/ios-icons.json",
+		"/Users/quickmobile/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/node_modules/express/lib/express.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/express/lib/express.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/express/bin/express",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/node_modules/express/bin/express",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/.bin/express",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/node_modules/.bin/express",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/express/node_modules/connect/node_modules/qs/.gitmodules",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/node_modules/express/node_modules/connect/node_modules/qs/.gitmodules",
+		"/Users/quickmobile/Work/INAPP/ionic/AppIcons/plugins/com.rjfun.cordova.plugin.admob/src/ios/GADModules.h",
+		"/Users/quickmobile/Work/INAPP/ionic/.gitmodules",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/strong-agent/node_modules/semver/test/no-module.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/strong-agent/lib/module-detector.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/node_modules/express/node_modules/connect/lib/middleware/methodOverride.js",
+		"/Users/quickmobile/Work/INAPP/ionic/AppIcons-Chrome/manifest.json",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/assets/www/lib/angular-ui-router/src/templateFactory.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/AppIcons/lib/angular-sanitize/angular-sanitize.min.js.map",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/AppIcons/lib/angular-sanitize/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/strong-agent/src/platform-win32.h",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/strong-agent/node_modules/semver/LICENSE",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/strong-agent/lib/transport.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/mongojs/tests/test-remove.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/test",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/wp8/www/lib/angular-sanitize/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/ios/www/lib/angular-sanitize/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/firefoxos/www/lib/angular-sanitize/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/IMRuler/lib/ionic/js/angular/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/wp8/www/lib/angular-sanitize/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/ios/www/lib/angular-sanitize/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/firefoxos/www/lib/angular-sanitize/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/IMRuler/lib/ionic/js/angular/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/ClipAnywhere/lib/angular-ui-router/src/stateFilters.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/node_modules/strong-agent/lib/sanitizers.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/HotIssue/lib/js/angular/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/HotIssue/lib/js/angular/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/HotIssueHybrid/www/lib/js/angular/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/ClipAnywhere/lib/angular-sanitize/angular-sanitize.min.js.map",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/HotIssue/lib/js/angular/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backend/HotIssue/lib/js/angular/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/HotIssueHybrid/www/lib/js/angular/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/ClipAnywhere/lib/angular-sanitize/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/AppIcons/lib/angular-sanitize/angular-sanitize.min.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/cordova/lib/start-emulator.bat",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/cordova/lib/start-emulator",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/ClipAnywhere/lib/angular-sanitize/angular-sanitize.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/assets/www/lib/angular-ui-router/src/stateFilters.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/assets/www/lib/angular-ui-router/src/stateDirectives.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/assets/www/lib/angular-ui-router/src/state.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/cordova/lib/list-started-emulators.bat",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/cordova/lib/list-started-emulators",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/wp8/www/lib/angular-ui-router/src/templateFactory.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/ios/www/lib/angular-ui-router/src/templateFactory.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/firefoxos/www/lib/angular-ui-router/src/templateFactory.js",
+		"/Users/quickmobile/Work/INAPP/ionic/backtest/ClipAnywhere/lib/angular-ui-router/src/templateFactory.js",
+		"/Users/quickmobile/Work/INAPP/ionic/AppIcons/plugins/de.appplant.cordova.plugin.email-composer/src/android/AttachmentProvider.java",
+		"/Users/quickmobile/Work/INAPP/ionic/AppIcons/config.xml",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/android/cordova/lib/appinfo.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/js/app.js",
+		"/Users/quickmobile/Work/INAPP/ionic/ClipAnywhere/platforms/ios/Clip Anywhere/Clip Anywhere-Prefix.pch",
+		"/Users/quickmobile/Work/INAPP/ionic/android-icons.json",
+		"/Users/quickmobile/Work/INAPP/ionic/AppIcons/ionic.project"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"get2",
+			"text",
+			"e",
+			"async",
+			"htmlToText",
+			"hotissue",
+			"hotis",
+			"client",
+			"naver",
+			"zum",
+			"nate",
+			"google",
+			"daum",
+			"naver",
+			"hotissue",
+			"HotIssue",
+			"검색어",
+			"}\n",
+			"iscont",
+			"content",
+			"module",
+			"ionic"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "HotIssueServer/server.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4860,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1388,
+								1388
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 112.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 0.0
+	},
+	"project": "package.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"iscontent",
+				"MusicRankHybrid/www/templates/content.html"
+			],
+			[
+				"module",
+				"backend/node_modules/express/lib/express.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 47.0,
+		"selected_items":
+		[
+			[
+				"content",
+				"content"
+			]
+		],
+		"width": 494.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 291.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
