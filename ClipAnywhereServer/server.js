@@ -9,7 +9,7 @@ var mongo = require('mongojs');
 var connection_string = "admin" + ":" +
   "B61vbEbF3kAg" + "@" +
   "mongo.imapp.kr" + ':' +
-  "61791" + '/' +
+  "27017" + '/' +
   process.env.OPENSHIFT_APP_NAME;
 
 var db = mongo(connection_string, ['clips']);
