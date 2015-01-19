@@ -1,10 +1,15 @@
 #!/bin/env node
 
 var mongo = require('mongojs');
-var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+// var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+//   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+//   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+//   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+//   process.env.OPENSHIFT_APP_NAME;
+var connection_string = "admin" + ":" +
+  "B61vbEbF3kAg" + "@" +
+  "mongo.imapp.kr" + ':' +
+  "61791" + '/' +
   process.env.OPENSHIFT_APP_NAME;
 
 var db = mongo(connection_string, ['clips']);
