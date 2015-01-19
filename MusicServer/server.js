@@ -6,11 +6,17 @@ var async = require('async');
 var mongo = require('mongojs');
 var lz = require('lz-string');
 
-var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-  process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-  process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-  process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-  process.env.OPENSHIFT_APP_NAME;
+// var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+//   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+//   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+//   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+//   process.env.OPENSHIFT_APP_NAME;
+
+var connection_string = "admin" + ":" +
+  "B61vbEbF3kAg" + "@" +
+  "mongo.imapp.kr" + ':' +
+  "29307" + '/backend';
+  
 var db = mongo(connection_string, ['music']);
 //////////////////////////////////
 var init = function() {
