@@ -134,10 +134,12 @@ var Backend = function() {
         var hotissue = require('./HotIssueServer/server.js');
         var clipAnywhere = require('./ClipAnywhereServer/server.js');
         var music = require('./MusicServer/server.js');
+        var video = require('./VideoServer/server.js');
 
         hotissue.init();
         clipAnywhere.init();
         music.init();
+        video.init();
         
         // self.createRoutes();
         self.app = express();
@@ -188,6 +190,14 @@ var Backend = function() {
                 case "music-back.imapp.kr":
                 case "test-music-back.imapp.kr":
                      music.server(req,res,next);
+                     break;
+                case "video.imapp.kr":
+                case "test-video.imapp.kr":
+                    express.static('./Video')(req,res,next);
+                     break;
+                case "video-back.imapp.kr":
+                case "test-video-back.imapp.kr":
+                     video.server(req,res,next);
                      break;
                 default:
                     res.setHeader('Content-Type', 'text/html');
