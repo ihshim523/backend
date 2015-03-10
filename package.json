@@ -30,7 +30,8 @@
     "imnaver": ">= 0.1.12",
     "async": ">= 0.9.0",
     "html-to-text": ">= 0.1.0",
-    "lz-string": ">= 1.3.6"
+    "lz-string": ">= 1.3.6",
+    "unifiedpush-node-sender":">= 0.7.0"
   },
   "devDependencies": {
     "zlibjs": "~0.2.0",
