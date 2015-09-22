@@ -10,14 +10,14 @@ var mongo = require('mongojs');
 var connection_string = "admin" + ":" +
   "B61vbEbF3kAg" + "@" +
   "mongo.imapp.kr" + ':' +
-  "29307" + '/backend';
+  "51553" + '/backend';
 
 var db = mongo(connection_string, ['clips']);
 
 var init = function() {
     var clips = db.collection('clips');
     clips.ensureIndex({expire:1},{expireAfterSeconds:600});
-}
+};
 
 var get = function(req, res, next) {
 //    console.log('+get:');

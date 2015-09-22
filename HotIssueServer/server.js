@@ -12,7 +12,7 @@ var mongo = require('mongojs');
 var connection_string = "admin" + ":" +
   "B61vbEbF3kAg" + "@" +
   "mongo.imapp.kr" + ':' +
-  "29307" + '/backend';
+  "51553" + '/backend';
   
 var db = mongo(connection_string, ['hotissue']);
 var naver = require('imnaver');
