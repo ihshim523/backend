@@ -11,12 +11,8 @@ var lz = require('lz-string');
 //   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
-var connection_string = "admin" + ":" +
-  "B61vbEbF3kAg" + "@" +
-  "mongo.imapp.kr" + ':' +
-  "51553" + '/backend';
   
-var db = mongo(connection_string, ['video']);
+var db = mongo(global.mongo, ['video']);
 //////////////////////////////////
 var init = function() {
 };

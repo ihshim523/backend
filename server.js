@@ -5,6 +5,11 @@ require('strong-agent').profile();
 var express = require('express');
 var fs = require('fs');
 
+global.mongo = "admin" + ":" +
+  "B61vbEbF3kAg" + "@" +
+  "mongo.imapp.kr" + ':' +
+  "51553" + '/backend';
+
 var Backend = function() {
 
     //  Scope.
