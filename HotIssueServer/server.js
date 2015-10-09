@@ -10,7 +10,7 @@ var mongo = require('mongojs');
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
   
-var db = mongo(global.mongo, ['hotissue']);
+var db = mongo(global.mongo, ['hotissue'], {authMechanism: 'ScramSHA1'});
 var naver = require('imnaver');
 var htmlToText = require('html-to-text');
 var lz = require('lz-string');

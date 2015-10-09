@@ -13,7 +13,7 @@ var gcm = require('./sendGCM.js');
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
 
-var db = mongo(global.mongo, ['movie']);
+var db = mongo(global.mongo, ['movie'], {authMechanism: 'ScramSHA1'});
 //////////////////////////////////
 var init = function() {
 };

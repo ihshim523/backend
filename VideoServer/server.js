@@ -12,7 +12,7 @@ var lz = require('lz-string');
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
   
-var db = mongo(global.mongo, ['video']);
+var db = mongo(global.mongo, ['video'], {authMechanism: 'ScramSHA1'});
 //////////////////////////////////
 var init = function() {
 };
