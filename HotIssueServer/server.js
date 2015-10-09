@@ -3,20 +3,20 @@
 var fs = require('fs');
 var zlib = require('zlibjs');
 var async = require('async');
-var mongo = require('mongojs');
 // var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
 //   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
 //   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
   
-var db = mongo(global.mongo, ['hotissue'], {authMechanism: 'ScramSHA1'});
+var db;
 var naver = require('imnaver');
 var htmlToText = require('html-to-text');
 var lz = require('lz-string');
 
 //////////////////////////////////
-var init = function() {
+var init = function(mongo) {
+	db = mongo;
 //    var hotissue = db.collection('hotissue');
 //    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
     

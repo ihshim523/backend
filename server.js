@@ -5,10 +5,12 @@ require('strong-agent').profile();
 var express = require('express');
 var fs = require('fs');
 
-global.mongo = "admin" + ":" +
+global.mongo = "mongodb://admin" + ":" +
   "B61vbEbF3kAg" + "@" +
   "mongo.imapp.kr" + ':' +
   "51553" + '/backend';
+var mongo = require('mongodb').MongoClient;
+
 
 var Backend = function() {
 
@@ -142,11 +144,11 @@ var Backend = function() {
         var video = require('./VideoServer/server.js');
         var movie = require('./MovieServer/server.js');
 
-        hotissue.init();
-        clipAnywhere.init();
-        music.init();
-        video.init();
-        movie.init();
+        hotissue.init(db);
+        clipAnywhere.init(db);
+        music.init(db);
+        video.init(db);
+        movie.init(db);
         
         // self.createRoutes();
         self.app = express();
@@ -250,11 +252,18 @@ var Backend = function() {
      *  Start the server (starts up the sample application).
      */
     self.start = function() {
-        //  Start the app on the specific interface (and port).
-        self.app.listen(self.port, self.ipaddress, function() {
-            console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
-        });
+		mongo.connect(global.mongo, function(err, db){
+			if ( !err ) {
+				//  Start the app on the specific interface (and port).
+				self.app.listen(self.port, self.ipaddress, function() {
+					console.log('%s: Node server started on %s:%d ...',
+								Date(Date.now() ), self.ipaddress, self.port);
+				});
+			}
+			else {
+				console.log('mongo connection error:'+err);
+			}
+		});
     };
 
 };   /*  Sample Application.  */

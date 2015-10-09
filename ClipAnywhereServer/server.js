@@ -1,15 +1,15 @@
 #!/bin/env node
 
-var mongo = require('mongojs');
 // var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
 //   process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
 //   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
 
-var db = mongo(global.mongo, ['clips'], {authMechanism: 'ScramSHA1'});
+var db;
 
-var init = function() {
+var init = function(mongo) {
+	db = mongo;
     var clips = db.collection('clips');
     clips.ensureIndex({expire:1},{expireAfterSeconds:600});
 };

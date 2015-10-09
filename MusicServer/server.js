@@ -3,7 +3,6 @@
 var fs = require('fs');
 var zlib = require('zlibjs');
 var async = require('async');
-var mongo = require('mongojs');
 var lz = require('lz-string');
 
 // var connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
@@ -12,9 +11,10 @@ var lz = require('lz-string');
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
 
-var db = mongo(global.mongo, ['music'], {authMechanism: 'ScramSHA1'});
+var db;
 //////////////////////////////////
-var init = function() {
+var init = function(mongo) {
+	db = mongo;
 };
 
 var get = function(req, res, next) {

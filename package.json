@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "express": "~3.4.4",
-    "mongojs": ">= 1.4.0",
+    "mongodb": ">= 2.0",
     "zlibjs": ">= 0.2.0",
     "strong-agent": "~0.4.9",
     "imnaver": ">= 0.1.12",
