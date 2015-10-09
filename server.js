@@ -184,6 +184,10 @@ var Backend = function() {
 						hotissue.list(req,res,next);
 					}
                     else
+					if ( 'get2.dat' === path.basename(req.path)) {
+						hotissue.list2(req,res,next);
+					}
+                    else
 						express.static('./HotIssue')(req,res,next);
 					
                      break;

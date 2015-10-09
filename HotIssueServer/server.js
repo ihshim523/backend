@@ -208,6 +208,32 @@ var list = function(req, res, next) {
 
 };
 
+var list2 = function(req, res, next) {
+	var hotissue = db.collection('hotissue');
+	
+	try{
+	    hotissue.findOne({k:'hotissue_list'}, function(err, doc) {
+	    	if (!err) {
+	    		//console.log("DOC:::"+JSON.stringify(doc));
+	    	    var input = new Buffer(JSON.stringify(doc.v));
+                var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
+
+   	    		res.send(compressed);
+	    	}
+	    	else {
+                console.log('get1:'+err);
+	    		next();
+            }
+	    });
+	}
+	catch(e) {
+        console.log('get2:'+e);
+		next();
+	}
+
+};
+
 module.exports.init = init;
 module.exports.server = server;
 module.exports.list = list;
+module.exports.list2 = list2;
