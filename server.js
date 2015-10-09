@@ -10,7 +10,7 @@ global.mongo = "mongodb://admin" + ":" +
   "mongo.imapp.kr" + ':' +
   "51553" + '/backend';
 var mongo = require('mongodb').MongoClient;
-
+var db;
 
 var Backend = function() {
 
@@ -252,17 +252,10 @@ var Backend = function() {
      *  Start the server (starts up the sample application).
      */
     self.start = function() {
-		mongo.connect(global.mongo, function(err, db){
-			if ( !err ) {
 				//  Start the app on the specific interface (and port).
-				self.app.listen(self.port, self.ipaddress, function() {
-					console.log('%s: Node server started on %s:%d ...',
-								Date(Date.now() ), self.ipaddress, self.port);
-				});
-			}
-			else {
-				console.log('mongo connection error:'+err);
-			}
+		self.app.listen(self.port, self.ipaddress, function() {
+			console.log('%s: Node server started on %s:%d ...',
+						Date(Date.now() ), self.ipaddress, self.port);
 		});
     };
 
@@ -272,6 +265,13 @@ var Backend = function() {
  *  main():  Main code.
  */
 var zapp = new Backend();
-zapp.initialize();
-zapp.start();
-
+mongo.connect(global.mongo, function(err, mongoDB){
+	if ( !err ) {
+		db = mongoDB;
+		zapp.initialize();
+		zapp.start();
+	}
+	else {
+		console.log('mongo connection error:'+err);
+	}
+});
