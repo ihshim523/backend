@@ -24,7 +24,7 @@ var init = function(mongo) {
         var hotissue = db.collection('hotissue');
     	hotissue.remove({expire:{$lt:((new Date).getTime() - 24*60*60*1000) }});
     },60000);
-}
+};
 
 var get = function(req, res, next) {
 	var hotissue = db.collection('hotissue');
@@ -128,12 +128,19 @@ var post = function(req, res, next) {
     function(err){
   		console.log('#### series end');
         try {	
-            var buffer = new Buffer(JSON.stringify(req.body.k));
+/*             var buffer = new Buffer(JSON.stringify(req.body.k));
             var compressed = zlib.deflateSync(buffer);
-
+ */
             console.log('#### series end 1');
 
-            fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
+		    var hotissue = db.collection('hotissue');
+			hotissue.update({k:'hotissue_list'},{k:'hotissue_list',v:req.body.k},
+				{upsert:true}, function(err, saved) { //
+				//if ( err ) console.log(err);
+				cb2();
+			});
+						
+/*             fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
                 console.log('#### series end 2:'+err);
                 
                 var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
@@ -142,7 +149,7 @@ var post = function(req, res, next) {
                      res.send('{"R":"1"}');
                 });
 //                res.send('{"R":"1"}');
-            });
+            }); */
         }
         catch(e) {
             console.log('#### series ex:' + e);
@@ -170,5 +177,31 @@ var server  = function(req, res, next) {
     }
 }; 
 
+var list = function(req, res, next) {
+	var hotissue = db.collection('hotissue');
+	
+	try{
+	    hotissue.findOne({k:'hotissue_list'}, function(err, doc) {
+	    	if (!err) {
+	    		//console.log("DOC:::"+JSON.stringify(doc));
+
+	    	    var buffer = new Buffer(JSON.stringify(doc.v));
+	    	    var compressed = zlib.deflateSync(buffer);
+	    	    res.send(compressed);
+	    	}
+	    	else {
+                console.log('get1:'+err);
+	    		next();
+            }
+	    });
+	}
+	catch(e) {
+        console.log('get2:'+e);
+		next();
+	}
+
+};
+
 module.exports.init = init;
 module.exports.server = server;
+module.exports.list = list;

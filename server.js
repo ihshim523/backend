@@ -4,6 +4,8 @@ require('strong-agent').profile();
 
 var express = require('express');
 var fs = require('fs');
+var url = require("url");
+var path = require("path");
 
 global.mongo = "mongodb://admin" + ":" +
   "B61vbEbF3kAg" + "@" +
@@ -178,7 +180,12 @@ var Backend = function() {
                      break;
                 case "hotissue.imapp.kr":
                 case "test-hotissue.imapp.kr":
-                    express.static('./HotIssue')(req,res,next);
+					if ( 'get.dat' === path.basename(req.path)) {
+						hotissue.list(req,res,next);
+					}
+                    else
+						express.static('./HotIssue')(req,res,next);
+					
                      break;
                 case "hotissue-back.imapp.kr":
                 case "test-hotissue-back.imapp.kr":
