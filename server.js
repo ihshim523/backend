@@ -9,7 +9,8 @@ global.mongo = "mongodb://admin" + ":" +
   "B61vbEbF3kAg" + "@" +
   "mongo.imapp.kr" + ':' +
   "51553" + '/backend';
-global.client = require('mongodb').MongoClient;
+var mongo = require('mongodb').MongoClient;
+var db;
 
 var Backend = function() {
 
@@ -263,6 +264,14 @@ var Backend = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new Backend();
-zapp.initialize();
-zapp.start();
+mongo.connect(global.mongo, function(err, mongoDB){
+	if ( !err ) {
+		db = mongoDB;
+		var zapp = new Backend();
+		zapp.initialize();
+		zapp.start();
+	}
+	else {
+		console.log('mongo connection error:'+err);
+	}
+});
