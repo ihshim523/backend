@@ -132,7 +132,7 @@ var Backend = function() {
         res.header('Access-Control-Allow-Headers', 'Content-Type');
     
         next();
-    }
+    };
 
     /**
      *  Initialize the server (express) and create the routes and register

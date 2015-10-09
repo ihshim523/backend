@@ -25,9 +25,13 @@ var get = function(req, res, next) {
 	    	if (!err) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 
-	    	    var buffer = new Buffer(JSON.stringify(doc));
-	    	    var compressed = zlib.deflateSync(buffer);
-	    	    res.send(compressed);
+	    	    var input = new Buffer(JSON.stringify(doc));
+	    	    zlib.deflate(input, function(err,compressed) {
+	    	    	if (!err)
+						res.send(compressed);
+					else
+						next();
+				});
 	    	}
 	    	else
 	    		next();
@@ -42,116 +46,116 @@ var get = function(req, res, next) {
 var post = function(req, res, next) {
     var music = db.collection('music');
 
-    var buffer = new Buffer(req.body.k);
+    var input = new Buffer(req.body.k);
 	
     var obj = JSON.parse(req.body.k);
 
-    var compressed = zlib.deflateSync(buffer);
+    zlib.deflate(input, function(err, compressed){		
+		try {
+			async.waterfall([
+			function(cb){
+				fs.writeFile('./Music/get.dat', compressed, function(err) {
+					cb(null);
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-    try {
-        async.waterfall([
-        function(cb){
-            fs.writeFile('./Music/get.dat', compressed, function(err) {
-                cb(null);
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'melon' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'melon' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Music/melon.dat', compressed, function(err) {
+					fs.writeFile('./Music/melon5.dat', compressed, function(err) {
+						cb(null);
+					});
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Music/melon.dat', compressed, function(err) {
-                fs.writeFile('./Music/melon5.dat', compressed, function(err) {
-                    cb(null);
-                });
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'mnet' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'mnet' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Music/mnet.dat', compressed, function(err) {
+					fs.writeFile('./Music/mnet5.dat', compressed, function(err) {
+						cb(null);
+					});
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Music/mnet.dat', compressed, function(err) {
-                fs.writeFile('./Music/mnet5.dat', compressed, function(err) {
-                    cb(null);
-                });
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'bugs' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'bugs' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Music/bugs.dat', compressed, function(err) {
+					fs.writeFile('./Music/bugs5.dat', compressed, function(err) {
+						cb(null);
+					});
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Music/bugs.dat', compressed, function(err) {
-                fs.writeFile('./Music/bugs5.dat', compressed, function(err) {
-                    cb(null);
-                });
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'soribada' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'soribada' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Music/soribada.dat', compressed, function(err) {
+					fs.writeFile('./Music/soribada5.dat', compressed, function(err) {
+						cb(null);
+					});
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Music/soribada.dat', compressed, function(err) {
-                fs.writeFile('./Music/soribada5.dat', compressed, function(err) {
-                    cb(null);
-                });
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'dosirak' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'dosirak' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Music/dosirak.dat', compressed, function(err) {
+					fs.writeFile('./Music/dosirak5.dat', compressed, function(err) {
+						cb(null);
+					});
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Music/dosirak.dat', compressed, function(err) {
-                fs.writeFile('./Music/dosirak5.dat', compressed, function(err) {
-                    cb(null);
-                });
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'billboard' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'billboard' )
-                    ranking.rank.push(item);
-            });
-
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Music/billboard.dat', compressed, function(err) {
-                fs.writeFile('./Music/billboard5.dat', compressed, function(err) {
-                    cb(null);
-                });
-            });
-        }],
-        function(err) {
-             res.send('{"R":"1"}');
-        });
-    }
-    catch(e) {
-        next();
-    }
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Music/billboard.dat', compressed, function(err) {
+					fs.writeFile('./Music/billboard5.dat', compressed, function(err) {
+						cb(null);
+					});
+				});
+			}],
+			function(err) {
+				 res.send('{"R":"1"}');
+			});
+		}
+		catch(e) {
+			next();
+		}
+	});
 };
 
 var del = function(req, res, next) {

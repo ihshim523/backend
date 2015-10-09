@@ -34,9 +34,11 @@ var get = function(req, res, next) {
 	    	if (!err) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 
-	    	    var buffer = new Buffer(JSON.stringify(doc));
-	    	    var compressed = zlib.deflateSync(buffer);
-	    	    res.send(compressed);
+	    	    var input = new Buffer(JSON.stringify(doc));
+	    	    zlib.deflate(input, function(err, compressed){
+		    	    if (!err) res.send(compressed);
+					else next();
+				});
 	    	}
 	    	else {
                 console.log('get1:'+err);
@@ -185,9 +187,13 @@ var list = function(req, res, next) {
 	    	if (!err) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 
-	    	    var buffer = new Buffer(JSON.stringify(doc.v));
-	    	    var compressed = zlib.deflateSync(buffer);
-	    	    res.send(compressed);
+	    	    var input = new Buffer(JSON.stringify(doc.v));
+	    	    zlib.deflate(input, function(err, compressed){
+					if (!err)
+	    	    		res.send(compressed);
+					else
+						next();
+				});
 	    	}
 	    	else {
                 console.log('get1:'+err);

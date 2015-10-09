@@ -26,9 +26,11 @@ var get = function(req, res, next) {
 	    	if (!err) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 
-	    	    var buffer = new Buffer(JSON.stringify(doc));
-	    	    var compressed = zlib.deflateSync(buffer);
-	    	    res.send(compressed);
+	    	    var input = new Buffer(JSON.stringify(doc));
+	    	    zlib.deflate(input, function(err, compressed){
+		    	    if (!err) res.send(compressed);
+					else next();
+				});
 	    	}
 	    	else
 	    		next();

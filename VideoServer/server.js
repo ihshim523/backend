@@ -25,9 +25,14 @@ var get = function(req, res, next) {
 	    	if (!err) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 
-	    	    var buffer = new Buffer(JSON.stringify(doc));
-	    	    var compressed = zlib.deflateSync(buffer);
-	    	    res.send(compressed);
+	    	    var input = new Buffer(JSON.stringify(doc));
+	    	    zlib.deflate(input, function(err, compressed){
+					if (!err) {
+			    	    res.send(compressed);
+					}
+					else
+						next();
+				});
 	    	}
 	    	else
 	    		next();
@@ -42,92 +47,92 @@ var get = function(req, res, next) {
 var post = function(req, res, next) {
     var video = db.collection('video');
 
-    var buffer = new Buffer(req.body.k);
+    var input = new Buffer(req.body.k);
 	
     var obj = JSON.parse(req.body.k);
 
-    var compressed = zlib.deflateSync(buffer);
+    zlib.deflate(input, function(err, compressed){
+		try {
+			async.waterfall([
+			function(cb){
+				fs.writeFile('./Video/get.dat', compressed, function(err) {
+					cb(null);
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-    try {
-        async.waterfall([
-        function(cb){
-            fs.writeFile('./Video/get.dat', compressed, function(err) {
-                cb(null);
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'nate' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'nate' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Video/v1.dat', compressed, function(err) {
+					cb(null);
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Video/v1.dat', compressed, function(err) {
-                cb(null);
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'youtube' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'youtube' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Video/v2.dat', compressed, function(err) {
+					cb(null);
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Video/v2.dat', compressed, function(err) {
-                cb(null);
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'pandora' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'pandora' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Video/v3.dat', compressed, function(err) {
+					cb(null);
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Video/v3.dat', compressed, function(err) {
-                cb(null);
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'mgoon' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'mgoon' )
-                    ranking.rank.push(item);
-            });
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Video/v4.dat', compressed, function(err) {
+						cb(null);
+				});
+			},
+			function(cb) {
+				var ranking = {rank:[]};
 
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Video/v4.dat', compressed, function(err) {
-                    cb(null);
-            });
-        },
-        function(cb) {
-            var ranking = {rank:[]};
+				obj.rank.forEach(function(item){
+					if ( item.site === 'afreeca' )
+						ranking.rank.push(item);
+				});
 
-            obj.rank.forEach(function(item){
-                if ( item.site === 'afreeca' )
-                    ranking.rank.push(item);
-            });
-
-            var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-            fs.writeFile('./Video/v5.dat', compressed, function(err) {
-                cb(null);
-            });
-        }
-        ],
-        function(err) {
-             res.send('{"R":"1"}');
-        });
-    }
-    catch(e) {
-        next();
-    }
+				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
+				fs.writeFile('./Video/v5.dat', compressed, function(err) {
+					cb(null);
+				});
+			}
+			],
+			function(err) {
+				 res.send('{"R":"1"}');
+			});
+		}
+		catch(e) {
+			next();
+		}
+	});
 };
 
 var del = function(req, res, next) {
