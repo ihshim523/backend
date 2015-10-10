@@ -27,27 +27,28 @@ var init = function(elasticsearch) {
 };
 
 var get = function(req, res, next) {
-//    console.log('+get:');
-//    console.log("k="+req.query.k);
+   console.log('+get:');
+   console.log("k="+req.query.k);
+
     id = parseInt(req.query.k);
 
     db.get({
 		index:'hotissue',
 		type:'clip',
 		id:id}, function(err, doc) {
-//        console.log("err:"+err);
+        console.log("err:"+err);
         if ( !err ) {
             if ( !doc )
                 res.jsonp({v:null});
             else
-                res.jsonp({k:doc.k,v:doc.v});
+                res.jsonp({k:id,v:doc.v});
 
-//            console.log("ret:" + JSON.stringify(doc));
+           console.log("ret:" + JSON.stringify(doc));
         }
         else
             res.jsonp(err);
     });
-//    console.log('-get:');
+   console.log('-get:');
 };
 
 var post = function(req, res, next) {
