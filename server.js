@@ -149,7 +149,7 @@ var Backend = function() {
         var video = require('./VideoServer/server.js');
         var movie = require('./MovieServer/server.js');
 
-        hotissue.init(mongodb);
+        hotissue.init(db);
         clipAnywhere.init(db);
         music.init(mongodb);
         video.init(mongodb);

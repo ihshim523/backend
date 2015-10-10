@@ -8,43 +8,57 @@ var async = require('async');
 //   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
-  
+
 var db;
 var naver = require('imnaver');
 var htmlToText = require('html-to-text');
 var lz = require('lz-string');
+var md5 = require('MD5');
 
 //////////////////////////////////
-var init = function(mongo) {
-	db = mongo;
+var init = function(elasticsearch) {
+	db = elasticsearch;
 //    var hotissue = db.collection('hotissue');
 //    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
-    
+
     setInterval(function(){
-        var hotissue = db.collection('hotissue');
-    	hotissue.remove({expire:{$lt:((new Date).getTime() - 24*60*60*1000) }});
+    	db.deleteByQuery({
+			index:'hotissue',
+			type:'hotissue_article',
+			body:{
+				"range" : {
+					"expire":{
+						"lte":(new Date()).getTime() - 24*60*60*1000
+					}
+				}
+			}
+		});
     },60000);
+
 };
 
 var get = function(req, res, next) {
-	var hotissue = db.collection('hotissue');
-	
-	try{
-	    hotissue.findOne({k:req.query.k}, function(err, doc) {
-	    	if (!err) {
-	    		//console.log("DOC:::"+JSON.stringify(doc));
 
-	    	    var input = new Buffer(JSON.stringify(doc));
-	    	    zlib.deflate(input, function(err, compressed){
-		    	    if (!err) res.send(compressed);
-					else next();
-				});
-	    	}
-	    	else {
-                console.log('get1:'+err);
-	    		next();
-            }
-	    });
+	try{
+    db.get({
+		index:'hotissue',
+		type:'hotissue_article',
+		id:req.query.k}, function(err, doc) {
+        // console.log("err:"+err);
+        if ( !err && doc.found ) {
+            var input = new Buffer(JSON.stringify(doc._source));
+            zlib.deflate(input, function(err, compressed){
+            if (!err)
+              res.send(compressed);
+            else
+              next();
+          //  console.log("ret:" + JSON.stringify(doc));
+        }
+        else {
+          console.log('get1:'+err);
+          next();
+        }
+    });
 	}
 	catch(e) {
         console.log('get2:'+e);
@@ -55,96 +69,92 @@ var get = function(req, res, next) {
 
 var post = function(req, res, next) {
 	var client = naver({key: '1e7189070640781bb5e7fae3c7f88904'});
-    var hotissue = db.collection('hotissue');
-
 // console.log('#####'+JSON.stringify(req.body)+'#####');
-
 //    var obj = JSON.parse(req.body.k);
-    var obj = req.body.k;
-
+  var obj = req.body.k;
     //console.log('#### series begin');
-    
-    async.eachSeries(obj.rank, function(item, cb){
-    	async.waterfall([function(cb2){
-            hotissue.findOne({k:item.title}, function(err, doc) {
-            	if (err) {
-      		//console.log('#### error found');
-            		cb2();
-            	}
-            	else 
-            	if ( !doc ) {
-              		//console.log('#### not found');
-            		cb2();
-            	}
-            	else
-            		cb2(true);
-            });
-    	},
-    	function(cb2){
-    		console.log("BING0:::"+item.title);
-    	    client.search(item.title, {target:'news'}, function(error, response, data) {
-                if ( !data.error ) {
-    	    		console.log("BING4:::" + JSON.stringify(data));
-    	    		cb2(null, data);
-    	    	}
-    	    	else {
-    	    		console.log("BING1:::"+error);
-    	    		cb2(true);
-    	    	}
-    	    });
-    	},
-    	function(data, cb2){
-    		console.log("BING2:::");//+JSON.stringify(data));
-    		if ( data && data.rss && data.rss.channel && data.rss.channel.length > 0 && 
-    				data.rss.channel[0].item && data.rss.channel[0].item.length > 0 &&
-    				data.rss.channel[0].item[0].description && data.rss.channel[0].item[0].description.length > 0 ) {
-    			
-    			var text = htmlToText.fromString(data.rss.channel[0].item[0].description[0], {
-    			    wordwrap: 130
-    			});
+  async.eachSeries(obj.rank, function(item, cb){
+  	async.waterfall([function(cb2){
+      db.get({
+  		index:'hotissue',
+  		type:'hotissue_article',
+  		id:item.title}, function(err, doc) {
+          // console.log("err:"+err);
+          if ( !err && doc.found ) {
+          		cb2(true);
+          }
+          else {
+            cb2();
+          }
+      });
+  	},
+  	function(cb2){
+  		console.log("BING0:::"+item.title);
+  	    client.search(item.title, {target:'news'}, function(error, response, data) {
+              if ( !data.error ) {
+  	    		console.log("BING4:::" + JSON.stringify(data));
+  	    		cb2(null, data);
+  	    	}
+  	    	else {
+  	    		console.log("BING1:::"+error);
+  	    		cb2(true);
+  	    	}
+  	    });
+  	},
+  	function(data, cb2){
+  		console.log("BING2:::");//+JSON.stringify(data));
+  		if ( data && data.rss && data.rss.channel && data.rss.channel.length > 0 &&
+  				data.rss.channel[0].item && data.rss.channel[0].item.length > 0 &&
+  				data.rss.channel[0].item[0].description && data.rss.channel[0].item[0].description.length > 0 ) {
 
-	    		console.log("BING3:: "+item.title+" :::"+text);
+  			var text = htmlToText.fromString(data.rss.channel[0].item[0].description[0], {
+  			    wordwrap: 130
+  			});
 
-		        hotissue.update({k:item.title},{k:item.title,v:text,
-		        	expire:(new Date).getTime()}, {upsert:true}, function(err, saved) { //
-		        		//if ( err ) console.log(err);
-		        		cb2();
-			       	});
-    		}
-    		else
-    			cb2();
-    	}
-    	],
-    	function(err){
+    		console.log("BING3:: "+item.title+" :::"+text);
 
-            // hotissue.update({k:item.title},{k:item.title,v:text,
-            //     expire:(new Date).getTime()}, {upsert:true}, function(err, saved) { //
-            //         //if ( err ) console.log(err);
-            //         cb2();
-            //     });
-    		
-    		cb();
-    	}
-    	);
-    },
-    function(err){
-  		console.log('#### series end');
-        try {	
-/*             var buffer = new Buffer(JSON.stringify(req.body.k));
-            var compressed = zlib.deflateSync(buffer);
- */
-            console.log('#### series end 1');
+        db.index({
+      		index:'hotissue',
+      		type:'hotissue_article',
+      		id:item.title,
+      		body:{k:item.title,v:text,expire:(new Date()).getTime()}
+      	}, function(err, response) { //
+	        cb2();
+		    });
+  		}
+  		else
+  			cb2();
+  	}
+  	],
+  	function(err){
 
-		    var hotissue = db.collection('hotissue');
-			hotissue.update({k:'hotissue_list'},{k:'hotissue_list',v:req.body.k},
-				{upsert:true}, function(err, saved) { //
-				//if ( err ) console.log(err);
-				cb2();
-			});
-						
+          // hotissue.update({k:item.title},{k:item.title,v:text,
+          //     expire:(new Date).getTime()}, {upsert:true}, function(err, saved) { //
+          //         //if ( err ) console.log(err);
+          //         cb2();
+          //     });
+
+  		cb();
+  	});
+  },
+  function(err) {
+		console.log('#### series end');
+
+		db.index({
+			index:'hotissue',
+			type:'hotissue_list',
+			id:'1',
+			body:{v:req.body.k}
+		},
+		function(err, saved) { //
+		//if ( err ) console.log(err);
+			cb2();
+		});
+	});
+
 /*             fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
                 console.log('#### series end 2:'+err);
-                
+
                 var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
 
                 fs.writeFile('./HotIssue/get2.dat', compressed, function(err) {
@@ -152,13 +162,6 @@ var post = function(req, res, next) {
                 });
 //                res.send('{"R":"1"}');
             }); */
-        }
-        catch(e) {
-            console.log('#### series ex:' + e);
-            next();
-        }
-    });
-    
 };
 
 var del = function(req, res, next) {
@@ -177,17 +180,14 @@ var server  = function(req, res, next) {
             del(req,res,next);
             break;
     }
-}; 
+};
 
 var list = function(req, res, next) {
-	var hotissue = db.collection('hotissue');
-	
 	try{
-	    hotissue.findOne({k:'hotissue_list'}, function(err, doc) {
-	    	if (!err) {
+	    db.get({index:'hotissue',type:'hotissue_list',id:'1'}, function(err, doc) {
+	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
-
-	    	    var input = new Buffer(JSON.stringify(doc.v));
+	    	    var input = new Buffer(JSON.stringify(doc._source.v));
 	    	    zlib.deflate(input, function(err, compressed){
 					if (!err)
 	    	    		res.send(compressed);
@@ -209,15 +209,12 @@ var list = function(req, res, next) {
 };
 
 var list2 = function(req, res, next) {
-	var hotissue = db.collection('hotissue');
-	
 	try{
-	    hotissue.findOne({k:'hotissue_list'}, function(err, doc) {
-	    	if (!err) {
+	    db.get({index:'hotissue',type:'hotissue_list',id:'1'}, function(err, doc) {
+	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
-	    	    var input = new Buffer(JSON.stringify(doc.v));
+	    	    var input = new Buffer(JSON.stringify(doc._source.v));
                 var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
-
    	    		res.send(compressed);
 	    	}
 	    	else {
