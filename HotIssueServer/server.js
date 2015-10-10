@@ -13,7 +13,6 @@ var db;
 var naver = require('imnaver');
 var htmlToText = require('html-to-text');
 var lz = require('lz-string');
-var md5 = require('MD5');
 
 //////////////////////////////////
 var init = function(elasticsearch) {
@@ -21,19 +20,19 @@ var init = function(elasticsearch) {
 //    var hotissue = db.collection('hotissue');
 //    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
 
-    setInterval(function(){
-    	db.deleteByQuery({
-			index:'hotissue',
-			type:'hotissue_article',
-			body:{
-				"range" : {
-					"expire":{
-						"lte":(new Date()).getTime() - 24*60*60*1000
-					}
+  setInterval(function(){
+  	db.deleteByQuery({
+		index:'hotissue',
+		type:'hotissue_article',
+		body:{
+			"range" : {
+				"expire":{
+					"lte":(new Date()).getTime() - 24*60*60*1000
 				}
 			}
-		});
-    },60000);
+		}
+	});
+  },60000);
 
 };
 
