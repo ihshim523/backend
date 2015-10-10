@@ -31,10 +31,10 @@ var get = function(req, res, next) {
 //    console.log("k="+req.query.k);
     id = parseInt(req.query.k);
 
-    db.search({
+    db.get({
 		index:'hotissue',
 		type:'clip',
-		q:'k:'+id}, function(err, doc) {
+		id:id}, function(err, doc) {
 //        console.log("err:"+err);
         if ( !err ) {
             if ( !doc )
