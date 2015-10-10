@@ -54,6 +54,7 @@ var get = function(req, res, next) {
 	            next();
 	          //  console.log("ret:" + JSON.stringify(doc));
 					});
+				}
         else {
           console.log('get1:'+err);
           next();
