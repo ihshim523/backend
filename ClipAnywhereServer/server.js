@@ -41,7 +41,7 @@ var get = function(req, res, next) {
             if ( !doc )
                 res.jsonp({v:null});
             else
-                res.jsonp({k:id,v:doc.v});
+                res.jsonp({k:id,v:doc._source.v});
 
            console.log("ret:" + JSON.stringify(doc));
         }
