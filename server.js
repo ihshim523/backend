@@ -1,7 +1,5 @@
 #!/bin/env node
 
-require('strong-agent').profile();
-
 var express = require('express');
 var fs = require('fs');
 var url = require("url");
