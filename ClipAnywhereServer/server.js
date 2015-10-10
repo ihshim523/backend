@@ -8,30 +8,40 @@
 
 var db;
 
-var init = function(mongo) {
-	db = mongo;
-    var clips = db.collection('clips');
-    clips.ensureIndex({expire:1},{expireAfterSeconds:600});
+var init = function(elasticsearch) {
+	db = elasticsearch;
+
+    setInterval(function(){
+    	db.deleteByQuery({
+			index:'hotissue',
+			type:'clip',
+			body:{
+				"range" : {
+					"expire":{
+						"lte":(new Date()).getTime() - 600*1000
+					}
+				}
+			}
+		});
+    },60000);
 };
 
 var get = function(req, res, next) {
 //    console.log('+get:');
-    var clips = db.collection('clips');
-
 //    console.log("k="+req.query.k);
-
     id = parseInt(req.query.k);
-    
-    clips.findOne({k:id}, function(err, doc) {
-        
+
+    db.search({
+		index:'hotissue',
+		type:'clip',
+		q:'k:'+id}, function(err, doc) {
 //        console.log("err:"+err);
-        
         if ( !err ) {
-            if ( !doc ) 
+            if ( !doc )
                 res.jsonp({v:null});
             else
                 res.jsonp({k:doc.k,v:doc.v});
-                
+
 //            console.log("ret:" + JSON.stringify(doc));
         }
         else
@@ -44,34 +54,35 @@ var post = function(req, res, next) {
 //    console.log('+post:');
 //    console.log("k="+req.query.k);
 //    console.log("v="+req.query.v);
-
-    var clips = db.collection('clips');
-    
     id = parseInt(req.query.k);
     // clips.update({k:id},{ $setOnInsert:{k:id,v:req.body.v} }, {upsert:true},
      // function(err, saved) { //
-           // if ( saved && saved.updatedExisting ) 
+           // if ( saved && saved.updatedExisting )
                 // res.send({u:true});
-            // else               
-           // if ( saved && !saved.updatedExisting ) 
+            // else
+           // if ( saved && !saved.updatedExisting )
                 // res.send({u:false});
             // else
                 // next();
-//                 
+//
            // console.log("err:"+err);
            // console.log("saved:"+JSON.stringify(saved));
      // });
-     
-    clips.update({k:id},{k:id,v:req.query.v,expire:new Date()}, {upsert:true},
-     function(err, saved) { //
-           if ( saved && saved.updatedExisting ) 
+
+    db.index({
+		index:'hotissue',
+		type:'clip',
+		id:id,
+		body:{v:req.query.v,expire:(new Date()).getTime()}
+	},
+     function(err, response) { //
+           if ( !err && response.created )
                 res.jsonp({u:true});
-            else               
-           if ( saved && !saved.updatedExisting ) 
+            else
+           if ( !err && !response.created )
                 res.jsonp({u:false});
             else
                 next();
-
 //           console.log("err:"+err);
 //           console.log("saved:"+JSON.stringify(saved));
      });
@@ -82,11 +93,11 @@ var post = function(req, res, next) {
 
 var del = function(req, res, next) {
 //    console.log('delete verb');
-    
-    var clips = db.collection('clips');
-    
-    clips.remove({});
-    
+
+	db.delete({
+		index:'hotissue',
+		type:'clip'
+	});
     next();
 };
 
@@ -108,7 +119,7 @@ var server  = function(req, res, next) {
             del(req,res,next);
             break;
     }
-}; 
+};
 
 module.exports.init = init;
 module.exports.server = server;

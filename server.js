@@ -12,7 +12,12 @@ global.mongo = "mongodb://admin" + ":" +
   "mongo.imapp.kr" + ':' +
   "51553" + '/backend';
 var mongo = require('mongodb').MongoClient;
-var db;
+
+var elasticsearch = require('elasticsearch');
+var db = new elasticsearch.Client({
+  host:['https://site:22d3ca5fb355b3ac1d9fb1b968921037@bofur-us-east-1.searchly.com']
+});
+var mongodb;
 
 var Backend = function() {
 
@@ -36,7 +41,7 @@ var Backend = function() {
             //  allows us to run/test the app locally.
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
-        };
+        }
 
     };
 
@@ -89,9 +94,9 @@ var Backend = function() {
         ].forEach(function(element, index, array) {
             process.on(element, function() { self.terminator(element); });
         });
-        
+
         process.on('uncaughtException', function(err){
-           console.log('Caught:'+err); 
+           console.log('Caught:'+err);
         });
     };
 
@@ -105,21 +110,21 @@ var Backend = function() {
      */
     // self.createRoutes = function() {
         // self.routes = { };
-// 
+//
         // // self.routes['/asciimo'] = function(req, res) {
             // // var link = "http://i.imgur.com/kmbjB.png";
             // // res.send("<html><body><img src='" + link + "'></body></html>");
         // // };
-// 
+//
         // self.routes['/'] = function(req, res) {
-        	// var 
-        	// hostName = req.header('host');
-        	// switch(hostName) {
-        		// case 'clip.imapp.kr':
-        			// break;
-//         		
-        	// } 
-//         	
+          // var
+          // hostName = req.header('host');
+          // switch(hostName) {
+            // case 'clip.imapp.kr':
+              // break;
+//
+          // }
+//
             // res.setHeader('Content-Type', 'text/html');
             // res.send(self.cache_get('index.html') );
         // };
@@ -130,7 +135,7 @@ var Backend = function() {
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
         res.header('Access-Control-Allow-Headers', 'Content-Type');
-    
+
         next();
     };
 
@@ -146,20 +151,20 @@ var Backend = function() {
         var video = require('./VideoServer/server.js');
         var movie = require('./MovieServer/server.js');
 
-        hotissue.init(db);
+        hotissue.init(mongodb);
         clipAnywhere.init(db);
-        music.init(db);
-        video.init(db);
-        movie.init(db);
-        
+        music.init(mongodb);
+        video.init(mongodb);
+        movie.init(mongodb);
+
         // self.createRoutes();
         self.app = express();
-        
-//		self.app.use(express.compress());
+
+//    self.app.use(express.compress());
         self.app.use(express.bodyParser());
-	   self.app.use(express.methodOverride());
-		self.app.use(self.allowCrossDomain);
-		
+     self.app.use(express.methodOverride());
+    self.app.use(self.allowCrossDomain);
+
         // //  Add handlers for the app (from the routes).
         // for (var r in self.routes) {
             // self.app.get(r, self.routes[r]);
@@ -180,16 +185,16 @@ var Backend = function() {
                      break;
                 case "hotissue.imapp.kr":
                 case "test-hotissue.imapp.kr":
-					if ( 'get.dat' === path.basename(req.path)) {
-						hotissue.list(req,res,next);
-					}
+          if ( 'get.dat' === path.basename(req.path)) {
+            hotissue.list(req,res,next);
+          }
                     else
-					if ( 'get2.dat' === path.basename(req.path)) {
-						hotissue.list2(req,res,next);
-					}
+          if ( 'get2.dat' === path.basename(req.path)) {
+            hotissue.list2(req,res,next);
+          }
                     else
-						express.static('./HotIssue')(req,res,next);
-					
+            express.static('./HotIssue')(req,res,next);
+
                      break;
                 case "hotissue-back.imapp.kr":
                 case "test-hotissue-back.imapp.kr":
@@ -201,8 +206,8 @@ var Backend = function() {
                     break;
                 case "test-ruler.imapp.kr":
                 case "ruler.imapp.kr":
-                	express.static('./IMRuler')(req,res,next);
-                	break;
+                  express.static('./IMRuler')(req,res,next);
+                  break;
                 case "music.imapp.kr":
                 case "test-music.imapp.kr":
                     express.static('./Music')(req,res,next);
@@ -231,7 +236,7 @@ var Backend = function() {
                     res.setHeader('Content-Type', 'text/html');
                     res.send(self.cache_get('index.html') );
                     break;
-            }  
+            }
         });
     }
     catch(err) {
@@ -240,9 +245,9 @@ var Backend = function() {
             // express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
 
         // self.app.get('/', function(req, res) {
-		            // res.setHeader('Content-Type', 'text/html');
-            		// res.send(self.cache_get('index.html') );
-            		// break;
+                // res.setHeader('Content-Type', 'text/html');
+                // res.send(self.cache_get('index.html') );
+                // break;
         // });
     };
 
@@ -263,11 +268,11 @@ var Backend = function() {
      *  Start the server (starts up the sample application).
      */
     self.start = function() {
-				//  Start the app on the specific interface (and port).
-		self.app.listen(self.port, self.ipaddress, function() {
-			console.log('%s: Node server started on %s:%d ...',
-						Date(Date.now() ), self.ipaddress, self.port);
-		});
+        //  Start the app on the specific interface (and port).
+    self.app.listen(self.port, self.ipaddress, function() {
+      console.log('%s: Node server started on %s:%d ...',
+            Date(Date.now() ), self.ipaddress, self.port);
+    });
     };
 
 };   /*  Sample Application.  */
@@ -275,14 +280,14 @@ var Backend = function() {
 /**
  *  main():  Main code.
  */
-mongo.connect(global.mongo, function(err, mongoDB){
-	if ( !err ) {
-		db = mongoDB;
-		var zapp = new Backend();
-		zapp.initialize();
-		zapp.start();
-	}
-	else {
-		console.log('mongo connection error:'+err);
-	}
-});
+ mongo.connect(global.mongo, function(err, mongoDB){
+   if ( !err ) {
+     mongodb = mongoDB;
+     var zapp = new Backend();
+     zapp.initialize();
+     zapp.start();
+   }
+   else {
+     console.log('mongo connection error:'+err);
+   }
+ });
