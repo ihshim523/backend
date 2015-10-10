@@ -46,14 +46,14 @@ var get = function(req, res, next) {
 		id:req.query.k}, function(err, doc) {
         // console.log("err:"+err);
         if ( !err && doc.found ) {
-            var input = new Buffer(JSON.stringify(doc._source));
-            zlib.deflate(input, function(err, compressed){
-            if (!err)
-              res.send(compressed);
-            else
-              next();
-          //  console.log("ret:" + JSON.stringify(doc));
-        }
+          var input = new Buffer(JSON.stringify(doc._source));
+          zlib.deflate(input, function(err, compressed) {
+	          if (!err)
+	            res.send(compressed);
+	          else
+	            next();
+	          //  console.log("ret:" + JSON.stringify(doc));
+					});
         else {
           console.log('get1:'+err);
           next();
