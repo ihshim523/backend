@@ -55,6 +55,7 @@ var list = function(req, res, next) {
     });
 	}
 	catch(e) {
+		console.log("list:::"+JSON.stringify(e));
 		next();
 	}
 	console.log('-list');

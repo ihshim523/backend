@@ -151,9 +151,9 @@ var Backend = function() {
 
         hotissue.init(db);
         clipAnywhere.init(db);
+        movie.init(db);
         music.init(mongodb);
         video.init(mongodb);
-        movie.init(mongodb);
 
         // self.createRoutes();
         self.app = express();
