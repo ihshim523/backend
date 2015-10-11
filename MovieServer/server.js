@@ -45,7 +45,7 @@ var list = function(req, res, next) {
 		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
 			console.log("DOC:::"+JSON.stringify(err));
     	if (!err && doc.found) {
-    		//console.log("DOC:::"+JSON.stringify(doc));
+    		console.log("DOC:::"+JSON.stringify(doc));
     	    var input = new Buffer(doc._source);
     	    var compressed = lz.compressToUTF16(input);
 					res.send(compressed);
