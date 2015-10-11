@@ -45,11 +45,12 @@ var list = function(req, res, next) {
 		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
 			console.log("DOC:::"+JSON.stringify(err));
     	if (!err && doc.found) {
-    		console.log("DOC:::"+JSON.stringify(doc._source));
-    	    var input = new Buffer(JSON.stringify(doc._source), "utf-8");
-					console.log('#######################');
-    	    var compressed = lz.compressToUTF16(input);
-					res.send(compressed);
+    		var jsonstr = JSON.stringify(doc._source);
+				console.log(jsonstr);
+  	    var input = new Buffer(jsonstr);
+				console.log('#######################');
+  	    var compressed = lz.compressToUTF16(input);
+				res.send(compressed);
     	}
     	else
     		next();
