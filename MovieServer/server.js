@@ -68,7 +68,7 @@ var post = function(req, res, next) {
         try {
             async.waterfall([
             function(cb){
-                db.index({index:'hotissue','type':'movie',id:1,body:{req.body.k}, function(err) {
+                db.index({index:'hotissue','type':'movie',id:1,body:req.body.k}, function(err) {
                     cb(null);
                 });
             ],
