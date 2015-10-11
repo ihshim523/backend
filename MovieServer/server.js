@@ -46,7 +46,8 @@ var list = function(req, res, next) {
 			console.log("DOC:::"+JSON.stringify(err));
     	if (!err && doc.found) {
     		console.log("DOC:::"+JSON.stringify(doc._source));
-    	    var input = new Buffer(doc._source);
+    	    var input = new Buffer(JSON.stringify(doc._source));
+					console.log('#######################');
     	    var compressed = lz.compressToUTF16(input);
 					res.send(compressed);
     	}
