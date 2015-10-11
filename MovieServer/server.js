@@ -41,6 +41,7 @@ var get = function(req, res, next) {
 var list = function(req, res, next) {
 	try{
 		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
+			console.log("DOC:::"+JSON.stringify(doc));
 	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 	    	    var input = new Buffer(JSON.stringify(doc._source));
