@@ -183,17 +183,16 @@ var Backend = function() {
                      break;
                 case "hotissue.imapp.kr":
                 case "test-hotissue.imapp.kr":
-          if ( 'get.dat' === path.basename(req.path)) {
-            hotissue.list(req,res,next);
-          }
-                    else
-          if ( 'get2.dat' === path.basename(req.path)) {
-            hotissue.list2(req,res,next);
-          }
-                    else
-            express.static('./HotIssue')(req,res,next);
-
-                     break;
+                  if ( 'get.dat' === path.basename(req.path)) {
+                    hotissue.list(req,res,next);
+                  }
+                  else
+                  if ( 'get2.dat' === path.basename(req.path)) {
+                    hotissue.list2(req,res,next);
+                  }
+                  else
+                    express.static('./HotIssue')(req,res,next);
+                  break;
                 case "hotissue-back.imapp.kr":
                 case "test-hotissue-back.imapp.kr":
                      hotissue.server(req,res,next);

@@ -40,6 +40,8 @@ var get = function(req, res, next) {
 
 var list = function(req, res, next) {
 	try{
+		console.log('+list');
+
 		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
 			console.log("DOC:::"+JSON.stringify(doc));
 	    	if (!err && doc.found) {
@@ -55,6 +57,7 @@ var list = function(req, res, next) {
 	catch(e) {
 		next();
 	}
+	console.log('-list');
 };
 
 var post = function(req, res, next) {
