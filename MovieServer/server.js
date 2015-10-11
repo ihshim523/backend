@@ -71,7 +71,7 @@ var post = function(req, res, next) {
                 db.index({index:'hotissue','type':'movie',id:1,body:req.body.k}, function(err) {
                     cb(null);
                 });
-            ],
+            }],
             function(err) {
                  res.send('{"R":"1"}');
             });
