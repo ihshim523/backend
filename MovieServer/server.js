@@ -43,16 +43,16 @@ var list = function(req, res, next) {
 		console.log('+list');
 
 		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
-			console.log("DOC:::"+JSON.stringify(doc));
-	    	if (!err && doc.found) {
-	    		//console.log("DOC:::"+JSON.stringify(doc));
-	    	    var input = new Buffer(JSON.stringify(doc._source));
-	    	    var compressed = lz.compressToUTF16(input);
-						res.send(compressed);
-	    	}
-	    	else
-	    		next();
-	    });
+			console.log("DOC:::"+JSON.stringify(err));
+    	if (!err && doc.found) {
+    		//console.log("DOC:::"+JSON.stringify(doc));
+    	    var input = new Buffer(JSON.stringify(doc._source));
+    	    var compressed = lz.compressToUTF16(input);
+					res.send(compressed);
+    	}
+    	else
+    		next();
+    });
 	}
 	catch(e) {
 		next();
