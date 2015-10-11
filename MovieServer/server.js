@@ -20,7 +20,7 @@ var init = function(elasticsearch) {
 
 var get = function(req, res, next) {
 	try{
-	    db.get({index:'hotissue', type:'movie', id:req.query.k}, function(err, doc) {
+	    db.get({index:'hotissue', type:'movie', id:1}, function(err, doc) {
 	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 	    	    var input = new Buffer(JSON.stringify(doc._source));
@@ -40,7 +40,7 @@ var get = function(req, res, next) {
 
 var list = function(req, res, next) {
 	try{
-	    db.get({index:'hotissue', type:'movie', id:req.query.k}, function(err, doc) {
+	    db.get({index:'hotissue', type:'movie', id:1}, function(err, doc) {
 	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 	    	    var input = new Buffer(JSON.stringify(doc._source));
@@ -68,11 +68,9 @@ var post = function(req, res, next) {
         try {
             async.waterfall([
             function(cb){
-                var compressed = lz.compressToUTF16(req.body.k);
-                fs.writeFile('./Movie/get.dat', compressed, function(err) {
+                db.index({index:'hotissue','type':'movie',id:1,body:{req.body.k}, function(err) {
                     cb(null);
                 });
-            }
             ],
             function(err) {
                  res.send('{"R":"1"}');
