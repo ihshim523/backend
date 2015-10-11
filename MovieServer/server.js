@@ -20,7 +20,7 @@ var init = function(elasticsearch) {
 
 var get = function(req, res, next) {
 	try{
-	    db.get({index:'hotissue', type:'movie', id:1}, function(err, doc) {
+	    db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
 	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 	    	    var input = new Buffer(JSON.stringify(doc._source));
@@ -40,7 +40,7 @@ var get = function(req, res, next) {
 
 var list = function(req, res, next) {
 	try{
-	    db.get({index:'hotissue', type:'movie', id:1}, function(err, doc) {
+		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
 	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 	    	    var input = new Buffer(JSON.stringify(doc._source));
@@ -65,20 +65,6 @@ var post = function(req, res, next) {
         gcm.send(new Buffer('{notify_category:' + req.body.c + '}').toString('base64'), next);
     }
     else {
-        try {
-            async.waterfall([
-            function(cb){
-                db.index({index:'hotissue','type':'movie',id:1,body:req.body.k}, function(err) {
-                    cb(null);
-                });
-            }],
-            function(err) {
-                 res.send('{"R":"1"}');
-            });
-        }
-        catch(e) {
-            next();
-        }
     }
 };
 
