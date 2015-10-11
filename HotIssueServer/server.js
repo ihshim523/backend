@@ -205,7 +205,6 @@ var list = function(req, res, next) {
         console.log('get2:'+e);
 		next();
 	}
-
 };
 
 var list2 = function(req, res, next) {
@@ -214,20 +213,19 @@ var list2 = function(req, res, next) {
 	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
 	    	    var input = new Buffer(JSON.stringify(doc._source.v));
-                var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
+            var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
    	    		res.send(compressed);
 	    	}
 	    	else {
-                console.log('get1:'+err);
+          console.log('get1:'+err);
 	    		next();
-            }
+        }
 	    });
 	}
 	catch(e) {
-        console.log('get2:'+e);
+    console.log('get2:'+e);
 		next();
 	}
-
 };
 
 module.exports.init = init;

@@ -14,23 +14,20 @@ var gcm = require('./sendGCM.js');
 
 var db;
 //////////////////////////////////
-var init = function(mongo) {
-	db = mongo;
+var init = function(elasticsearch) {
+	db = elasticsearch;
 };
 
 var get = function(req, res, next) {
-	var movie = db.collection('movie');
-	
 	try{
-	    movie.findOne({k:req.query.k}, function(err, doc) {
-	    	if (!err) {
+	    db.get({index:'hotissue', type:'movie', id:req.query.k}, function(err, doc) {
+	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
-
-	    	    var input = new Buffer(JSON.stringify(doc));
+	    	    var input = new Buffer(JSON.stringify(doc._source));
 	    	    zlib.deflate(input, function(err, compressed){
-		    	    if (!err) res.send(compressed);
-					else next();
-				});
+			    	  if (!err) res.send(compressed);
+							else next();
+						});
 	    	}
 	    	else
 	    		next();
@@ -39,14 +36,29 @@ var get = function(req, res, next) {
 	catch(e) {
 		next();
 	}
+};
 
+var list = function(req, res, next) {
+	try{
+	    db.get({index:'hotissue', type:'movie', id:req.query.k}, function(err, doc) {
+	    	if (!err && doc.found) {
+	    		//console.log("DOC:::"+JSON.stringify(doc));
+	    	    var input = new Buffer(JSON.stringify(doc._source));
+	    	    var compressed = lz.compressToUTF16(input);
+						res.send(compressed);
+	    	}
+	    	else
+	    		next();
+	    });
+	}
+	catch(e) {
+		next();
+	}
 };
 
 var post = function(req, res, next) {
-    var movie = db.collection('movie');
-
     // if ( req.body.f == 1 ) {
-    //     gcm.registerId(req.body.i); 
+    //     gcm.registerId(req.body.i);
     // }
     // else
     if ( req.body.f == 2 ) {
@@ -56,7 +68,6 @@ var post = function(req, res, next) {
         try {
             async.waterfall([
             function(cb){
-
                 var compressed = lz.compressToUTF16(req.body.k);
                 fs.writeFile('./Movie/get.dat', compressed, function(err) {
                     cb(null);
@@ -89,7 +100,8 @@ var server  = function(req, res, next) {
             del(req,res,next);
             break;
     }
-}; 
+};
 
 module.exports.init = init;
 module.exports.server = server;
+module.exports.list = list;

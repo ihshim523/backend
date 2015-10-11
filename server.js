@@ -224,8 +224,12 @@ var Backend = function() {
                      break;
                 case "movie.imapp.kr":
                 case "test-movie.imapp.kr":
+                  if ( 'get.dat' === path.basename(req.path)) {
+                    movie.list(req,res,next);
+                  }
+                  else
                     express.static('./Movie')(req,res,next);
-                     break;
+                  break;
                 case "movie-back.imapp.kr":
                 case "test-movie-back.imapp.kr":
                      movie.server(req,res,next);
