@@ -64,7 +64,7 @@ var post = function(req, res, next) {
            // if ( saved && !saved.updatedExisting )
                 // res.send({u:false});
             // else
-                // next();
+                // res.end();
 //
            // console.log("err:"+err);
            // console.log("saved:"+JSON.stringify(saved));
@@ -83,7 +83,7 @@ var post = function(req, res, next) {
            if ( !err && !response.created )
                 res.jsonp({u:false});
             else
-                next();
+                res.end();
 //           console.log("err:"+err);
 //           console.log("saved:"+JSON.stringify(saved));
      });
@@ -99,7 +99,7 @@ var del = function(req, res, next) {
 		index:'hotissue',
 		type:'clip'
 	});
-    next();
+    res.end();
 };
 
 var server  = function(req, res, next) {

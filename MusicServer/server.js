@@ -28,15 +28,15 @@ var get = function(req, res, next) {
 	    	    	if (!err)
 						res.send(compressed);
 					else
-						next();
+						res.end();
 				});
 	    	}
 	    	else
-	    		next();
+	    		res.end();
 	    });
 	}
 	catch(e) {
-		next();
+		res.end();
 	}
 
 };
@@ -191,13 +191,13 @@ var post = function(req, res, next) {
 			});
 		}
 		catch(e) {
-			next();
+			res.end();
 		}
 	});
 };
 
 var del = function(req, res, next) {
-    next();
+    res.end();
 };
 
 var server  = function(req, res, next) {
@@ -227,7 +227,7 @@ var list = function(id, res, next) {
 			}
 		}
 		else {
-			next();
+			res.end();
 		}
 	});
 };
@@ -245,7 +245,7 @@ var list2 = function(id, res, next) {
 			}
 		}
 		else {
-			next();
+			res.end();
 		}
 	});
 };

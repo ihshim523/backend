@@ -26,15 +26,15 @@ var get = function(req, res, next) {
 	    	    var input = new Buffer(JSON.stringify(doc._source));
 	    	    zlib.deflate(input, function(err, compressed){
 			    	  if (!err) res.send(compressed);
-							else next();
+							else res.end();
 						});
 	    	}
 	    	else
-	    		next();
+	    		res.end();
 	    });
 	}
 	catch(e) {
-		next();
+		res.end();
 	}
 };
 
@@ -46,12 +46,12 @@ var list = function(req, res, next) {
 				res.send(compressed);
     	}
     	else
-    		next();
+    		res.end();
     });
 	}
 	catch(e) {
 		console.log("list:::"+JSON.stringify(e));
-		next();
+		res.end();
 	}
 };
 
@@ -68,7 +68,7 @@ var post = function(req, res, next) {
 };
 
 var del = function(req, res, next) {
-    next();
+    res.end();
 };
 
 var server  = function(req, res, next) {

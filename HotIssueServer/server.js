@@ -50,19 +50,19 @@ var get = function(req, res, next) {
 	          if (!err)
 	            res.send(compressed);
 	          else
-	            next();
+	            res.end();
 	          //  console.log("ret:" + JSON.stringify(doc));
 					});
 				}
         else {
           console.log('get1:'+err);
-          next();
+          res.end();
         }
     });
 	}
 	catch(e) {
         console.log('get2:'+e);
-		next();
+		res.end();
 	}
 
 };
@@ -165,7 +165,7 @@ var post = function(req, res, next) {
 };
 
 var del = function(req, res, next) {
-    next();
+    res.end();
 };
 
 var server  = function(req, res, next) {
@@ -192,18 +192,18 @@ var list = function(req, res, next) {
 					if (!err)
 	    	    		res.send(compressed);
 					else
-						next();
+						res.end();
 				});
 	    	}
 	    	else {
                 console.log('get1:'+err);
-	    		next();
+	    		res.end();
             }
 	    });
 	}
 	catch(e) {
         console.log('get2:'+e);
-		next();
+		res.end();
 	}
 };
 
@@ -217,13 +217,13 @@ var list2 = function(req, res, next) {
 	    	}
 	    	else {
           console.log('get1:'+err);
-	    		next();
+	    		res.end();
         }
 	    });
 	}
 	catch(e) {
     console.log('get2:'+e);
-		next();
+		res.end();
 	}
 };
 
