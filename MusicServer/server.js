@@ -177,9 +177,8 @@ var server  = function(req, res, next) {
 function makeFile(key, cb){
 	db.get({index:'hotissue',type:'music',id:key}, function(err, doc){
 		if (!err && doc.found) {
-			console.log(JSON.stringify(doc));
 			try {
-				var compressed = lz.compressToUTF16(JSON.stringify(doc));
+				var compressed = lz.compressToUTF16(JSON.stringify(doc._source));
 				fs.writeFile('./Music/'+key+'.dat', compressed, function(err) {
 					fs.writeFile('./Music/'+key+'5.dat', compressed, function(err) {
 						cb(null);
@@ -200,9 +199,8 @@ function makeFile(key, cb){
 function makeFile2(key, cb){
 	db.get({index:'hotissue',type:'music',id:key}, function(err, doc){
 		if (!err && doc.found) {
-			console.log(JSON.stringify(doc));
 			try {
-				zlib.deflate(JSON.stringify(doc), function(err, compressed) {
+				zlib.deflate(JSON.stringify(doc._source), function(err, compressed) {
 					fs.writeFile('./Music/'+key+'.dat', compressed, function(err) {
 						fs.writeFile('./Music/'+key+'5.dat', compressed, function(err) {
 							cb(null);
