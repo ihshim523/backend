@@ -126,7 +126,7 @@ var post = function(req, res, next) {
 		},
 		function(err, saved) { //
 		//if ( err ) console.log(err);
-			cb2();
+			cb();
 		});
 	});
 
