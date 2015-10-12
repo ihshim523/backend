@@ -209,6 +209,8 @@ var Backend = function() {
                 case "test-music.imapp.kr":
                   switch(path.basename(req.path)) {
                     case 'get.dat':
+                      music.list(path.basename(req.path),res,next);
+                      break;
                     case 'melon.dat':
                     case 'melon5.dat':
                     case 'mnet.dat':
@@ -221,7 +223,7 @@ var Backend = function() {
                     case 'dosirak5.dat':
                     case 'billboard.dat':
                     case 'billboard5.dat':
-                      music.list(path.basename(req.path),res,next);
+                      music.list2(path.basename(req.path),res,next);
                       break;
                     default:
                       express.static('./Music')(req,res,next);

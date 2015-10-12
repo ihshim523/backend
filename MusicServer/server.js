@@ -54,6 +54,9 @@ var post = function(req, res, next) {
 				// 	cb(null);
 				// });
 				db.index({index:'hotissue',type:'music',id:'get.dat',body:{v:compressed.toString('base64')}}, function(err){
+					if (err) {
+						console.log('get.dat:::'+JSON.stringify(err));
+					}
 					cb(null);
 				})
 			},
@@ -71,7 +74,10 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'melon.dat',body:{v:compressed.toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'melon.dat',body:{v:compressed}}, function(err){
+					if (err) {
+						console.log('get.dat:::'+JSON.stringify(err));
+					}
 					cb(null);
 				})
 			},
@@ -89,7 +95,10 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'mnet.dat',body:{v:compressed.toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'mnet.dat',body:{v:compressed}}, function(err){
+					if (err) {
+						console.log('get.dat:::'+JSON.stringify(err));
+					}
 					cb(null);
 				})
 			},
@@ -107,7 +116,10 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'bugs.dat',body:{v:compressed.toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'bugs.dat',body:{v:compressed}}, function(err){
+					if (err) {
+						console.log('get.dat:::'+JSON.stringify(err));
+					}
 					cb(null);
 				})
 			},
@@ -125,7 +137,10 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'soribada.dat',body:{v:compressed.toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'soribada.dat',body:{v:compressed}}, function(err){
+					if (err) {
+						console.log('get.dat:::'+JSON.stringify(err));
+					}
 					cb(null);
 				})
 			},
@@ -143,7 +158,10 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'dosirak.dat',body:{v:compressed.toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'dosirak.dat',body:{v:compressed}}, function(err){
+					if (err) {
+						console.log('get.dat:::'+JSON.stringify(err));
+					}
 					cb(null);
 				})
 			},
@@ -161,7 +179,10 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'billboard.dat',body:{v:compressed.toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'billboard.dat',body:{v:compressed}}, function(err){
+					if (err) {
+						console.log('get.dat:::'+JSON.stringify(err));
+					}
 					cb(null);
 				})
 			}],
@@ -209,6 +230,23 @@ var list = function(id, res, next) {
 	});
 };
 
+var list2 = function(id, res, next) {
+	db.get({index:'hotissue',type:'music',id:id}, function(err, doc){
+		if (!err && doc.found) {
+			try {
+				res.send(doc._source);
+			}
+			catch(e){
+				console.log(JSON.stringify(e));
+			}
+		}
+		else {
+			next();
+		}
+	});
+};
+
 module.exports.init = init;
 module.exports.server = server;
 module.exports.list = list;
+module.exports.list2 = list2;
