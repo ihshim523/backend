@@ -183,7 +183,6 @@ var Backend = function() {
                      break;
                 case "hotissue.imapp.kr":
                 case "test-hotissue.imapp.kr":
-                console.log(path.basename(req.path));
                   if ( 'get.dat' === path.basename(req.path)) {
                     hotissue.list(req,res,next);
                   }
@@ -208,7 +207,6 @@ var Backend = function() {
                   break;
                 case "music.imapp.kr":
                 case "test-music.imapp.kr":
-                console.log(path.basename(req.path));
                   switch(path.basename(req.path)) {
                     case 'get.dat':
                       music.list(path.basename(req.path),res,next);
