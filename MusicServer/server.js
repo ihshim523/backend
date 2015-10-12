@@ -241,6 +241,9 @@ var list = function(cb2) {
 			makeFile('soribada',cb);
 		},
 		function(cb){
+			makeFile('dosirak',cb);
+		},
+		function(cb){
 			makeFile('billboard',cb);
 		},
 	],
