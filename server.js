@@ -137,116 +137,108 @@ var Backend = function() {
      */
     self.initializeServer = function() {
 
-        var hotissue = require('./HotIssueServer/server.js');
-        var clipAnywhere = require('./ClipAnywhereServer/server.js');
-        var music = require('./MusicServer/server.js');
-        var video = require('./VideoServer/server.js');
-        var movie = require('./MovieServer/server.js');
+      var hotissue = require('./HotIssueServer/server.js');
+      var clipAnywhere = require('./ClipAnywhereServer/server.js');
+      var music = require('./MusicServer/server.js');
+      var video = require('./VideoServer/server.js');
+      var movie = require('./MovieServer/server.js');
 
-        async.waterfall([
-          function(cb){
-            hotissue.init(cb);
-          },
-          function(cb){
-            clipAnywhere.init(cb);
-          },
-          function(cb){
-            movie.init(cb);
-          },
-          function(cb){
-            music.init(cb);
-          },
-          function(cb){
-            video.init(cb, mongodb);
-          }],
-          function(err){
-            // self.createRoutes();
-            self.app = express();
+      async.waterfall([
+        function(cb){
+          hotissue.init(cb);
+        },
+        function(cb){
+          clipAnywhere.init(cb);
+        },
+        function(cb){
+          movie.init(cb);
+        },
+        function(cb){
+          music.init(cb);
+        },
+        function(cb){
+          video.init(cb, mongodb);
+        }],
+        function(err){
+          // self.createRoutes();
+          self.app = express();
 
-            //    self.app.use(express.compress());
-            self.app.use(express.bodyParser());
-            self.app.use(express.methodOverride());
-            self.app.use(self.allowCrossDomain);
+          //    self.app.use(express.compress());
+          self.app.use(express.bodyParser());
+          self.app.use(express.methodOverride());
+          self.app.use(self.allowCrossDomain);
 
-            // //  Add handlers for the app (from the routes).
-            // for (var r in self.routes) {
-            // self.app.get(r, self.routes[r]);
-            // }
+          // //  Add handlers for the app (from the routes).
+          // for (var r in self.routes) {
+          // self.app.get(r, self.routes[r]);
+          // }
 
-            try {
-              self.app.use(function(req, res, next) {
-                switch(req.host) {
-                  case "clip.imapp.kr":
-                  case "test-clip.imapp.kr":
-                    //console.log('clip');
-                    express.static('./ClipAnywhere')(req,res,next);
-                    break;
-                  case "clip-back.imapp.kr":
-                  case "test-clip-back.imapp.kr":
-                    //console.log('clip-back');
-                    clipAnywhere.server(req,res,next);
-                    break;
-                  case "hotissue.imapp.kr":
-                  case "test-hotissue.imapp.kr":
-                    express.static('./HotIssue')(req,res,next);
-                    break;
-                  case "hotissue-back.imapp.kr":
-                  case "test-hotissue-back.imapp.kr":
-                    hotissue.server(req,res,next);
-                    break;
-                  case "appicons.imapp.kr":
-                  case "test-appicons.imapp.kr":
-                    express.static('./AppIcons')(req,res,next);
-                    break;
-                  case "test-ruler.imapp.kr":
-                  case "ruler.imapp.kr":
-                    express.static('./IMRuler')(req,res,next);
-                    break;
-                  case "music.imapp.kr":
-                  case "test-music.imapp.kr":
-                    express.static('./Music')(req,res,next);
-                    break;
-                  case "music-back.imapp.kr":
-                  case "test-music-back.imapp.kr":
-                    music.server(req,res,next);
-                    break;
-                  case "video.imapp.kr":
-                  case "test-video.imapp.kr":
-                    express.static('./Video')(req,res,next);
-                    break;
-                  case "video-back.imapp.kr":
-                  case "test-video-back.imapp.kr":
-                    video.server(req,res,next);
-                    break;
-                  case "movie.imapp.kr":
-                  case "test-movie.imapp.kr":
-                    express.static('./Movie')(req,res,next);
-                    break;
-                  case "movie-back.imapp.kr":
-                  case "test-movie-back.imapp.kr":
-                    movie.server(req,res,next);
-                    break;
-                  default:
-                    res.setHeader('Content-Type', 'text/html');
-                    res.send(self.cache_get('index.html') );
-                    break;
-                }
-              });
-        }
-        catch(err) {
-            console.log("## Exception:"+err.message);
-        }
-                // express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
-
-            // self.app.get('/', function(req, res) {
-                    // res.setHeader('Content-Type', 'text/html');
-                    // res.send(self.cache_get('index.html') );
-                    // break;
-            // });
+          try {
+            self.app.use(function(req, res, next) {
+              switch(req.host) {
+                case "clip.imapp.kr":
+                case "test-clip.imapp.kr":
+                  //console.log('clip');
+                  express.static('./ClipAnywhere')(req,res,next);
+                  break;
+                case "clip-back.imapp.kr":
+                case "test-clip-back.imapp.kr":
+                  //console.log('clip-back');
+                  clipAnywhere.server(req,res,next);
+                  break;
+                case "hotissue.imapp.kr":
+                case "test-hotissue.imapp.kr":
+                  express.static('./HotIssue')(req,res,next);
+                  break;
+                case "hotissue-back.imapp.kr":
+                case "test-hotissue-back.imapp.kr":
+                  hotissue.server(req,res,next);
+                  break;
+                case "appicons.imapp.kr":
+                case "test-appicons.imapp.kr":
+                  express.static('./AppIcons')(req,res,next);
+                  break;
+                case "test-ruler.imapp.kr":
+                case "ruler.imapp.kr":
+                  express.static('./IMRuler')(req,res,next);
+                  break;
+                case "music.imapp.kr":
+                case "test-music.imapp.kr":
+                  express.static('./Music')(req,res,next);
+                  break;
+                case "music-back.imapp.kr":
+                case "test-music-back.imapp.kr":
+                  music.server(req,res,next);
+                  break;
+                case "video.imapp.kr":
+                case "test-video.imapp.kr":
+                  express.static('./Video')(req,res,next);
+                  break;
+                case "video-back.imapp.kr":
+                case "test-video-back.imapp.kr":
+                  video.server(req,res,next);
+                  break;
+                case "movie.imapp.kr":
+                case "test-movie.imapp.kr":
+                  express.static('./Movie')(req,res,next);
+                  break;
+                case "movie-back.imapp.kr":
+                case "test-movie-back.imapp.kr":
+                  movie.server(req,res,next);
+                  break;
+                default:
+                  res.setHeader('Content-Type', 'text/html');
+                  res.send(self.cache_get('index.html') );
+                  break;
+              }
+            });
           }
-        );
+          catch(err) {
+              console.log("## Exception:"+err.message);
+          }
+        }
+      );
     };
-
     /**
      *  Initializes the sample application.
      */
