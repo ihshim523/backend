@@ -4,20 +4,18 @@ var express = require('express');
 var fs = require('fs');
 var url = require("url");
 var path = require("path");
+var async = require('async');
 
 global.mongo = "mongodb://admin" + ":" +
   "B61vbEbF3kAg" + "@" +
   "mongo.imapp.kr" + ':' +
   "51553" + '/backend';
 var mongo = require('mongodb').MongoClient;
-
 var mongodb;
 
 var Backend = function() {
-
     //  Scope.
     var self = this;
-
 
     /*  ================================================================  */
     /*  Helper functions.                                                 */
@@ -145,127 +143,108 @@ var Backend = function() {
         var video = require('./VideoServer/server.js');
         var movie = require('./MovieServer/server.js');
 
-        hotissue.init();
-        clipAnywhere.init();
-        movie.init();
-        music.init();
-        video.init(mongodb);
+        async.waterfall([
+          function(cb){
+            hotissue.init(cb);
+          },
+          function(cb){
+            clipAnywhere.init(cb);
+          },
+          function(cb){
+            movie.init(cb);
+          },
+          function(cb){
+            music.init(cb);
+          },
+          function(cb){
+            video.init(cb, mongodb);
+          }],
+          function(err){
+            // self.createRoutes();
+            self.app = express();
 
-        // self.createRoutes();
-        self.app = express();
+            //    self.app.use(express.compress());
+            self.app.use(express.bodyParser());
+            self.app.use(express.methodOverride());
+            self.app.use(self.allowCrossDomain);
 
-//    self.app.use(express.compress());
-        self.app.use(express.bodyParser());
-     self.app.use(express.methodOverride());
-    self.app.use(self.allowCrossDomain);
-
-        // //  Add handlers for the app (from the routes).
-        // for (var r in self.routes) {
+            // //  Add handlers for the app (from the routes).
+            // for (var r in self.routes) {
             // self.app.get(r, self.routes[r]);
-        // }
+            // }
 
-    try {
-        self.app.use(function(req, res, next) {
-            switch(req.host) {
-                case "clip.imapp.kr":
-                case "test-clip.imapp.kr":
+            try {
+              self.app.use(function(req, res, next) {
+                switch(req.host) {
+                  case "clip.imapp.kr":
+                  case "test-clip.imapp.kr":
                     //console.log('clip');
                     express.static('./ClipAnywhere')(req,res,next);
                     break;
-                case "clip-back.imapp.kr":
-                case "test-clip-back.imapp.kr":
+                  case "clip-back.imapp.kr":
+                  case "test-clip-back.imapp.kr":
                     //console.log('clip-back');
-                     clipAnywhere.server(req,res,next);
-                     break;
-                case "hotissue.imapp.kr":
-                case "test-hotissue.imapp.kr":
-                  // if ( 'get.dat' === path.basename(req.path)) {
-                  //   hotissue.list(req,res,next);
-                  // }
-                  // else
-                  // if ( 'get2.dat' === path.basename(req.path)) {
-                  //   hotissue.list2(req,res,next);
-                  // }
-                  // else
+                    clipAnywhere.server(req,res,next);
+                    break;
+                  case "hotissue.imapp.kr":
+                  case "test-hotissue.imapp.kr":
                     express.static('./HotIssue')(req,res,next);
-                  break;
-                case "hotissue-back.imapp.kr":
-                case "test-hotissue-back.imapp.kr":
-                     hotissue.server(req,res,next);
-                     break;
-                case "appicons.imapp.kr":
-                case "test-appicons.imapp.kr":
+                    break;
+                  case "hotissue-back.imapp.kr":
+                  case "test-hotissue-back.imapp.kr":
+                    hotissue.server(req,res,next);
+                    break;
+                  case "appicons.imapp.kr":
+                  case "test-appicons.imapp.kr":
                     express.static('./AppIcons')(req,res,next);
                     break;
-                case "test-ruler.imapp.kr":
-                case "ruler.imapp.kr":
-                  express.static('./IMRuler')(req,res,next);
-                  break;
-                case "music.imapp.kr":
-                case "test-music.imapp.kr":
-                  // switch(path.basename(req.path)) {
-                  //   case 'get.dat':
-                  //     music.list(path.basename(req.path),res,next);
-                  //     break;
-                  //   case 'melon.dat':
-                  //   case 'melon5.dat':
-                  //   case 'mnet.dat':
-                  //   case 'mnet5.dat':
-                  //   case 'bugs.dat':
-                  //   case 'bugs5.dat':
-                  //   case 'soribada.dat':
-                  //   case 'soribada5.dat':
-                  //   case 'dosirak.dat':
-                  //   case 'dosirak5.dat':
-                  //   case 'billboard.dat':
-                  //   case 'billboard5.dat':
-                  //     music.list2(path.basename(req.path),res,next);
-                  //     break;
-                  //   default:
-                      express.static('./Music')(req,res,next);
-                  // }
-                  break;
-                case "music-back.imapp.kr":
-                case "test-music-back.imapp.kr":
-                     music.server(req,res,next);
-                     break;
-                case "video.imapp.kr":
-                case "test-video.imapp.kr":
+                  case "test-ruler.imapp.kr":
+                  case "ruler.imapp.kr":
+                    express.static('./IMRuler')(req,res,next);
+                    break;
+                  case "music.imapp.kr":
+                  case "test-music.imapp.kr":
+                    express.static('./Music')(req,res,next);
+                    break;
+                  case "music-back.imapp.kr":
+                  case "test-music-back.imapp.kr":
+                    music.server(req,res,next);
+                    break;
+                  case "video.imapp.kr":
+                  case "test-video.imapp.kr":
                     express.static('./Video')(req,res,next);
-                     break;
-                case "video-back.imapp.kr":
-                case "test-video-back.imapp.kr":
-                     video.server(req,res,next);
-                     break;
-                case "movie.imapp.kr":
-                case "test-movie.imapp.kr":
-                  if ( 'get.dat' === path.basename(req.path)) {
-                    movie.list(req,res,next);
-                  }
-                  else
+                    break;
+                  case "video-back.imapp.kr":
+                  case "test-video-back.imapp.kr":
+                    video.server(req,res,next);
+                    break;
+                  case "movie.imapp.kr":
+                  case "test-movie.imapp.kr":
                     express.static('./Movie')(req,res,next);
-                  break;
-                case "movie-back.imapp.kr":
-                case "test-movie-back.imapp.kr":
-                     movie.server(req,res,next);
-                     break;
-                default:
+                    break;
+                  case "movie-back.imapp.kr":
+                  case "test-movie-back.imapp.kr":
+                    movie.server(req,res,next);
+                    break;
+                  default:
                     res.setHeader('Content-Type', 'text/html');
                     res.send(self.cache_get('index.html') );
                     break;
-            }
-        });
-    }
-    catch(err) {
-        console.log("## Exception:"+err.message);
-    }
-            // express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
+                }
+              });
+        }
+        catch(err) {
+            console.log("## Exception:"+err.message);
+        }
+                // express.vhost('clip.imapp.kr', express.static('./ClipAnywhere')));
 
-        // self.app.get('/', function(req, res) {
-                // res.setHeader('Content-Type', 'text/html');
-                // res.send(self.cache_get('index.html') );
-                // break;
-        // });
+            // self.app.get('/', function(req, res) {
+                    // res.setHeader('Content-Type', 'text/html');
+                    // res.send(self.cache_get('index.html') );
+                    // break;
+            // });
+          }
+        );
     };
 
     /**
@@ -286,10 +265,10 @@ var Backend = function() {
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
-    self.app.listen(self.port, self.ipaddress, function() {
-      console.log('%s: Node server started on %s:%d ...',
-            Date(Date.now() ), self.ipaddress, self.port);
-    });
+      self.app.listen(self.port, self.ipaddress, function() {
+        console.log('%s: Node server started on %s:%d ...',
+              Date(Date.now() ), self.ipaddress, self.port);
+      });
     };
 
 };   /*  Sample Application.  */
@@ -297,7 +276,7 @@ var Backend = function() {
 /**
  *  main():  Main code.
  */
- mongo.connect(global.mongo, function(err, mongoDB){
+mongo.connect(global.mongo, function(err, mongoDB){
    if ( !err ) {
      mongodb = mongoDB;
      var zapp = new Backend();
@@ -307,4 +286,4 @@ var Backend = function() {
    else {
      console.log('mongo connection error:'+err);
    }
- });
+});

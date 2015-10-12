@@ -15,7 +15,7 @@ var htmlToText = require('html-to-text');
 var lz = require('lz-string');
 
 //////////////////////////////////
-var init = function() {
+var init = function(cb) {
 //    var hotissue = db.collection('hotissue');
 //    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
 
@@ -33,6 +33,7 @@ var init = function() {
 	});
   },60000);
 
+	cb(null);
 };
 
 var get = function(req, res, next) {

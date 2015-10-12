@@ -14,7 +14,8 @@ var gcm = require('./sendGCM.js');
 
 var db = require('../elastic.js');
 //////////////////////////////////
-var init = function() {
+var init = function(cb) {
+	cb(null);
 };
 
 var get = function(req, res, next) {

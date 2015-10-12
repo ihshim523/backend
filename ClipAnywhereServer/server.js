@@ -8,7 +8,7 @@
 
 var db = require('../elastic.js');
 
-var init = function() {
+var init = function(cb) {
 
     setInterval(function(){
     	db.deleteByQuery({
@@ -23,6 +23,8 @@ var init = function() {
 			}
 		});
     },60000);
+
+		cb(null);
 };
 
 var get = function(req, res, next) {

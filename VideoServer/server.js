@@ -10,16 +10,17 @@ var lz = require('lz-string');
 //   process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
-  
+
 var db;
 //////////////////////////////////
-var init = function(mongo) {
+var init = function(cb, mongo) {
 	db = mongo;
+  cb(null);
 };
 
 var get = function(req, res, next) {
 	var video = db.collection('video');
-	
+
 	try{
 	    video.findOne({k:req.query.k}, function(err, doc) {
 	    	if (!err) {
@@ -48,7 +49,7 @@ var post = function(req, res, next) {
     var video = db.collection('video');
 
     var input = new Buffer(req.body.k);
-	
+
     var obj = JSON.parse(req.body.k);
 
     zlib.deflate(input, function(err, compressed){
@@ -151,7 +152,7 @@ var server  = function(req, res, next) {
             del(req,res,next);
             break;
     }
-}; 
+};
 
 module.exports.init = init;
 module.exports.server = server;
