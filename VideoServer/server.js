@@ -108,12 +108,16 @@ var post = function(req, res, next) {
     var input = new Buffer(req.body.k);
     var obj = JSON.parse(req.body.k);
 
-		makeFile(input, obj, function(err){
-			if (!err)
-				res.send('{"R":"1"}');
-			res.end();
+console.log('+++post');
+console.log(JSON.stringify(req.body.k));
 
+		makeFile(input, obj, function(err){
+			console.log('+++post2');
 			db.index({index:'hotissue', type:'temp_video', id:'all', body:req.body.k}, function(err){
+				console.log('+++post3');
+				if (!err)
+					res.send('{"R":"1"}');
+				res.end();
 			});
 		})
 };
