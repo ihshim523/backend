@@ -94,12 +94,12 @@ function makeFile(input, obj, cb2){
 				}
 			],
 			function(err) {
-				cb(null);
+				cb2(null);
 			});
 		}
 		catch(e) {
 			console.log(JSON.stringify(e));
-			cb(true);
+			cb2(true);
 		}
 	});
 };
