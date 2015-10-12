@@ -13,27 +13,24 @@ var lz = require('lz-string');
 
 var db = require('../elastic.js');
 //////////////////////////////////
-var init = function(cb) {
-	cb(null);
-};
 
 var get = function(req, res, next) {
 	try{
-	    music.findOne({k:req.query.k}, function(err, doc) {
-	    	if (!err) {
-	    		//console.log("DOC:::"+JSON.stringify(doc));
+		music.findOne({k:req.query.k}, function(err, doc) {
+			if (!err) {
+				//console.log("DOC:::"+JSON.stringify(doc));
 
-	    	    var input = new Buffer(JSON.stringify(doc));
-	    	    zlib.deflate(input, function(err,compressed) {
-	    	    	if (!err)
-						res.send(compressed);
+				var input = new Buffer(JSON.stringify(doc));
+				zlib.deflate(input, function(err,compressed) {
+					if (!err)
+					res.send(compressed);
 					else
-						res.end();
+					res.end();
 				});
-	    	}
-	    	else
-	    		res.end();
-	    });
+			}
+			else
+			res.end();
+		});
 	}
 	catch(e) {
 		res.end();
@@ -53,7 +50,7 @@ var post = function(req, res, next) {
 				// fs.writeFile('./Music/get.dat', compressed, function(err) {
 				// 	cb(null);
 				// });
-				db.index({index:'hotissue',type:'music',id:'get.dat',body:{v:compressed.toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'get',body:{v:compressed.toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -74,7 +71,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'melon.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'melon',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -95,7 +92,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'mnet.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'mnet',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -116,7 +113,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'bugs.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'bugs',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -137,7 +134,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'soribada.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'soribada',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -158,7 +155,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'dosirak.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'dosirak',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -179,7 +176,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'billboard.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'billboard',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -214,43 +211,65 @@ var server  = function(req, res, next) {
     }
 };
 
-var list = function(id, res, next) {
-	console.log('+list');
-	db.get({index:'hotissue',type:'music',id:id}, function(err, doc){
+function makeFile(key, cb){
+	db.get({index:'hotissue',type:'music',id:key}, function(err, doc){
 		if (!err && doc.found) {
 			console.log(JSON.stringify(doc));
 			try {
-				res.send(new Buffer(doc._source, 'base64'));
+				fs.writeFile('./Music/'+key+'.dat', new Buffer(doc._source, 'base64'), function(err) {
+					fs.writeFile('./Music/'+key+'5.dat', new Buffer(doc._source, 'base64'), function(err) {
+						cb(null);
+					});
+				});
 			}
 			catch(e){
 				console.log(JSON.stringify(e));
+				cb(null);
 			}
 		}
 		else {
-			res.end();
+			cb(null);
 		}
 	});
-};
+}
 
-var list2 = function(id, res, next) {
-	console.log('+list2');
-	db.get({index:'hotissue',type:'music',id:id}, function(err, doc){
-		console.log(JSON.stringify(doc));
-		if (!err && doc.found) {
-			try {
-				res.send(new Buffer(doc._source, 'base64'));
-			}
-			catch(e){
-				console.log(JSON.stringify(e));
-			}
-		}
-		else {
-			res.end();
-		}
+var list = function(cb2) {
+	console.log('+list');
+	// fs.writeFile('./Music/get.dat', compressed, function(err) {
+	// 	cb(null);
+	// });
+	async.waterfall([
+		function(cb){
+			makeFile('get',cb);
+		},
+		function(cb){
+			makeFile('melon',cb);
+		},
+		function(cb){
+			makeFile('mnet',cb);
+		},
+		function(cb){
+			makeFile('bugs',cb);
+		},
+		function(cb){
+			makeFile('soribada',cb);
+		},
+		function(cb){
+			makeFile('billboard',cb);
+		},
+	],
+	function(err){
+		cb2(null);
 	});
-};
+}
+
+var init = function(cb) {
+	setInterval(function(){
+		list(function(){});
+	},60000);
+
+	list(cb);
+}
 
 module.exports.init = init;
 module.exports.server = server;
-module.exports.list = list;
-module.exports.list2 = list2;
