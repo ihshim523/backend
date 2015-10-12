@@ -215,8 +215,10 @@ var server  = function(req, res, next) {
 };
 
 var list = function(id, res, next) {
+	console.log('+list');
 	db.get({index:'hotissue',type:'music',id:id}, function(err, doc){
 		if (!err && doc.found) {
+			console.log(JSON.stringify(doc));
 			try {
 				res.send(new Buffer(doc._source, 'base64'));
 			}
@@ -231,7 +233,9 @@ var list = function(id, res, next) {
 };
 
 var list2 = function(id, res, next) {
+	console.log('+list2');
 	db.get({index:'hotissue',type:'music',id:id}, function(err, doc){
+		console.log(JSON.stringify(doc));
 		if (!err && doc.found) {
 			try {
 				res.send(doc._source);
