@@ -220,10 +220,6 @@ function makeFile2(key, cb){
 }
 
 var list = function(cb2) {
-	console.log('+list');
-	// fs.writeFile('./Music/get.dat', compressed, function(err) {
-	// 	cb(null);
-	// });
 	async.waterfall([
 		function(cb){
 			makeFile2('get',cb);

@@ -15,7 +15,11 @@ var gcm = require('./sendGCM.js');
 var db = require('../elastic.js');
 //////////////////////////////////
 var init = function(cb) {
-	cb(null);
+	setInterval(function(){
+    list(function(){});
+  },60000);
+
+	list(cb);
 };
 
 var get = function(req, res, next) {
@@ -38,20 +42,22 @@ var get = function(req, res, next) {
 	}
 };
 
-var list = function(req, res, next) {
+var list = function(cb) {
 	try{
 		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
     	if (!err && doc.found) {
   	    var compressed = lz.compressToUTF16(JSON.stringify(doc._source));
-				res.send(compressed);
+				fs.writeFile('./Movie/get.dat', compressed, function(err) {
+					cb(null);
+				});
     	}
     	else
-    		res.end();
+			cb(null);
     });
 	}
 	catch(e) {
 		console.log("list:::"+JSON.stringify(e));
-		res.end();
+		cb(null);
 	}
 };
 
