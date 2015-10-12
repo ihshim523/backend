@@ -39,12 +39,12 @@ var get = function(req, res, next) {
 };
 
 var post = function(req, res, next) {
-    var input = new Buffer(req.body.k);
+	var input = new Buffer(req.body.k);
 
-    var obj = JSON.parse(req.body.k);
+	var obj = JSON.parse(req.body.k);
 
-		try {
-			async.waterfall([
+	try {
+		async.waterfall([
 			function(cb){
 				// fs.writeFile('./Music/get.dat', compressed, function(err) {
 				// 	cb(null);
@@ -61,7 +61,7 @@ var post = function(req, res, next) {
 
 				obj.rank.forEach(function(item){
 					if ( item.site === 'melon' )
-						ranking.rank.push(item);
+					ranking.rank.push(item);
 				});
 
 				db.index({index:'hotissue',type:'music',id:'melon',body:JSON.stringify(ranking)}, function(err){
@@ -76,7 +76,7 @@ var post = function(req, res, next) {
 
 				obj.rank.forEach(function(item){
 					if ( item.site === 'mnet' )
-						ranking.rank.push(item);
+					ranking.rank.push(item);
 				});
 
 				db.index({index:'hotissue',type:'music',id:'mnet',body:JSON.stringify(ranking)}, function(err){
@@ -91,7 +91,7 @@ var post = function(req, res, next) {
 
 				obj.rank.forEach(function(item){
 					if ( item.site === 'bugs' )
-						ranking.rank.push(item);
+					ranking.rank.push(item);
 				});
 
 				db.index({index:'hotissue',type:'music',id:'bugs',body:JSON.stringify(ranking)}, function(err){
@@ -106,7 +106,7 @@ var post = function(req, res, next) {
 
 				obj.rank.forEach(function(item){
 					if ( item.site === 'soribada' )
-						ranking.rank.push(item);
+					ranking.rank.push(item);
 				});
 
 				db.index({index:'hotissue',type:'music',id:'soribada',body:JSON.stringify(ranking)}, function(err){
@@ -121,7 +121,7 @@ var post = function(req, res, next) {
 
 				obj.rank.forEach(function(item){
 					if ( item.site === 'dosirak' )
-						ranking.rank.push(item);
+					ranking.rank.push(item);
 				});
 
 				db.index({index:'hotissue',type:'music',id:'dosirak',body:JSON.stringify(ranking)}, function(err){
@@ -136,7 +136,7 @@ var post = function(req, res, next) {
 
 				obj.rank.forEach(function(item){
 					if ( item.site === 'billboard' )
-						ranking.rank.push(item);
+					ranking.rank.push(item);
 				});
 
 				db.index({index:'hotissue',type:'music',id:'billboard',body:JSON.stringify(ranking)}, function(err){
@@ -147,13 +147,13 @@ var post = function(req, res, next) {
 				})
 			}],
 			function(err) {
-				 res.send('{"R":"1"}');
-			});
-		}
-		catch(e) {
-			res.end();
-		}
-	});
+				res.send('{"R":"1"}');
+			}
+		);
+	}
+	catch(e) {
+		res.end();
+	}
 };
 
 var del = function(req, res, next) {
