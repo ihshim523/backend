@@ -14,28 +14,6 @@ var naver = require('imnaver');
 var htmlToText = require('html-to-text');
 var lz = require('lz-string');
 
-//////////////////////////////////
-var init = function(cb) {
-//    var hotissue = db.collection('hotissue');
-//    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
-
-  setInterval(function(){
-  	db.deleteByQuery({
-		index:'hotissue',
-		type:'hotissue_article',
-		body:{
-			"range" : {
-				"expire":{
-					"lte":(new Date()).getTime() - 24*60*60*1000
-				}
-			}
-		}
-	});
-  },60000);
-
-	cb(null);
-};
-
 var get = function(req, res, next) {
 
 	try{
@@ -182,52 +160,56 @@ var server  = function(req, res, next) {
     }
 };
 
-var list = function(req, res, next) {
-	try{
-	    db.get({index:'hotissue',type:'hotissue_list',id:'1'}, function(err, doc) {
-	    	if (!err && doc.found) {
-	    		//console.log("DOC:::"+JSON.stringify(doc));
-	    	    var input = new Buffer(JSON.stringify(doc._source.v));
-	    	    zlib.deflate(input, function(err, compressed){
-					if (!err)
-	    	    		res.send(compressed);
-					else
-						res.end();
-				});
-	    	}
-	    	else {
-                console.log('get1:'+err);
-	    		res.end();
-            }
-	    });
-	}
-	catch(e) {
-        console.log('get2:'+e);
-		res.end();
-	}
+var list = function(cb) {
+  try{
+    db.get({index:'hotissue',type:'hotissue_list',id:'1'}, function(err, doc) {
+      if (!err && doc.found) {
+        //console.log("DOC:::"+JSON.stringify(doc));
+        var input = new Buffer(JSON.stringify(doc._source.v));
+        zlib.deflate(input, function(err, compressed){
+          fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
+            var compressed = lz.compressToUTF16(JSON.stringify(doc._source.v));
+            fs.writeFile('./HotIssue/get2.dat', compressed, function(err) {
+              cb(null);
+            });
+            //                res.send('{"R":"1"}');
+          });
+        }
+        });
+      }
+      else {
+        console.log('get1:'+err);
+        cb(null);
+      }
+    });
+  }
+  catch(e) {
+    console.log('get2:'+e);
+    res.end();
+  }
 };
 
-var list2 = function(req, res, next) {
-	try{
-	    db.get({index:'hotissue',type:'hotissue_list',id:'1'}, function(err, doc) {
-	    	if (!err && doc.found) {
-	    		//console.log("DOC:::"+JSON.stringify(doc));
-            var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
-   	    		res.send(compressed);
-	    	}
-	    	else {
-          console.log('get1:'+err);
-	    		res.end();
-        }
-	    });
-	}
-	catch(e) {
-    console.log('get2:'+e);
-		res.end();
-	}
+//////////////////////////////////
+var init = function(cb) {
+//    var hotissue = db.collection('hotissue');
+//    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
+
+  setInterval(function(){
+  	db.deleteByQuery({
+		index:'hotissue',
+		type:'hotissue_article',
+		body:{
+			"range" : {
+				"expire":{
+					"lte":(new Date()).getTime() - 24*60*60*1000
+				}
+			}
+		}
+	});
+  },60000);
+
+	list(cb);
 };
 
 module.exports.init = init;
 module.exports.server = server;
-module.exports.list = list;
-module.exports.list2 = list2;
