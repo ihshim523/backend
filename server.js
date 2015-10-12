@@ -232,6 +232,10 @@ var Backend = function() {
                   break;
               }
             });
+            self.app.listen(self.port, self.ipaddress, function() {
+              console.log('%s: Node server started on %s:%d ...',
+                    Date(Date.now() ), self.ipaddress, self.port);
+            });
           }
           catch(err) {
               console.log("## Exception:"+err.message);
@@ -250,19 +254,6 @@ var Backend = function() {
         // Create the express server and routes.
         self.initializeServer();
     };
-
-
-    /**
-     *  Start the server (starts up the sample application).
-     */
-    self.start = function() {
-        //  Start the app on the specific interface (and port).
-      self.app.listen(self.port, self.ipaddress, function() {
-        console.log('%s: Node server started on %s:%d ...',
-              Date(Date.now() ), self.ipaddress, self.port);
-      });
-    };
-
 };   /*  Sample Application.  */
 
 /**
@@ -273,7 +264,6 @@ mongo.connect(global.mongo, function(err, mongoDB){
      mongodb = mongoDB;
      var zapp = new Backend();
      zapp.initialize();
-     zapp.start();
    }
    else {
      console.log('mongo connection error:'+err);
