@@ -179,14 +179,14 @@ var Backend = function() {
                      break;
                 case "hotissue.imapp.kr":
                 case "test-hotissue.imapp.kr":
-                  if ( 'get.dat' === path.basename(req.path)) {
-                    hotissue.list(req,res,next);
-                  }
-                  else
-                  if ( 'get2.dat' === path.basename(req.path)) {
-                    hotissue.list2(req,res,next);
-                  }
-                  else
+                  // if ( 'get.dat' === path.basename(req.path)) {
+                  //   hotissue.list(req,res,next);
+                  // }
+                  // else
+                  // if ( 'get2.dat' === path.basename(req.path)) {
+                  //   hotissue.list2(req,res,next);
+                  // }
+                  // else
                     express.static('./HotIssue')(req,res,next);
                   break;
                 case "hotissue-back.imapp.kr":
@@ -203,27 +203,27 @@ var Backend = function() {
                   break;
                 case "music.imapp.kr":
                 case "test-music.imapp.kr":
-                  switch(path.basename(req.path)) {
-                    case 'get.dat':
-                      music.list(path.basename(req.path),res,next);
-                      break;
-                    case 'melon.dat':
-                    case 'melon5.dat':
-                    case 'mnet.dat':
-                    case 'mnet5.dat':
-                    case 'bugs.dat':
-                    case 'bugs5.dat':
-                    case 'soribada.dat':
-                    case 'soribada5.dat':
-                    case 'dosirak.dat':
-                    case 'dosirak5.dat':
-                    case 'billboard.dat':
-                    case 'billboard5.dat':
-                      music.list2(path.basename(req.path),res,next);
-                      break;
-                    default:
+                  // switch(path.basename(req.path)) {
+                  //   case 'get.dat':
+                  //     music.list(path.basename(req.path),res,next);
+                  //     break;
+                  //   case 'melon.dat':
+                  //   case 'melon5.dat':
+                  //   case 'mnet.dat':
+                  //   case 'mnet5.dat':
+                  //   case 'bugs.dat':
+                  //   case 'bugs5.dat':
+                  //   case 'soribada.dat':
+                  //   case 'soribada5.dat':
+                  //   case 'dosirak.dat':
+                  //   case 'dosirak5.dat':
+                  //   case 'billboard.dat':
+                  //   case 'billboard5.dat':
+                  //     music.list2(path.basename(req.path),res,next);
+                  //     break;
+                  //   default:
                       express.static('./Music')(req,res,next);
-                  }
+                  // }
                   break;
                 case "music-back.imapp.kr":
                 case "test-music-back.imapp.kr":
