@@ -74,7 +74,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'melon.dat',body:{v:compressed}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'melon.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -95,7 +95,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'mnet.dat',body:{v:compressed}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'mnet.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -116,7 +116,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'bugs.dat',body:{v:compressed}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'bugs.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -137,7 +137,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'soribada.dat',body:{v:compressed}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'soribada.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -158,7 +158,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'dosirak.dat',body:{v:compressed}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'dosirak.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -179,7 +179,7 @@ var post = function(req, res, next) {
 				// 		cb(null);
 				// 	});
 				// });
-				db.index({index:'hotissue',type:'music',id:'billboard.dat',body:{v:compressed}}, function(err){
+				db.index({index:'hotissue',type:'music',id:'billboard.dat',body:{v:new Buffer(compressed).toString('base64')}}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -238,7 +238,7 @@ var list2 = function(id, res, next) {
 		console.log(JSON.stringify(doc));
 		if (!err && doc.found) {
 			try {
-				res.send(doc._source);
+				res.send(new Buffer(doc._source, 'base64'));
 			}
 			catch(e){
 				console.log(JSON.stringify(e));
