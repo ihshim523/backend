@@ -204,6 +204,7 @@ var init = function(cb) {
 				}
 			}
 		}
+    list(function(){});
 	});
   },60000);
 
