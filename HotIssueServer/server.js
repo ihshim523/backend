@@ -190,25 +190,22 @@ var list = function(cb) {
 
 //////////////////////////////////
 var init = function(cb) {
-//    var hotissue = db.collection('hotissue');
-//    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
-
   setInterval(function(){
-  	db.deleteByQuery({
-		index:'hotissue',
-		type:'hotissue_article',
-		body:{
-			"range" : {
-				"expire":{
-					"lte":(new Date()).getTime() - 24*60*60*1000
-				}
-			}
-		}
+    db.deleteByQuery({
+      index:'hotissue',
+      type:'hotissue_article',
+      body:{
+        "range" : {
+          "expire":{
+            "lte":(new Date()).getTime() - 24*60*60*1000
+          }
+        }
+      }
+    });
     list(function(){});
-	});
   },60000);
 
-	list(cb);
+  list(cb);
 };
 
 module.exports.init = init;
