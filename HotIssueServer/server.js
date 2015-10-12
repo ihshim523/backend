@@ -174,7 +174,6 @@ var list = function(cb) {
             });
             //                res.send('{"R":"1"}');
           });
-        }
         });
       }
       else {
@@ -185,7 +184,7 @@ var list = function(cb) {
   }
   catch(e) {
     console.log('get2:'+e);
-    res.end();
+    cb(null);
   }
 };
 
