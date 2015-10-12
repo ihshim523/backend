@@ -169,6 +169,8 @@ var Backend = function() {
         // }
 
     try {
+      console.log(path.basename(req.path));
+      
         self.app.use(function(req, res, next) {
             switch(req.host) {
                 case "clip.imapp.kr":
