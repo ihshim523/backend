@@ -212,7 +212,6 @@ var list2 = function(req, res, next) {
 	    db.get({index:'hotissue',type:'hotissue_list',id:'1'}, function(err, doc) {
 	    	if (!err && doc.found) {
 	    		//console.log("DOC:::"+JSON.stringify(doc));
-	    	    var input = new Buffer(JSON.stringify(doc._source.v));
             var compressed = lz.compressToUTF16(JSON.stringify(req.body.k));
    	    		res.send(compressed);
 	    	}

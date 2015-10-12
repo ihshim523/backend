@@ -40,15 +40,9 @@ var get = function(req, res, next) {
 
 var list = function(req, res, next) {
 	try{
-		console.log('+list');
-
 		db.get({index:'hotissue', type:'temp_movie', id:'movie'}, function(err, doc) {
-			console.log("DOC:::"+JSON.stringify(err));
     	if (!err && doc.found) {
-    		var jsonstr = JSON.stringify(doc._source);
-				console.log(jsonstr);
-				console.log('#######################');
-  	    var compressed = lz.compressToUTF16(jsonstr);
+  	    var compressed = lz.compressToUTF16(JSON.stringify(doc._source));
 				res.send(compressed);
     	}
     	else
@@ -59,7 +53,6 @@ var list = function(req, res, next) {
 		console.log("list:::"+JSON.stringify(e));
 		next();
 	}
-	console.log('-list');
 };
 
 var post = function(req, res, next) {
