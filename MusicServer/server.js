@@ -64,7 +64,7 @@ var post = function(req, res, next) {
 						ranking.rank.push(item);
 				});
 
-				db.index({index:'hotissue',type:'music',id:'melon',body:JSON.stringify(ranking), function(err){
+				db.index({index:'hotissue',type:'music',id:'melon',body:JSON.stringify(ranking)}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -79,7 +79,7 @@ var post = function(req, res, next) {
 						ranking.rank.push(item);
 				});
 
-				db.index({index:'hotissue',type:'music',id:'mnet',body:JSON.stringify(ranking), function(err){
+				db.index({index:'hotissue',type:'music',id:'mnet',body:JSON.stringify(ranking)}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -109,7 +109,7 @@ var post = function(req, res, next) {
 						ranking.rank.push(item);
 				});
 
-				db.index({index:'hotissue',type:'music',id:'soribada',body:JSON.stringify(ranking), function(err){
+				db.index({index:'hotissue',type:'music',id:'soribada',body:JSON.stringify(ranking)}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -124,7 +124,7 @@ var post = function(req, res, next) {
 						ranking.rank.push(item);
 				});
 
-				db.index({index:'hotissue',type:'music',id:'dosirak',body:JSON.stringify(ranking), function(err){
+				db.index({index:'hotissue',type:'music',id:'dosirak',body:JSON.stringify(ranking)}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
@@ -139,7 +139,7 @@ var post = function(req, res, next) {
 						ranking.rank.push(item);
 				});
 
-				db.index({index:'hotissue',type:'music',id:'billboard',body:JSON.stringify(ranking), function(err){
+				db.index({index:'hotissue',type:'music',id:'billboard',body:JSON.stringify(ranking)}, function(err){
 					if (err) {
 						console.log('get.dat:::'+JSON.stringify(err));
 					}
