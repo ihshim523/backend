@@ -12,10 +12,9 @@ var gcm = require('./sendGCM.js');
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
 
-var db;
+var db = require('../elastic.js');
 //////////////////////////////////
-var init = function(elasticsearch) {
-	db = elasticsearch;
+var init = function() {
 };
 
 var get = function(req, res, next) {

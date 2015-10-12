@@ -9,14 +9,13 @@ var async = require('async');
 //   process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
 //   process.env.OPENSHIFT_APP_NAME;
 
-var db;
+var db = require('../elastic.js');
 var naver = require('imnaver');
 var htmlToText = require('html-to-text');
 var lz = require('lz-string');
 
 //////////////////////////////////
-var init = function(elasticsearch) {
-	db = elasticsearch;
+var init = function() {
 //    var hotissue = db.collection('hotissue');
 //    hotissue.ensureIndex({expire:1},{expireAfterSeconds:6000});
 

@@ -11,10 +11,6 @@ global.mongo = "mongodb://admin" + ":" +
   "51553" + '/backend';
 var mongo = require('mongodb').MongoClient;
 
-var elasticsearch = require('elasticsearch');
-var db = new elasticsearch.Client({
-  host:['https://site:22d3ca5fb355b3ac1d9fb1b968921037@bofur-us-east-1.searchly.com']
-});
 var mongodb;
 
 var Backend = function() {
@@ -149,10 +145,10 @@ var Backend = function() {
         var video = require('./VideoServer/server.js');
         var movie = require('./MovieServer/server.js');
 
-        hotissue.init(db);
-        clipAnywhere.init(db);
-        movie.init(db);
-        music.init(db);
+        hotissue.init();
+        clipAnywhere.init();
+        movie.init();
+        music.init();
         video.init(mongodb);
 
         // self.createRoutes();
