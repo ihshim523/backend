@@ -13,13 +13,11 @@ var lz = require('lz-string');
 
 var db;
 //////////////////////////////////
-var init = function(mongo) {
-	db = mongo;
+var init = function(elasticsearch) {
+	db = elasticsearch;
 };
 
 var get = function(req, res, next) {
-	var music = db.collection('music');
-	
 	try{
 	    music.findOne({k:req.query.k}, function(err, doc) {
 	    	if (!err) {
@@ -44,19 +42,20 @@ var get = function(req, res, next) {
 };
 
 var post = function(req, res, next) {
-    var music = db.collection('music');
-
     var input = new Buffer(req.body.k);
-	
+
     var obj = JSON.parse(req.body.k);
 
-    zlib.deflate(input, function(err, compressed){		
+    zlib.deflate(input, function(err, compressed){
 		try {
 			async.waterfall([
 			function(cb){
-				fs.writeFile('./Music/get.dat', compressed, function(err) {
+				// fs.writeFile('./Music/get.dat', compressed, function(err) {
+				// 	cb(null);
+				// });
+				db.index({index:'hotissue',type:'music',id:'get.dat',body:{v:compressed.toString('base64')}}, function(err){
 					cb(null);
-				});
+				})
 			},
 			function(cb) {
 				var ranking = {rank:[]};
@@ -67,11 +66,14 @@ var post = function(req, res, next) {
 				});
 
 				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-				fs.writeFile('./Music/melon.dat', compressed, function(err) {
-					fs.writeFile('./Music/melon5.dat', compressed, function(err) {
-						cb(null);
-					});
-				});
+				// fs.writeFile('./Music/melon.dat', compressed, function(err) {
+				// 	fs.writeFile('./Music/melon5.dat', compressed, function(err) {
+				// 		cb(null);
+				// 	});
+				// });
+				db.index({index:'hotissue',type:'music',id:'melon.dat',body:{v:compressed.toString('base64')}}, function(err){
+					cb(null);
+				})
 			},
 			function(cb) {
 				var ranking = {rank:[]};
@@ -82,11 +84,14 @@ var post = function(req, res, next) {
 				});
 
 				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-				fs.writeFile('./Music/mnet.dat', compressed, function(err) {
-					fs.writeFile('./Music/mnet5.dat', compressed, function(err) {
-						cb(null);
-					});
-				});
+				// fs.writeFile('./Music/mnet.dat', compressed, function(err) {
+				// 	fs.writeFile('./Music/mnet5.dat', compressed, function(err) {
+				// 		cb(null);
+				// 	});
+				// });
+				db.index({index:'hotissue',type:'music',id:'mnet.dat',body:{v:compressed.toString('base64')}}, function(err){
+					cb(null);
+				})
 			},
 			function(cb) {
 				var ranking = {rank:[]};
@@ -97,11 +102,14 @@ var post = function(req, res, next) {
 				});
 
 				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-				fs.writeFile('./Music/bugs.dat', compressed, function(err) {
-					fs.writeFile('./Music/bugs5.dat', compressed, function(err) {
-						cb(null);
-					});
-				});
+				// fs.writeFile('./Music/bugs.dat', compressed, function(err) {
+				// 	fs.writeFile('./Music/bugs5.dat', compressed, function(err) {
+				// 		cb(null);
+				// 	});
+				// });
+				db.index({index:'hotissue',type:'music',id:'bugs.dat',body:{v:compressed.toString('base64')}}, function(err){
+					cb(null);
+				})
 			},
 			function(cb) {
 				var ranking = {rank:[]};
@@ -112,11 +120,14 @@ var post = function(req, res, next) {
 				});
 
 				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-				fs.writeFile('./Music/soribada.dat', compressed, function(err) {
-					fs.writeFile('./Music/soribada5.dat', compressed, function(err) {
-						cb(null);
-					});
-				});
+				// fs.writeFile('./Music/soribada.dat', compressed, function(err) {
+				// 	fs.writeFile('./Music/soribada5.dat', compressed, function(err) {
+				// 		cb(null);
+				// 	});
+				// });
+				db.index({index:'hotissue',type:'music',id:'soribada.dat',body:{v:compressed.toString('base64')}}, function(err){
+					cb(null);
+				})
 			},
 			function(cb) {
 				var ranking = {rank:[]};
@@ -127,11 +138,14 @@ var post = function(req, res, next) {
 				});
 
 				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-				fs.writeFile('./Music/dosirak.dat', compressed, function(err) {
-					fs.writeFile('./Music/dosirak5.dat', compressed, function(err) {
-						cb(null);
-					});
-				});
+				// fs.writeFile('./Music/dosirak.dat', compressed, function(err) {
+				// 	fs.writeFile('./Music/dosirak5.dat', compressed, function(err) {
+				// 		cb(null);
+				// 	});
+				// });
+				db.index({index:'hotissue',type:'music',id:'dosirak.dat',body:{v:compressed.toString('base64')}}, function(err){
+					cb(null);
+				})
 			},
 			function(cb) {
 				var ranking = {rank:[]};
@@ -142,11 +156,14 @@ var post = function(req, res, next) {
 				});
 
 				var compressed = lz.compressToUTF16(JSON.stringify(ranking));
-				fs.writeFile('./Music/billboard.dat', compressed, function(err) {
-					fs.writeFile('./Music/billboard5.dat', compressed, function(err) {
-						cb(null);
-					});
-				});
+				// fs.writeFile('./Music/billboard.dat', compressed, function(err) {
+				// 	fs.writeFile('./Music/billboard5.dat', compressed, function(err) {
+				// 		cb(null);
+				// 	});
+				// });
+				db.index({index:'hotissue',type:'music',id:'billboard.dat',body:{v:compressed.toString('base64')}}, function(err){
+					cb(null);
+				})
 			}],
 			function(err) {
 				 res.send('{"R":"1"}');
@@ -174,7 +191,24 @@ var server  = function(req, res, next) {
             del(req,res,next);
             break;
     }
-}; 
+};
+
+var list = function(id, res, next) {
+	db.get({index:'hotissue',type:'music',id:id}, function(err, doc){
+		if (!err && doc.found) {
+			try {
+				res.send(new Buffer(doc._source, 'base64'));
+			}
+			catch(e){
+				console.log(JSON.stringify(e));
+			}
+		}
+		else {
+			next();
+		}
+	});
+};
 
 module.exports.init = init;
 module.exports.server = server;
+module.exports.list = list;

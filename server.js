@@ -152,7 +152,7 @@ var Backend = function() {
         hotissue.init(db);
         clipAnywhere.init(db);
         movie.init(db);
-        music.init(mongodb);
+        music.init(db);
         video.init(mongodb);
 
         // self.createRoutes();
@@ -207,8 +207,26 @@ var Backend = function() {
                   break;
                 case "music.imapp.kr":
                 case "test-music.imapp.kr":
-                    express.static('./Music')(req,res,next);
-                     break;
+                  switch(path.basename(req.path)) {
+                    case 'get.dat':
+                    case 'melon.dat':
+                    case 'melon5.dat':
+                    case 'mnet.dat':
+                    case 'mnet5.dat':
+                    case 'bugs.dat':
+                    case 'bugs5.dat':
+                    case 'soribada.dat':
+                    case 'soribada5.dat':
+                    case 'dosirak.dat':
+                    case 'dosirak5.dat':
+                    case 'billboard.dat':
+                    case 'billboard5.dat':
+                      music.list(path.basename(req.path),res,next);
+                      break;
+                    default:
+                      express.static('./Music')(req,res,next);
+                  }
+                  break;
                 case "music-back.imapp.kr":
                 case "test-music-back.imapp.kr":
                      music.server(req,res,next);
