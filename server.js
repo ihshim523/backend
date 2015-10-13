@@ -6,13 +6,6 @@ var url = require("url");
 var path = require("path");
 var async = require('async');
 
-global.mongo = "mongodb://admin" + ":" +
-  "B61vbEbF3kAg" + "@" +
-  "mongo.imapp.kr" + ':' +
-  "51553" + '/backend';
-var mongo = require('mongodb').MongoClient;
-var mongodb;
-
 var Backend = function() {
     //  Scope.
     var self = this;
@@ -142,6 +135,7 @@ var Backend = function() {
       var music = require('./MusicServer/server.js');
       var video = require('./VideoServer/server.js');
       var movie = require('./MovieServer/server.js');
+      var voa = require('./VoaServer/server.js');
 
       async.waterfall([
         function(cb){
@@ -157,7 +151,10 @@ var Backend = function() {
           music.init(cb);
         },
         function(cb){
-          video.init(cb, mongodb);
+          video.init(cb);
+        },
+        function(cb){
+          voa.init(cb);
         }],
         function(err){
           // self.createRoutes();
@@ -226,6 +223,14 @@ var Backend = function() {
                 case "test-movie-back.imapp.kr":
                   movie.server(req,res,next);
                   break;
+                case "voa.imapp.kr":
+                case "test-voa.imapp.kr":
+                  express.static('./Voa')(req,res,next);
+                  break;
+                case "voa-back.imapp.kr":
+                case "test-voa-back.imapp.kr":
+                  voa.server(req,res,next);
+                  break;
                 default:
                   res.setHeader('Content-Type', 'text/html');
                   res.send(self.cache_get('index.html') );
@@ -259,13 +264,5 @@ var Backend = function() {
 /**
  *  main():  Main code.
  */
-mongo.connect(global.mongo, function(err, mongoDB){
-   if ( !err ) {
-     mongodb = mongoDB;
-     var zapp = new Backend();
-     zapp.initialize();
-   }
-   else {
-     console.log('mongo connection error:'+err);
-   }
-});
+var zapp = new Backend();
+zapp.initialize();
