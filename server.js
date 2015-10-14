@@ -223,6 +223,7 @@ var Backend = function() {
                 case "test-movie-back.imapp.kr":
                   movie.server(req,res,next);
                   break;
+                case "c6.imapp.kr":
                 case "voa.imapp.kr":
                 case "test-voa.imapp.kr":
                   express.static('./Voa')(req,res,next);
