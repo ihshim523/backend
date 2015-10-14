@@ -18,7 +18,7 @@ var get = function(req, res, next) {
 	res.end();
 };
 
-function makeFile(input, obj, cb2){
+function makeFile(input, cb2){
 	zlib.deflate(input, function(err, compressed){
 		try {
 			fs.writeFile('./Voa/voa/get.dat', compressed, function(err) {
@@ -43,21 +43,25 @@ var del = function(req, res, next) {
 function list(cb) {
 	db.get({index:'esl', type:'voa', id:'all'}, function(err, doc){
 		if (!err && doc.found){
-			var obj = doc._source;
-			var input = new Buffer(obj);
-			makeFile(input, obj, function(err){
+			var input = new Buffer(doc._source);
+			makeFile(input, function(err){
 				cb(null);
 			});
+		}
+		else {
+			console.log('not found:::'+JSON.stringify(err));
 		}
 	});
 }
 
 var init = function(cb) {
+	console.log('+voa init');
 	setInterval(function(){
     list(function(){});
   },60000);
 
 	list(cb);
+	console.log('-voa init');
 };
 
 var server  = function(req, res, next) {
