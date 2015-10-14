@@ -21,7 +21,7 @@ var get = function(req, res, next) {
 function makeFile(input, obj, cb2){
 	zlib.deflate(input, function(err, compressed){
 		try {
-			fs.writeFile('./Voa/get.dat', compressed, function(err) {
+			fs.writeFile('./Voa/voa/get.dat', compressed, function(err) {
 				cb2(null);
 			});
 		}
