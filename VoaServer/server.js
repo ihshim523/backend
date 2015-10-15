@@ -19,7 +19,7 @@ var get = function(req, res, next) {
 };
 
 function makeFile(input, cb2){
-	var compressed = lz.compressToUTF16(input);
+	var compressed = lz.compressToUTF16(JSON.stringify(input));
 	fs.writeFileSync('./Voa/voa/get.dat', compressed);
 	cb2(null);
 };
