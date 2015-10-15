@@ -20,15 +20,8 @@ var get = function(req, res, next) {
 
 function makeFile(input, cb2){
 	var compressed = lz.compressToUTF16(input);
-	try {
-		fs.writeFile('./Voa/voa/get.dat', compressed, function(err) {
-			cb2(null);
-		});
-	}
-	catch(e) {
-		console.log(JSON.stringify(e));
-		cb2(true);
-	}
+	fs.writeFileSync('./Voa/voa/get.dat', compressed);
+	cb2(null);
 };
 
 var post = function(req, res, next) {
