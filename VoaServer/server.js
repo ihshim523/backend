@@ -19,17 +19,16 @@ var get = function(req, res, next) {
 };
 
 function makeFile(input, cb2){
-	zlib.deflate(input, function(err, compressed){
-		try {
-			fs.writeFile('./Voa/voa/get.dat', compressed, function(err) {
-				cb2(null);
-			});
-		}
-		catch(e) {
-			console.log(JSON.stringify(e));
-			cb2(true);
-		}
-	});
+	var compressed = lz.compressToUTF16(input);
+	try {
+		fs.writeFile('./Voa/voa/get.dat', compressed, function(err) {
+			cb2(null);
+		});
+	}
+	catch(e) {
+		console.log(JSON.stringify(e));
+		cb2(true);
+	}
 };
 
 var post = function(req, res, next) {
@@ -43,8 +42,7 @@ var del = function(req, res, next) {
 function list(cb) {
 	db.get({index:'esl', type:'voa', id:'all'}, function(err, doc){
 		if (!err && doc.found){
-			var input = new Buffer(doc._source);
-			makeFile(input, function(err){
+			makeFile(doc._source, function(err){
 				cb(null);
 			});
 		}
