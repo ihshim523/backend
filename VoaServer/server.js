@@ -12,6 +12,7 @@ var lz = require('lz-string');
 //   process.env.OPENSHIFT_APP_NAME;
 
 var db = require('../elastic.js');
+var gcm = require('./sendGCM.js');
 //////////////////////////////////
 
 var get = function(req, res, next) {
@@ -36,11 +37,24 @@ function list(cb) {
 	db.get({index:'esl', type:'voa', id:'all'}, function(err, doc){
 		if (!err && doc.found){
 			makeFile(doc._source, function(err){
-				cb(null);
+				db.get({index:'esl', type:'voa', id:'push'}, function(err, doc){
+					if (!err && doc.found){
+						if (doc._source.push) {
+							db.index({index:'esl', type:'voa', id:'push', body:{push:false}}, function(err, response){
+								gcm.send('', cb);
+							}
+						}
+						else
+							cb(null);
+					}
+					else
+						cb(null);
+				});
 			});
 		}
 		else {
 			console.log('not found:::'+JSON.stringify(err));
+			cb(true);
 		}
 	});
 }

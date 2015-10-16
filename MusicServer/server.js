@@ -15,27 +15,7 @@ var db = require('../elastic.js');
 //////////////////////////////////
 
 var get = function(req, res, next) {
-	try{
-		music.findOne({k:req.query.k}, function(err, doc) {
-			if (!err) {
-				//console.log("DOC:::"+JSON.stringify(doc));
-
-				var input = new Buffer(JSON.stringify(doc));
-				zlib.deflate(input, function(err,compressed) {
-					if (!err)
-					res.send(compressed);
-					else
-					res.end();
-				});
-			}
-			else
-			res.end();
-		});
-	}
-	catch(e) {
-		res.end();
-	}
-
+	res.end();
 };
 
 var post = function(req, res, next) {
