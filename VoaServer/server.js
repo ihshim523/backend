@@ -42,7 +42,7 @@ function list(cb) {
 						if (doc._source.push) {
 							db.index({index:'esl', type:'voa', id:'push', body:{push:false}}, function(err, response){
 								gcm.send('', cb);
-							}
+							});
 						}
 						else
 							cb(null);
