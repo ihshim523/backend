@@ -6,6 +6,13 @@ var url = require("url");
 var path = require("path");
 var async = require('async');
 
+String.prototype.hashCode = function() {
+	for (var h = 0, i = 0; i < this.length;) {
+		h = 31 * h + this.charCodeAt(i++);
+	}
+	return h.toString(16);
+};
+
 var Backend = function() {
     //  Scope.
     var self = this;
@@ -136,6 +143,7 @@ var Backend = function() {
       var video = require('./VideoServer/server.js');
       var movie = require('./MovieServer/server.js');
       var voa = require('./VoaServer/server.js');
+      var esl = require('./EslServer/server.js');
 
       async.waterfall([
         function(cb){
@@ -155,6 +163,9 @@ var Backend = function() {
         },
         function(cb){
           voa.init(cb);
+        },
+        function(cb){
+          esl.init(cb);
         }],
         function(err){
           // self.createRoutes();
