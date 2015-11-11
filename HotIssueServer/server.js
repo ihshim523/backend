@@ -36,14 +36,12 @@ var get = function(req, res, next) {
                     res.end();
               //  console.log("ret:" + JSON.stringify(doc));
             });
-        }
-    });
+        });
 	}
 	catch(e) {
         console.log('get2:'+e);
 		res.end();
 	}
-
 };
 
 var post = function(req, res, next) {
