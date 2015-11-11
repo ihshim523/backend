@@ -22,19 +22,20 @@ var get = function(req, res, next) {
 		type:'hotissue_article',
 		id:req.query.k}, function(err, doc) {
         // console.log("err:"+err);
-        if ( !err && doc.found ) {
-          var input = new Buffer(JSON.stringify(doc._source));
-          zlib.deflate(input, function(err, compressed) {
-	          if (!err)
-	            res.send(compressed);
-	          else
-	            res.end();
-	          //  console.log("ret:" + JSON.stringify(doc));
-					});
-				}
-        else {
-          console.log('get1:'+err);
-          res.end();
+            var input = 'null';
+            if ( !err && doc.found ) {
+                input = new Buffer(JSON.stringify(doc._source));
+            }
+            else
+                console.log('get1:'+err);
+            
+            zlib.deflate(input, function(err, compressed) {
+                if (!err)
+                    res.send(compressed);
+                else
+                    res.end();
+              //  console.log("ret:" + JSON.stringify(doc));
+            });
         }
     });
 	}
