@@ -22,13 +22,15 @@ var get = function(req, res, next) {
 		type:'hotissue_article',
 		id:req.query.k}, function(err, doc) {
         // console.log("err:"+err);
-            var input = 'null';
+            var input;
             if ( !err && doc.found ) {
                 input = new Buffer(JSON.stringify(doc._source));
             }
-            else
+            else {
                 console.log('get1:'+err);
-            
+            	var item = {k: '', v: '데이터를 가져오기 실패했습니다. 자세히 보기를 눌러보세요..'};
+                input = new Buffer(JSON.stringify(item));
+            }
             zlib.deflate(input, function(err, compressed) {
                 if (!err)
                     res.send(compressed);
