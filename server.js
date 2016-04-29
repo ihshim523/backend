@@ -144,6 +144,7 @@ var Backend = function() {
       var movie = require('./MovieServer/server.js');
       var voa = require('./VoaServer/server.js');
       var esl = require('./EslServer/server.js');
+      var appshare = require('./AppShareServer/server.js');
 
       async.waterfall([
         function(cb){
@@ -166,7 +167,11 @@ var Backend = function() {
         },
         function(cb){
           esl.init(cb);
-        }],
+        },
+        function(cb){
+          appshare.init(cb);
+        }
+        ],
         function(err){
           // self.createRoutes();
           self.app = express();
@@ -242,6 +247,14 @@ var Backend = function() {
                 case "voa-back.imapp.kr":
                 case "test-voa-back.imapp.kr":
                   voa.server(req,res,next);
+                  break;
+                case "appshare.imapp.kr":
+                case "test-appshare.imapp.kr":
+                  express.static('./AppShare')(req,res,next);
+                  break;
+                case "appshare-back.imapp.kr":
+                case "test-appshare-back.imapp.kr":
+                  appshare.server(req,res,next);
                   break;
                 default:
                   res.setHeader('Content-Type', 'text/html');
