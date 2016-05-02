@@ -158,8 +158,12 @@ function getRank(key, start, size, lastRank, callback) {
 
 function putRank(req, callback) {
     var i = 0;
-	async.whilst(function(){ return i < req.datas.length;},
+    
+// console.log('req::'+req.func);
+    
+	async.whilst(function(){ return req.func === 2 && i < req.datas.length;},
     function(cb){
+// console.log('insert'+i);
         var data = req.datas[i];
         db.index({index:'appshare', type:'as_noob', body:data}, 
         function(err, response){
@@ -253,7 +257,7 @@ var post = function(req, res, next) {
         case '3':
 // console.log('func:::3333');
             var start = Math.max(req.body.s,0);
-            var size = Math.max(req.body.e,20);
+            var size = Math.max(req.body.e,100);
             var lastRank = req.body.l;
             var key = req.body.k;
             getRank(key, start, size, lastRank, function(err, result) {
@@ -281,17 +285,13 @@ var put = function(req, res, next) {
 
     try {
         var jsonObj = req.body;
-        if (jsonObj.func == 2) {
-            putRank(jsonObj, function(err, result){
-    // console.log('put###2:::' + result);
-                res.send(result);
-                // snappy.compress(JSON.stringify(result), function(err, compressed){
-                    // res.send(compressed);
-                // })
-            });
-        } else {
-            res.end();
-        }
+        putRank(jsonObj, function(err, result){
+// console.log('put###2:::' + result);
+            res.send(result);
+            // snappy.compress(JSON.stringify(result), function(err, compressed){
+                // res.send(compressed);
+            // })
+        });
     } catch(e){
         console.log('put::exception::' + e);
         res.end();
