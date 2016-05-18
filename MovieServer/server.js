@@ -72,7 +72,7 @@ var post = function(req, res, next) {
     else 
 	if (req.body.k) {
 		db.index({index:'hotissue', type:'temp_movie', id:'movie', body:req.body.k}, function(err, response) {
-			console.log("movieUpdater::index:::err::"+JSON.stringify(response)+"response::"+JSON.stringify(response));
+			console.log("movieUpdater::index:::err::"+JSON.stringify(err)+"response::"+JSON.stringify(response));
 			res.end();
 		});
     } else res.end();
