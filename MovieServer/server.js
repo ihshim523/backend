@@ -73,9 +73,9 @@ var post = function(req, res, next) {
 	if (req.body.k) {
 		db.index({index:'hotissue', type:'temp_movie', id:'movie', body:req.body.k}, function(err, response) {
 			console.log("movieUpdater::index:::err::"+JSON.stringify(response)+"response::"+JSON.stringify(response));
-			next();
+			res.end();
 		});
-    }
+    } else res.end();
 };
 
 var del = function(req, res, next) {
