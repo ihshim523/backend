@@ -69,8 +69,13 @@ var post = function(req, res, next) {
     if ( req.body.f == 2 ) {
         gcm.send(new Buffer('{notify_category:' + req.body.c + '}').toString('base64'), next);
     }
-    else {
+    else 
+	if (req.body.k) {
+		db.index({index:'hotissue', type:'temp_movie', id:'movie', body:req.body.k}, function(err, response) {
+			console.log("movieUpdater::index:::err::"+JSON.stringify(response)+"response::"+JSON.stringify(response));
+		});
     }
+	res.end();
 };
 
 var del = function(req, res, next) {
