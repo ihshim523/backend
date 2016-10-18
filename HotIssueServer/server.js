@@ -47,7 +47,7 @@ var get = function(req, res, next) {
 };
 
 var post = function(req, res, next) {
-	var client = naver({key: '1e7189070640781bb5e7fae3c7f88904'});
+	var client = naver();
 // console.log('#####'+JSON.stringify(req.body)+'#####');
 //    var obj = JSON.parse(req.body.k);
   var obj = req.body.k;
@@ -69,7 +69,7 @@ var post = function(req, res, next) {
   	},
   	function(cb2){
   		console.log("BING0:::"+item.title);
-  	    client.search(item.title, {target:'news'}, function(error, response, data) {
+  	    client.search(item.title, {id: 'WTnJxLWRRVSiVAy1fo9S', secret: 'EHKD7lcsbj'}, function(error, response, data) {
               if ( !data.error ) {
   	    		console.log("BING4:::" + JSON.stringify(data));
   	    		cb2(null, data);
