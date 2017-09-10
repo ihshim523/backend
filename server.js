@@ -188,6 +188,7 @@ var Backend = function() {
 
           try {
             self.app.use(function(req, res, next) {
+console.log('let`s see:' + req.host)
               switch(req.host) {
                 case "clip.imapp.kr":
                 case "test-clip.imapp.kr":
