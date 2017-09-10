@@ -88,7 +88,7 @@ var Backend = function() {
         });
 
         process.on('uncaughtException', function(err){
-           console.log('Caught:'+err);
+           console.log('Caught is this?:'+err);
         });
     };
 
