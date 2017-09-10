@@ -165,7 +165,7 @@ var list = function(cb) {
   try{
     db.get({index:'hotissue',type:'hotissue_list',id:'1'}, function(err, doc) {
       if (!err && doc.found) {
-        //console.log("DOC:::"+JSON.stringify(doc));
+console.log("DOC:::"+JSON.stringify(doc));
         var input = new Buffer(JSON.stringify(doc._source.v));
         zlib.deflate(input, function(err, compressed){
           fs.writeFile('./HotIssue/get.dat', compressed, function(err) {
