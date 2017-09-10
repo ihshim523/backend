@@ -277,12 +277,21 @@ var Backend = function() {
      *  Initializes the sample application.
      */
     self.initialize = function() {
+        console.log('start up')
         self.setupVariables();
+        console.log('start up1')
+        
         self.populateCache();
+        console.log('start up2')
+        
         self.setupTerminationHandlers();
+        console.log('start up3')
+        
 
         // Create the express server and routes.
         self.initializeServer();
+        console.log('start up4')
+        
     };
 };   /*  Sample Application.  */
 
